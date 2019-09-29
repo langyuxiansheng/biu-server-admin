@@ -1,4 +1,6 @@
 # base-nuxt-admin
+一套node后台服务框架,自带管理后台页面.基于nuxt,也可以作为纯api服务器使用.移除client及server/src/bin/Server.js 里的 isNuxtRender 覆盖的,然后移除,package.json里nuxt相关包和UI框架即可.
+
 
 > API服务器
 
@@ -58,3 +60,5 @@ const config = {
 };
 ```
 
+
+ 
