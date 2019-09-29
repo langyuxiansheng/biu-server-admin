@@ -21,9 +21,9 @@ $ npm run generate
 
 ## 特殊点配置 MD5 加密配置
 
-1. 由 str + _WWW.BIUTOOL.COM  生成md5 然后转成大写
+1. 由 str + _SERVICE.MU.HOME  生成md5 然后转成大写
 ```
-MD5(`${str}_WWW.BIUTOOL.COM`).toUpperCase();
+MD5(`${str}_SERVICE.MU.HOME`).toUpperCase();
 ```
 
 2. 设置数据库配置
