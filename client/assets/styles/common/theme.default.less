@@ -1,0 +1,71 @@
+@import './constant.less';
+//主背景色
+.app-bg-white{
+    background:@app-bg-color;
+}
+*{
+    box-sizing: border-box;
+}
+html,
+body{
+    width: 100%;
+    height: 100%;
+    background-color:@app-bg-color;
+}
+#__nuxt,
+#__layout{
+    width: 100%;
+    height: 100%;
+    .el-header{
+        padding: 0;
+        height: auto;
+    }
+    .el-main{
+        padding: 0;
+        .no-padding{
+            padding: 0;
+        }
+    }
+    .layout-container{
+        width: 100%;
+        height: 100%;
+        background: #f0f2f5;
+        .layout-view{
+            padding:20px 20px 44px 20px;
+            overflow: auto;
+            max-height: calc(100% - 56px);
+        }
+    }
+    .app-dialog{
+        border-radius: 10px;
+    }
+    .app-text-left{
+        text-align: left;
+    }
+    .app-href-link{
+        color: #409EFF;
+    }
+}
+
+.app-form{
+    .app-submit-btns{
+        text-align: center;
+        margin-top: 50px;
+    }
+    .select-block{
+        display: block;
+    }
+}
+
+/**图片放大**/
+.vue-directive-image-previewer{
+    z-index: 10000000;
+}
+
+.vue-directive-image-previewer .vue-directive-image-previewer-pic{
+    z-index: 10000002;
+}
+
+.app-image-previewer{
+    cursor: pointer;
+}

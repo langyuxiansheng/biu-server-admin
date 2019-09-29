@@ -1,0 +1,125 @@
+.clearfix:after {
+  content: "";
+  height: 0;
+  line-height: 0;
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+}
+/*fade*/
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.28s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+/*fade*/
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all .5s;
+}
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.breadcrumb-move {
+  transition: all .5s;
+}
+.breadcrumb-leave-active {
+  position: absolute;
+}
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #fafbfc;
+}
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #fafbfc;
+}
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.app-bg-white {
+  background: #F4F7F6;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #F4F7F6;
+}
+#__nuxt,
+#__layout {
+  width: 100%;
+  height: 100%;
+}
+#__nuxt .el-header,
+#__layout .el-header {
+  padding: 0;
+  height: auto;
+}
+#__nuxt .el-main,
+#__layout .el-main {
+  padding: 0;
+}
+#__nuxt .el-main .no-padding,
+#__layout .el-main .no-padding {
+  padding: 0;
+}
+#__nuxt .layout-container,
+#__layout .layout-container {
+  width: 100%;
+  height: 100%;
+  background: #f0f2f5;
+}
+#__nuxt .layout-container .layout-view,
+#__layout .layout-container .layout-view {
+  padding: 20px 20px 44px 20px;
+  overflow: auto;
+  max-height: calc(44%);
+}
+#__nuxt .app-dialog,
+#__layout .app-dialog {
+  border-radius: 10px;
+}
+#__nuxt .app-text-left,
+#__layout .app-text-left {
+  text-align: left;
+}
+#__nuxt .app-href-link,
+#__layout .app-href-link {
+  color: #409EFF;
+}
+.app-form .app-submit-btns {
+  text-align: center;
+  margin-top: 50px;
+}
+.app-form .select-block {
+  display: block;
+}
+/**图片放大**/
+.vue-directive-image-previewer {
+  z-index: 10000000;
+}
+.vue-directive-image-previewer .vue-directive-image-previewer-pic {
+  z-index: 10000002;
+}
+.app-image-previewer {
+  cursor: pointer;
+}

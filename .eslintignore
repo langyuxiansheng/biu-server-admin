@@ -1,0 +1,7 @@
+.nuxt
+.vscode
+/nuxt-dist
+/node_modules
+/client/router
+/client/base
+/client/http/interceptor.js

@@ -1,0 +1,123 @@
+//常量文件
+@app-bg-color:#F4F7F6;
+//主题颜色
+@app-theme-color:#189D68;
+
+.clearfix:after {
+	content: "";
+	height: 0;
+	line-height: 0;
+	display: block;
+	visibility: hidden;
+	clear: both;
+}
+
+.clearfix{
+	zoom:1;
+}
+
+//面包屑导航动画
+/*fade*/
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.28s;
+}
+
+.fade-enter,
+.fade-leave-active {
+	opacity: 0;
+}
+
+/*fade*/
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+	transition: all .5s;
+}
+
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+	opacity: 0;
+	transform: translateX(20px);
+}
+
+.breadcrumb-move {
+	transition: all .5s;
+}
+
+.breadcrumb-leave-active {
+	position: absolute;
+}
+
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar
+{
+	width: 5px;
+	height: 5px;
+	background-color: #fafbfc;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track
+{
+	box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	border-radius: 10px;
+	background-color: #fafbfc;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	box-shadow: inset 0 0 6px rgba(0,0,0,.1);
+	background-color: rgba(0,0,0,.1);
+}
+
+
+// 文本溢出省略号显示 (多行)
+// 只支持 webkit 浏览器, 解决方案：高度 = 行高*行数
+// height: 90px; line-height: 30px; -webkit-line-clamp: 3;
+.ellipsis-mult(@n: 3) {
+    display: -webkit-box; -webkit-box-orient: vertical;-webkit-line-clamp: @n; word-break: break-all;
+    -o-text-overflow: ellipsis; -ms-text-overflow: ellipsis; text-overflow:ellipsis; overflow: hidden;
+}
+
+// 书写模式：牌匾从右至左水平单行排版效果、文笺从右至左、从上至下排版效果
+.retext(x) { direction: rtl; unicode-bidi: bidi-override; }
+.retext(y) { writing-mode: tb-rl; writing-mode: vertical-rl; }
+
+// 文字透明
+.transparent-text() { font: 0/0 serif; text-shadow: none; color: transparent; }
+
+// 文字隐藏（常用于SEO优化）
+.hidden-text() { text-indent : -9999px; overflow: hidden; text-align: left; }
+// 文字外发光效果
+.glow-text(@r: 10px, @color: gold) { text-shadow: 0 0 @r @color; }
+
+//------------------------------------- ├ 图像 ┆ └------------------------------------
+
+// 用 max-width 来防止图片撑破容器
+.max-img() { display: block; max-width: 100%; height: auto; }
+
+// 2x 3x 背景图片
+.bg-image(@url) {
+    background-image: url("@url + '@2x.png'");
+    @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+    background-image: url("@url + '@3x.png'");
+}
+}
+// 全屏大图背景
+.fullscreen-bg(@url) {
+    width: 100vw;
+    height: 100vh;
+    background: url(@url) no-repeat 50% 50%;
+    background-size: cover;
+}
+// 滤镜: 将彩色照片显示为黑白照片
+.grayscale() {
+filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
