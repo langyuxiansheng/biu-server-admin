@@ -7,7 +7,7 @@ const koaStatic = require('koa-static'); //静态文件
 const consola = require('consola'); //打印
 const { Nuxt, Builder } = require('nuxt'); //nuxt渲染框架
 const config = require(':config/server.base.config'); //配置文件
-const nuxtConfig = require(':root/clinet.config'); //nuxt配置文件
+const nuxtConfig = require(':root/nuxt.config'); //nuxt配置文件
 const controllers = require(':controllers'); //路由入口
 const ErrorRoutesCatch = require(':middleware/ErrorRoutesCatch'); //全局错误捕获
 // require(':crawlers')(); //爬虫注册中心

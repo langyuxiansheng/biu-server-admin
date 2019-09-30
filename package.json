@@ -1,8 +1,8 @@
 {
     "name": "biu-server-admin",
-    "title": "后台管理系统",
+    "title": "基于Node-Koa2的restfulAPI服务器",
     "version": "1.0.0",
-    "description": "基于Node后台系统",
+    "description": "基于Node-Koa2的restfulAPI服务器,自带一套管理后台系统,也可以独立出来作为纯API服务器使用",
     "author": "simple",
     "private": true,
     "scripts": {
