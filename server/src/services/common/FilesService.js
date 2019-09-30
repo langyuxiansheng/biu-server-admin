@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const result = require(':lib/Result');
-const config = require(':root/nuxt.config'); //配置文件
+const config = require(':config/server.base.config'); //配置文件
 const { MODELS_PATH, getExtname, getTimeStampUUID, getYearMonthDay } = require(':lib/Utils');
 const { MuHomeDB, SOP } = require(':lib/sequelize');
 const FilesBaseModel = MuHomeDB.import(`${MODELS_PATH}/common/FilesBaseModel`);
@@ -37,7 +37,7 @@ module.exports = class {
             };
             //创建文件夹
             const time = getYearMonthDay(); //获取时间
-            let uploadPath = path.join(config.server.staticPath, `/uploads/`, time.replace(/-/g, '')); //文件上传存放路径
+            let uploadPath = path.join(config.staticPath, `/uploads/`, time.replace(/-/g, '')); //文件上传存放路径
             const existsSync = await new Promise((resolve, reject) => {
                 if (!fs.existsSync(uploadPath)) { //判断文件夹是否存在
                     fs.mkdir(uploadPath, (err) => {
@@ -74,7 +74,7 @@ module.exports = class {
         try {
             //创建文件夹
             const time = getYearMonthDay(); //获取时间
-            let uploadPath = path.join(config.server.staticPath, `/uploads/`, time.replace(/-/g, '')); //文件上传存放路径
+            let uploadPath = path.join(config.staticPath, `/uploads/`, time.replace(/-/g, '')); //文件上传存放路径
             const existsSync = await new Promise((resolve, reject) => {
                 if (!fs.existsSync(uploadPath)) { //判断文件夹是否存在
                     fs.mkdir(uploadPath, (err) => {
