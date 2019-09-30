@@ -1,7 +1,7 @@
 const MD5 = require('blueimp-md5');
 const UUID = require('uuid');
 const JWT = require('jsonwebtoken');
-const config = require(':root/nuxt.config');
+const config = require(':config/server.base.config'); //配置文件
 /**
  * 工具类
  */
@@ -16,7 +16,7 @@ const Utils = {
      */
     getJwtData(authorization) {
         if (!authorization) return null;
-        return JWT.verify(authorization, config.server.jwtPublicKey);
+        return JWT.verify(authorization, config.jwtPublicKey);
     },
 
     /**
@@ -26,7 +26,7 @@ const Utils = {
      */
     signJWT(data, expiresIn) {
         const time = 60 * 30; //默认为30分钟的有效期
-        const sign = { data: { data }, publicKey: config.server.jwtPublicKey, expiresIn: { expiresIn: expiresIn || time } };
+        const sign = { data: { data }, publicKey: config.jwtPublicKey, expiresIn: { expiresIn: expiresIn || time } };
         return JWT.sign(sign.data, sign.publicKey, sign.expiresIn);
     },
 
