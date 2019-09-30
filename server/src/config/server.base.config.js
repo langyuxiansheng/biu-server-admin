@@ -13,7 +13,7 @@ module.exports = {
         start: true, //是否开启爬虫系统
         settimeout: 1 //延时多少s启动
     },
-    unlessPath: [
+    unlessPath: [ //url白名单 如果不设置默认都是没权限访问的,会返回{code:401}
         /^\/public/, //公共资源
         /^\/_nuxt/, //nuxt页面
         /^\/login/, //登录
@@ -22,7 +22,7 @@ module.exports = {
         /^\/System/, //系统设置
         /^\/Home/, //主页
         //api部分
-        /^\/v1\/api\/common\/getImgValidate/,
-        /^\/v1\/api\/common\/userLoginForSysAdmin/
+        /^\/v1\/api\/common\/getImgValidate/, //验证码
+        /^\/v1\/api\/common\/userLoginForSysAdmin/ //登录接口
     ]
 };
