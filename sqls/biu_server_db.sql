@@ -10,10 +10,37 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2019-09-30 12:03:51
+Date: 2019-11-21 15:31:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `biu_files_base`
+-- ----------------------------
+DROP TABLE IF EXISTS `biu_files_base`;
+CREATE TABLE `biu_files_base` (
+  `fileId` varchar(50) NOT NULL,
+  `fileName` varchar(100) DEFAULT NULL,
+  `aliasName` varchar(100) DEFAULT NULL,
+  `userId` varchar(50) DEFAULT NULL,
+  `userName` varchar(100) DEFAULT NULL,
+  `size` bigint(20) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `suffix` varchar(30) DEFAULT NULL,
+  `path` varchar(200) DEFAULT NULL,
+  `fileMD5` varchar(40) DEFAULT NULL,
+  `status` int(2) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `isDelete` tinyint(1) DEFAULT NULL,
+  `createdTime` int(11) DEFAULT NULL,
+  `updatedTime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fileId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of biu_files_base
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `sys_admin_base`

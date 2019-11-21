@@ -3,8 +3,8 @@
  */
 const result = require(':lib/Result');
 const { MODELS_PATH, getLC, signJWT, deepCloneObject } = require(':lib/Utils');
-const { MuHomeDB } = require(':lib/sequelize');
-const SysAdminBaseModel = MuHomeDB.import(`${MODELS_PATH}/system/SysAdminBaseModel`);
+const { BiuDB } = require(':lib/sequelize');
+const SysAdminBaseModel = BiuDB.import(`${MODELS_PATH}/system/SysAdminBaseModel`);
 module.exports = class {
     /**
      * 管理员登录

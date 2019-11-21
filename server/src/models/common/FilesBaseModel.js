@@ -63,6 +63,11 @@ module.exports = (sequelize, dataTypes) => {
             allowNull: true
         },
 
+        fileMD5: { //文件指纹
+            type: dataTypes.STRING(40),
+            allowNull: true
+        },
+
         //文件状态
         status: {
             type: dataTypes.INTEGER(2),
@@ -96,6 +101,6 @@ module.exports = (sequelize, dataTypes) => {
             defaultValue: () => (Date.parse(new Date()) / 1000)
         }
     }, {
-        tableName: 'mu_files_base'
+        tableName: 'biu_files_base'
     });
 };

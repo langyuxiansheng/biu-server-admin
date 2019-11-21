@@ -41,10 +41,10 @@ var _require = require(':lib/Utils'),
     getYearMonthDay = _require.getYearMonthDay;
 
 var _require2 = require(':lib/sequelize'),
-    MuHomeDB = _require2.MuHomeDB,
+    BiuDB = _require2.BiuDB,
     SOP = _require2.SOP;
 
-var FilesBaseModel = MuHomeDB.import(MODELS_PATH + '/common/FilesBaseModel');
+var FilesBaseModel = BiuDB.import(MODELS_PATH + '/common/FilesBaseModel');
 module.exports = function () {
     function _class() {
         (0, _classCallCheck3.default)(this, _class);

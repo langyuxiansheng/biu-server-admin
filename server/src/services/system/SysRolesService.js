@@ -3,8 +3,8 @@
  */
 const result = require(':lib/Result');
 const { MODELS_PATH } = require(':lib/Utils');
-const { SOP, MuHomeDB } = require(':lib/sequelize');
-const SysRolesBaseModel = MuHomeDB.import(`${MODELS_PATH}/system/SysRolesBaseModel`);
+const { SOP, BiuDB } = require(':lib/sequelize');
+const SysRolesBaseModel = BiuDB.import(`${MODELS_PATH}/system/SysRolesBaseModel`);
 module.exports = class {
     /**
      * 添加系统角色

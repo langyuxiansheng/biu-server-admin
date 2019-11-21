@@ -3,17 +3,18 @@
  */
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const result = require(':lib/Result');
 const config = require(':config/server.base.config'); //配置文件
 const { MODELS_PATH, getExtname, getTimeStampUUID, getYearMonthDay } = require(':lib/Utils');
-const { MuHomeDB, SOP } = require(':lib/sequelize');
-const FilesBaseModel = MuHomeDB.import(`${MODELS_PATH}/common/FilesBaseModel`);
+const { BiuDB, SOP } = require(':lib/sequelize');
+const FilesBaseModel = BiuDB.import(`${MODELS_PATH}/common/FilesBaseModel`);
 module.exports = class {
-    // constructor() {
-    //     FilesBaseModel.sync().then((res) => {
-    //         console.log(`FilesBaseModel 同步成功`, res);
-    //     });
-    // }
+    constructor() {
+        FilesBaseModel.sync().then((res) => {
+            console.log(`FilesBaseModel 同步成功`, res);
+        });
+    }
 
     /**
      * 单文件上传
@@ -111,6 +112,7 @@ module.exports = class {
      */
     __filePromise (file, uploadPath, { userId, userName }) {
         return new Promise((resolve, reject) => { //异常上传,同步获取
+            const md5sum = crypto.createHash('md5'); //创建文件指纹读取对象
             const { name, size, type } = file;
             //创建数据库存储数据
             const data = {
@@ -126,13 +128,17 @@ module.exports = class {
                 remark: null //源文件路径
             };
             try {
+                console.log(`正在上传${name}`);
                 const reader = fs.createReadStream(file.path); //创建可读文件流
                 const fileName = `${data.fileId}.${data.suffix}`; //重名名后的文件
                 const fileSavePath = path.join(uploadPath, fileName); //合成路径 + 时间 + 文件名
                 data.path = fileSavePath; //存储完整路径
                 data.aliasName = fileName; //存储别名
                 reader.pipe(fs.createWriteStream(fileSavePath)); //写入文件
+                reader.on('data', (chunk) => { md5sum.update(chunk); }); //读取文件流
                 reader.on('end', () => {
+                    data.fileMD5 = md5sum.digest('hex').toUpperCase();
+                    console.log(`fileMD5:`, data.fileMD5);
                     reader.close(); //关闭文件
                     fs.unlink(file.path, (err) => { //上传成功后删除临时文件
                         if (err) {

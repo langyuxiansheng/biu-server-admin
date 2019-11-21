@@ -71,7 +71,7 @@ var SOP = Sequelize.Op;
 //     $col: Op.col
 // };
 
-var MuHomeDB = new Sequelize(config.database, config.username, config.password, {
+var BiuDB = new Sequelize(config.database, config.username, config.password, {
     host: config.host, // 数据库地址
     dialect: config.DB_type, // 指定连接的数据库类型
     dialectOptions: config.dialectOptions, //mysql专用
@@ -80,14 +80,14 @@ var MuHomeDB = new Sequelize(config.database, config.username, config.password, 
     // operatorsAliases
 });
 
-MuHomeDB.authenticate().then(function (res) {
+BiuDB.authenticate().then(function (res) {
     console.log('\u8FDE\u63A5\u6570\u636E\u5E93\uFF1A' + config.database + ' \u6210\u529F!');
 }).catch(function (err) {
     throw new Error('\u8FDE\u63A5\u6570\u636E\u5E93\uFF1A' + config.database + ' \u51FA\u9519' + err);
 });
 
 //同步数据库模型专用 此操作将会删除数据库的表重新创建,请谨慎使用
-// MuHomeDB.sync({ force: true }).then(function(result) {
+// BiuDB.sync({ force: true }).then(function(result) {
 //     console.log('result');
 // });
 
@@ -114,4 +114,4 @@ var Attrs = function Attrs(table, list) {
 };
 
 //配置关系型数据库ORM
-module.exports = { Sequelize: Sequelize, MuHomeDB: MuHomeDB, SOP: SOP, COL: COL, Attrs: Attrs };
+module.exports = { Sequelize: Sequelize, BiuDB: BiuDB, SOP: SOP, COL: COL, Attrs: Attrs };

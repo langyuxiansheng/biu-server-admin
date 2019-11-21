@@ -3,11 +3,11 @@
  */
 const result = require(':lib/Result');
 const { MODELS_PATH } = require(':lib/Utils');
-const { SOP, MuHomeDB } = require(':lib/sequelize');
-const SysAdminBaseModel = MuHomeDB.import(`${MODELS_PATH}/system/SysAdminBaseModel`);
-// MuHomeDB.import(`${MODELS_PATH}/system/SysPermissionModel`);
-// MuHomeDB.import(`${MODELS_PATH}/system/SysRolesAuthModel`);
-// MuHomeDB.import(`${MODELS_PATH}/system/SysRolesBaseModel`);
+const { SOP, BiuDB } = require(':lib/sequelize');
+const SysAdminBaseModel = BiuDB.import(`${MODELS_PATH}/system/SysAdminBaseModel`);
+// BiuDB.import(`${MODELS_PATH}/system/SysPermissionModel`);
+// BiuDB.import(`${MODELS_PATH}/system/SysRolesAuthModel`);
+// BiuDB.import(`${MODELS_PATH}/system/SysRolesBaseModel`);
 module.exports = class {
     /**
      * 添加管理平台

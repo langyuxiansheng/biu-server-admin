@@ -32,9 +32,9 @@ var _require = require(':lib/Utils'),
 
 var _require2 = require(':lib/sequelize'),
     SOP = _require2.SOP,
-    MuHomeDB = _require2.MuHomeDB;
+    BiuDB = _require2.BiuDB;
 
-var SysRolesBaseModel = MuHomeDB.import(MODELS_PATH + '/system/SysRolesBaseModel');
+var SysRolesBaseModel = BiuDB.import(MODELS_PATH + '/system/SysRolesBaseModel');
 module.exports = function () {
     function _class() {
         (0, _classCallCheck3.default)(this, _class);

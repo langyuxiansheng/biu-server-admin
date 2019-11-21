@@ -30,9 +30,9 @@ var _require = require(':lib/Utils'),
     deepCloneObject = _require.deepCloneObject;
 
 var _require2 = require(':lib/sequelize'),
-    MuHomeDB = _require2.MuHomeDB;
+    BiuDB = _require2.BiuDB;
 
-var SysAdminBaseModel = MuHomeDB.import(MODELS_PATH + '/system/SysAdminBaseModel');
+var SysAdminBaseModel = BiuDB.import(MODELS_PATH + '/system/SysAdminBaseModel');
 module.exports = function () {
     function _class() {
         (0, _classCallCheck3.default)(this, _class);

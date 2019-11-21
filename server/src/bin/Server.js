@@ -1,4 +1,3 @@
-const path = require('path'); //路径模块
 const Koa2 = require('koa'); //koa
 const KoaCors = require('koa-cors'); //核心文件
 const KoaBody = require('koa-body'); //koa文件上传
@@ -12,8 +11,8 @@ const controllers = require(':controllers'); //路由入口
 const ErrorRoutesCatch = require(':middleware/ErrorRoutesCatch'); //全局错误捕获
 // require(':crawlers')(); //爬虫注册中心
 const app = new Koa2();
-const host = process.env.HOST || config.host;
-const port = process.env.PORT || config.port;
+const host = process.env.HOST || config.host || '127.0.0.1';
+const port = process.env.PORT || config.port || 3000;
 config.dev = !(app.env === 'production');
 module.exports = class Server {
     static async run() {
@@ -31,7 +30,7 @@ module.exports = class Server {
             multipart: true,
             strict: false,
             formidable: {
-                uploadDir: path.join(`${config.staticPath}/uploads/tmp`), //设置上传缓存文件夹
+                uploadDir: config.uploadDir, //设置上传缓存文件夹
                 maxFileSize: 1024 * 1024 * 10 * 1024 // 设置上传文件大小最大限制，默认1G 1024M
             },
             jsonLimit: '10mb',

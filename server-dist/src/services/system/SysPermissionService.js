@@ -34,11 +34,11 @@ var _require = require(':lib/Utils'),
 var _require2 = require(':lib/sequelize'),
     Attrs = _require2.Attrs,
     SOP = _require2.SOP,
-    MuHomeDB = _require2.MuHomeDB,
+    BiuDB = _require2.BiuDB,
     COL = _require2.COL;
 
-var SysPermissionModel = MuHomeDB.import(MODELS_PATH + '/system/SysPermissionModel');
-var SysRolesAuthModel = MuHomeDB.import(MODELS_PATH + '/system/SysRolesAuthModel');
+var SysPermissionModel = BiuDB.import(MODELS_PATH + '/system/SysPermissionModel');
+var SysRolesAuthModel = BiuDB.import(MODELS_PATH + '/system/SysRolesAuthModel');
 module.exports = function () {
     function _class() {
         (0, _classCallCheck3.default)(this, _class);

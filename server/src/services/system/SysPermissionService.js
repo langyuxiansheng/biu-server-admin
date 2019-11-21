@@ -3,9 +3,9 @@
  */
 const result = require(':lib/Result');
 const { MODELS_PATH, listToTree } = require(':lib/Utils');
-const { Attrs, SOP, MuHomeDB, COL } = require(':lib/sequelize');
-const SysPermissionModel = MuHomeDB.import(`${MODELS_PATH}/system/SysPermissionModel`);
-const SysRolesAuthModel = MuHomeDB.import(`${MODELS_PATH}/system/SysRolesAuthModel`);
+const { Attrs, SOP, BiuDB, COL } = require(':lib/sequelize');
+const SysPermissionModel = BiuDB.import(`${MODELS_PATH}/system/SysPermissionModel`);
+const SysRolesAuthModel = BiuDB.import(`${MODELS_PATH}/system/SysRolesAuthModel`);
 module.exports = class {
     // constructor() {
     //     // SysPermissionModel.sync().then((res) => {
