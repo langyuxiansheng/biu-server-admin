@@ -1,12 +1,15 @@
 <template>
-    <div>
+    <card-container>
         欢迎您,管理员!
-    </div>
+    </card-container>
 </template>
 <script>
 // import { getSysRoleList, delSysAdminByIds } from '@/http';
 export default {
     name: 'Welcome',
+    head: {
+        title: '欢迎页'
+    },
     data () {
         return {
 

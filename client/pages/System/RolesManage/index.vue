@@ -49,6 +49,9 @@ import { getSysRoleList, delSysAdminByIds } from '@/http';
 import RoleForm from './RoleForm';
 export default {
     name: 'RolesMange',
+    head: {
+        title: '角色管理'
+    },
     components: { RoleForm },
     data () {
         return {

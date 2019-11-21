@@ -21,7 +21,7 @@
 /*fade*/
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 .breadcrumb-enter,
 .breadcrumb-leave-active {
@@ -29,7 +29,7 @@
   transform: translateX(20px);
 }
 .breadcrumb-move {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 .breadcrumb-leave-active {
   position: absolute;
@@ -92,7 +92,7 @@ body {
 #__layout .layout-container .layout-view {
   padding: 20px 20px 44px 20px;
   overflow: auto;
-  max-height: calc(44%);
+  max-height: calc(100% - 56px);
 }
 #__nuxt .app-dialog,
 #__layout .app-dialog {

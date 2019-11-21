@@ -36,6 +36,9 @@ import { getSysPermissionList, delSysPermissionByIds } from '@/http';
 import PermissionForm from './PermissionForm';
 export default {
     name: 'PermissionMange',
+    head: {
+        title: '权限管理'
+    },
     components: { PermissionForm },
     data () {
         return {

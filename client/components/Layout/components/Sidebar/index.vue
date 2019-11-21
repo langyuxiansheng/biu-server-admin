@@ -1,9 +1,14 @@
 <template>
     <div class="sidebar-menu">
-        <h3 class="title">
-            {{ $store.state.config.sidebarTitle }}
+        <h3 :title="isCollapse ? '点击展开' : '点击收起'" class="title" @click="isCollapse = !isCollapse">
+            <template v-if="isCollapse">
+                BSA
+            </template>
+            <template v-else>
+                {{ $store.state.config.sidebarTitle }}
+            </template>
         </h3>
-        <el-menu background-color="#000c17" text-color="#fff" active-text-color="#1890ff" :default-active="$route.path" unique-opened router>
+        <el-menu :collapse-transition="false" :collapse="isCollapse" background-color="#000c17" text-color="#fff" active-text-color="#1890ff" :default-active="$route.path" unique-opened router>
             <template v-for="(menu,k) in sideMenus">
                 <el-submenu v-if="menu.list" :key="k" :index="menu.permissionId" popper-class="sidebar-submenu">
                     <template slot="title">
@@ -38,6 +43,7 @@ export default {
     name: 'Sidebar',
     data() {
         return {
+            isCollapse: false,
             sideMenus: []
         };
     },
@@ -123,7 +129,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .sidebar-menu {
-    width: 210px;
+    // width: 210px;
     background: #001529;
     height: 100%;
     .title {
@@ -132,11 +138,16 @@ export default {
         font-size: 20px;
         color: #fff;
         font-weight: bold;
+        cursor: pointer;
+        transition: color .2s ease-in;
+        &:hover{
+            color: #409eff;
+        }
     }
     & /deep/ .el-menu {
         border-right: 0;
         .sidebar-menu-item {
-        padding-left: 20px;
+            padding-left: 20px;
         }
     }
     .sidebar-submenu {
