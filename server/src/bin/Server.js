@@ -3,6 +3,7 @@ const KoaCors = require('koa-cors'); //核心文件
 const KoaBody = require('koa-body'); //koa文件上传
 const koaJWT = require('koa-jwt'); //jwt生成解析
 const koaStatic = require('koa-static'); //静态文件
+const responseTime = require('koa-response-time');
 const consola = require('consola'); //打印
 const { Nuxt, Builder } = require('nuxt'); //nuxt渲染框架
 const config = require(':config/server.base.config'); //配置文件
@@ -23,6 +24,7 @@ module.exports = class Server {
                 await builder.build();
             }
         }
+        app.use(responseTime({ hrtime: true }));
         app.use(KoaCors());
         app.use(ErrorRoutesCatch);
         app.use(koaStatic(config.staticPath));

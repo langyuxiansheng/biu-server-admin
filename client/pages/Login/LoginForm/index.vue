@@ -1,7 +1,7 @@
 <template>
     <div class="login-form" @keyup.enter="submitForm('Form')">
         <h1 class="title">
-            管理平台
+            基于Node-Koa2的RestfulAPI服务器
         </h1>
         <div class="login-form-body">
             <el-row>

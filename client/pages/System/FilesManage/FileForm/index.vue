@@ -9,7 +9,7 @@
                             :action="uploadURL"
                             :before-upload="beforeUpload"
                             :on-preview="handlePreview"
-                            :on-remove="handleRemove"
+                            :before-remove="handleBeforeRemove"
                             :on-success="handleSuccess"
                             :file-list="fileList"
                             list-type="picture"
@@ -31,7 +31,7 @@
                                 保存
                             </el-button>
                             <el-button @click="resetForm('AppForm')">
-                                重新填写
+                                取消
                             </el-button>
                         </el-form-item>
                     </div>
@@ -41,8 +41,8 @@
     </dialog-container>
 </template>
 <script type="text/ecmascript-6">
+import { deleteFiles } from '@/http';
 import util from '@/lib/util';
-import { addSysAdmin, updateSysAdmin } from '@/http';
 import { FILE_UPLOAD_URL } from '@/http/models/types';
 export default {
     name: 'FileForm',
@@ -60,13 +60,7 @@ export default {
             headers: {
                 Authorization: util.getCookie(`BIU-SERVER-ADMIN-JWT`)
             },
-            fileList: [{
-                name: 'food.jpeg',
-                url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-            }, {
-                name: 'food2.jpeg',
-                url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-            }]
+            fileList: []
         };
     },
     methods: {
@@ -108,8 +102,20 @@ export default {
         /**
          * 移除文件
          */
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
+        async handleBeforeRemove(file, fileList) {
+            try {
+                const { code } = await this.$axios[deleteFiles.method](deleteFiles.url, {
+                    data: { ids: [file.response.data.fileId], isDelete: true }
+                });
+                if (code == 200) {
+                    this.$message.success(this.$t('msg.deleted_success'));
+                    return Promise.resolve(true);
+                } else {
+                    return Promise.resolve(false);
+                }
+            } catch (error) {
+                console.error(error);
+            }
         },
 
         /**
@@ -118,7 +124,7 @@ export default {
         handleSuccess(res, file) {
             console.log(res);
             if (res && res.code == 200) {
-
+                this.$message.success('上传成功!');
             } else {
                 this.$message.error(res.msg || '上传失败!');
             }
@@ -128,30 +134,8 @@ export default {
 		 * 提交表单
 		 */
         submitForm (formName) {
-            this.$refs[formName].validate(async (valid) => {
-                if (valid) {
-                    const { account, pwd, adminName, avatar, roleId, roleName } = this.sendData;
-                    const send = { account, adminName, avatar, roleId, roleName, password: util.getMD5UC(pwd) };
-                    let res = null;
-                    try {
-                        if (this.type == 'add') { //添加
-                            res = await this.$axios[addSysAdmin.method](addSysAdmin.url, send);
-                        } else { //编辑
-                            res = await this.$axios[updateSysAdmin.method](updateSysAdmin.url, this.sendData);
-                        }
-                    } catch (error) {
-                        console.log(error);
-                    }
-                    if (res && res.code == 200) {
-                        this.dialogConf.isShow = false;
-                        this.$message.success(this.$t('msg.operation_success'));
-                        this.resetForm(formName);
-                        this.$emit('refresh');
-                    };
-                } else {
-                    this.$message.error('请填写完表单');
-                }
-            });
+            this.dialogConf.isShow = false;
+            this.$emit('refresh');
         },
 
         /**
@@ -159,6 +143,8 @@ export default {
 		 * @param formName
 		 */
         resetForm (formName) {
+            this.dialogConf.isShow = false;
+            this.$emit('refresh');
             this.$refs[formName].resetFields();
         }
 

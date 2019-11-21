@@ -32,7 +32,7 @@ module.exports = {
             host: 'localhost', // 服务器地址
             port: 3306, // 数据库端口号
             username: 'root', // 数据库用户名
-            password: '', // 数据库密码
+            password: 'root', // 数据库密码
             database: 'biu_server_db', // 数据库名称
             dialectOptions: { // MySQL > 5.5，其它数据库删除此项
                 charset: 'utf8mb4',
