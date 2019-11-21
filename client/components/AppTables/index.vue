@@ -36,7 +36,8 @@
             <el-table-column
                 v-if="!table.selection"
                 type="selection"
-                width="35"
+                align="center"
+                width="40"
             />
             <el-table-column
                 v-for="(col,k) in table.cols"
@@ -117,8 +118,8 @@ export default {
             cols: Object,
             default() {
                 return {
-                    // left: [{ label: '', slot: 'add' }],
-                    // right: [{ label: '', slot: 'search' }],
+                    // left: [{  slot: 'add' }],
+                    // right: [{  slot: 'search' }],
                     // cols: [12, 12]
                 };
             }
@@ -170,8 +171,8 @@ export default {
                     tableType: 3, //表格类型
                     hidePagination: true, //隐藏分页器
                     utils: { //表格工具栏
-                        left: [{ label: '', slot: 'add' }],
-                        right: [{ label: '', slot: 'search' }],
+                        left: [{ slot: 'add' }],
+                        right: [{ slot: 'search' }],
                         cols: [12, 12]
                     },
                     cols: [ //表格列配置

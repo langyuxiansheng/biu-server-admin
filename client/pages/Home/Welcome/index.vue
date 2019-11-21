@@ -7,7 +7,6 @@
 // import { getSysRoleList, delSysAdminByIds } from '@/http';
 export default {
     name: 'Welcome',
-    layout: 'layout',
     data () {
         return {
 

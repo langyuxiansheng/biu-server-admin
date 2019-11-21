@@ -6,7 +6,7 @@ const path = require('path');
 const crypto = require('crypto');
 const result = require(':lib/Result');
 const config = require(':config/server.base.config'); //配置文件
-const { MODELS_PATH, getExtname, getTimeStampUUID, getYearMonthDay } = require(':lib/Utils');
+const { MODELS_PATH, getExtname, getTimeStampUUID, getYearMonthDay, getFileNameUUID32 } = require(':lib/Utils');
 const { BiuDB, SOP } = require(':lib/sequelize');
 const FilesBaseModel = BiuDB.import(`${MODELS_PATH}/common/FilesBaseModel`);
 module.exports = class {
@@ -130,7 +130,7 @@ module.exports = class {
             try {
                 console.log(`正在上传${name}`);
                 const reader = fs.createReadStream(file.path); //创建可读文件流
-                const fileName = `${data.fileId}.${data.suffix}`; //重名名后的文件
+                const fileName = getFileNameUUID32(data.suffix); //重名名后的文件
                 const fileSavePath = path.join(uploadPath, fileName); //合成路径 + 时间 + 文件名
                 data.path = fileSavePath; //存储完整路径
                 data.aliasName = fileName; //存储别名

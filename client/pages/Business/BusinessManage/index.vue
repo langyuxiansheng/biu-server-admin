@@ -65,7 +65,6 @@ import { getBusinessList, updateBusiness, delBusinessByIds } from '@/http';
 import BusinessForm from './BusinessForm';
 export default {
     name: 'BusinessManage',
-    layout: 'layout',
     components: { BusinessForm },
     data () {
         return {

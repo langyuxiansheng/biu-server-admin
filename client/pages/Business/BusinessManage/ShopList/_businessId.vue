@@ -45,7 +45,6 @@
 import { getBusinessShopListByAdmin } from '@/http';
 export default {
     name: 'ShopList',
-    layout: 'layout',
     data () {
         const { businessId } = this.$route.params;
         return {

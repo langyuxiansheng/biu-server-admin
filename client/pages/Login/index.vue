@@ -10,9 +10,8 @@
 import LoginForm from './LoginForm';
 export default {
     name: 'Login',
-    components: {
-        LoginForm
-    },
+    layout: 'empty',
+    components: { LoginForm },
     data() {
         return {
             bgUrlIndex: 0

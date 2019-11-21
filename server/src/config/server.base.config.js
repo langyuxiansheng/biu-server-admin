@@ -13,6 +13,8 @@ module.exports = {
         start: true, //是否开启爬虫系统
         settimeout: 1 //延时多少s启动
     },
+    saltMD5: '_SERVICE.BIU.COM', //md5 加盐的字符,随意更改可能会造成密码错误等.
+    filePrefix: 'BIU_WEB_', //上传的文件名前缀
     email: {
         host: 'smtp.qq.com', //邮箱服务器地址
         port: 465, //服务器端口 默认 465

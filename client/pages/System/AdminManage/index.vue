@@ -55,7 +55,6 @@ import { getSysAdminList, delSysAdminByIds } from '@/http';
 import AdminForm from './AdminForm';
 import BindRoleForm from './BindRoleForm';
 export default {
-    layout: 'layout',
     head: {
         title: '管理员管理'
     },
@@ -71,8 +70,8 @@ export default {
                 total: 0, //总页数
                 tableType: 1, //表格类型
                 utils: { //表格工具栏
-                    left: [{ label: '', slot: 'add' }],
-                    right: [{ label: '', slot: 'search' }],
+                    left: [{ slot: 'add' }],
+                    right: [{ slot: 'search' }],
                     cols: [12, 12]
                 },
                 cols: [ //表格列配置

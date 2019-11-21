@@ -1,10 +1,10 @@
 <template>
-    <nuxt />
+    <layout />
 </template>
 <script>
-// import layout from '@/components/Layout';
+import layout from '@/components/Layout';
 export default {
-    // components: { layout },
+    components: { layout },
     transition: {
         name: 'test',
         mode: 'fade-in'

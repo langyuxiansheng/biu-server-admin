@@ -36,7 +36,6 @@ import { getSysPermissionList, delSysPermissionByIds } from '@/http';
 import PermissionForm from './PermissionForm';
 export default {
     name: 'PermissionMange',
-    layout: 'layout',
     components: { PermissionForm },
     data () {
         return {
@@ -49,8 +48,8 @@ export default {
                 total: 0, //总页数
                 tableType: 3, //表格类型
                 utils: { //表格工具栏
-                    left: [{ label: '', slot: 'add' }],
-                    right: [{ label: '', slot: 'search' }],
+                    left: [{ slot: 'add' }],
+                    right: [{ slot: 'search' }],
                     cols: [12, 12]
                 },
                 cols: [ //表格列配置

@@ -33,19 +33,17 @@ const Utils = {
     /**
      * 取随机数
      */
-    getRandomNum() {
-        let Min = 10000000;
-        let Max = 99999999;
-        let Range = Max - Min;
-        let Rand = Math.random();
-        return (Min + Math.round(Rand * Range));
+    getRandomNum(min = 10000000, max = 99999999) {
+        let range = min - max;
+        let rand = Math.random();
+        return (min + Math.round(rand * range));
     },
 
     /**
      * 获取MD5加密
      */
     getMd5(str) {
-        return MD5(`${str}_SERVICE.MU.HOME`).toUpperCase();
+        return MD5(`${str}${config.saltMD5}`).toUpperCase();
     },
 
     /**
@@ -128,11 +126,11 @@ const Utils = {
      * 格式化设置
      * @param {*} GetOptions
      */
-    optionFormat(GetOptions) {
+    optionFormat(getOptions) {
         let options = '{';
-        for (let n = 0; n < GetOptions.length; n++) {
-            options = options + '\'' + GetOptions[n].option_name + '\':\'' + GetOptions[n].option_value + '\'';
-            if (n < GetOptions.length - 1) {
+        for (let n = 0; n < getOptions.length; n++) {
+            options = options + '\'' + getOptions[n].option_name + '\':\'' + getOptions[n].option_value + '\'';
+            if (n < getOptions.length - 1) {
                 options = options + ',';
             }
         }
@@ -255,13 +253,11 @@ const Utils = {
     },
 
     /**
-     * 生成文件名
+     * 生成文件名 默认全大写
      * @param {*} isLowerCase
      */
     getFileNameUUID32(nameExtension, isLowerCase) {
-        const str = Utils.getMd5(UUID.v1());
-        const name = isLowerCase ? str : str.toUpperCase();
-        return `BIUXS_WEB_${name}.${nameExtension}`;
+        return `BIUXS_WEB_${Utils.getTimeStampUUID(isLowerCase)}.${nameExtension}`;
     },
 
     // 转为unicode 编码

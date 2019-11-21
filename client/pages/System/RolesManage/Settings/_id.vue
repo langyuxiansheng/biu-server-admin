@@ -40,7 +40,6 @@
 import { getSysRolePermissionListToTree, setSysRolePermission, clearSysRoleAllPermission } from '@/http';
 export default {
     name: 'Settings',
-    layout: 'layout',
     validate ({ params }) {
         return params.id != undefined;
     },
