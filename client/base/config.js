@@ -3,6 +3,7 @@
  * 公共插件功能配置文件
  */
 export default {
+    sidebarTitle:"BiuServerAdmin",
     devUrl: 'http://192.168.0.59:8000',
     productionUrl: 'http://192.168.0.59:8000',
     // devUrl: 'https://api.pandaparking.cn',

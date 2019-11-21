@@ -132,7 +132,7 @@ module.exports = class {
                 const reader = fs.createReadStream(file.path); //创建可读文件流
                 const fileName = getFileNameUUID32(data.suffix); //重名名后的文件
                 const fileSavePath = path.join(uploadPath, fileName); //合成路径 + 时间 + 文件名
-                data.path = fileSavePath; //存储完整路径
+                data.path = fileSavePath.split('public')[1]; //存储完整路径
                 data.aliasName = fileName; //存储别名
                 reader.pipe(fs.createWriteStream(fileSavePath)); //写入文件
                 reader.on('data', (chunk) => { md5sum.update(chunk); }); //读取文件流
@@ -162,22 +162,24 @@ module.exports = class {
      * 批量删除文件
      * @param {*} param0
      */
-    async deleteFiles({ state, body: { fileIds } }) {
-        if (!Array.isArray(fileIds)) return result.paramsLack();
+    async deleteFiles({ state, body: { ids } }) {
+        if (!Array.isArray(ids)) return result.paramsLack();
         try {
-            const { userId } = state.user.data;
-            //查询相关文件
-            const files = await FilesBaseModel.findAll({
+            const { userId, isAdmin, roleName } = state.user.data;
+            const queryData = {
                 where: {
                     userId,
-                    fileId: { [SOP.in]: fileIds }
+                    fileId: { [SOP.in]: ids }
                     // isDelete: false
                 }
-            });
+            };
+            if (isAdmin && (roleName === '超级管理员')) delete queryData['userId']; //超级管理员会获取所有的文件
+            //查询相关文件
+            const files = await FilesBaseModel.findAll(queryData);
             if (files && files.length) { //获取数据库里的文件数据
                 const deleteFiles = files.map((file) => {
                     return new Promise((resolve, reject) => {
-                        fs.unlink(file.path, (err) => { //删除文件
+                        fs.unlink(path.join(config.staticPath, file.path), (err) => { //删除文件
                             if (err) {
                                 reject(new Error(`删除文件: ${file.path} 异常！`));
                             } else {
@@ -211,7 +213,7 @@ module.exports = class {
      * @param {*} param0
      */
     async getFiles({ state, query }) {
-        const { userId } = state.user.data;
+        const { userId, isAdmin, roleName } = state.user.data;
         const { keyword, page, limit } = query;
         let queryData = {
             where: { userId, isDelete: false },
@@ -220,6 +222,7 @@ module.exports = class {
             ],
             attributes: { exclude: ['isDelete'] }
         };
+        if (isAdmin && (roleName === '超级管理员')) delete queryData['userId']; //超级管理员会获取所有的文件
         if (keyword) {
             queryData.where['fileName'] = {
                 [SOP.like]: `%${keyword}%`

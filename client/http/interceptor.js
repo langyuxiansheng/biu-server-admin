@@ -18,7 +18,7 @@ let loading = null;
 
 //http request 拦截
 axios.interceptors.request.use(config => {
-    config.headers.Authorization = util.getCookie(`AUTH-BIUTOOL-JWT`);
+    config.headers.Authorization = util.getCookie(`BIU-SERVER-ADMIN-JWT`);
     loading = Loading.service({
         lock: true,
         text: '拼命加载中...',

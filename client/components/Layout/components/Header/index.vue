@@ -43,7 +43,7 @@ export default {
     computed: {
         user() {
             if (window && window.localStorage) {
-                const user = window.localStorage.getItem(`MU-HOME-USER-INFO`);
+                const user = window.localStorage.getItem(`BIU-SERVER-ADMIN-INFO`);
                 return typeof user === 'string' ? JSON.parse(user) : user || {};
             }
             return {};
@@ -95,8 +95,8 @@ export default {
         },
 
         clear() {
-            util.clearCookie('AUTH-MU-HOME-JWT');
-            window.localStorage.removeItem('MU-HOME-USER-INFO');
+            util.clearCookie('BIU-SERVER-ADMIN-JWT');
+            window.localStorage.removeItem('BIU-SERVER-ADMIN-INFO');
             this.$router.push(`/login`);
         }
     }

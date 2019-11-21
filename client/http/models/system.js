@@ -178,5 +178,24 @@ export default {
     updateSysPassword: {
         url: `${API_SERVER}/system/updateSysPassword`,
         method: 'put'
+    },
+
+    /**
+     * 获取文件列表
+     * @param {*} data
+     */
+    getFiles: {
+        url: `${API_SERVER}/common/getFiles`,
+        method: 'get'
+    },
+
+    /**
+     * 批量删除文件
+     * @param {*} data
+     */
+    deleteFiles: {
+        url: `${API_SERVER}/common/deleteFiles`,
+        method: 'delete'
     }
+
 };

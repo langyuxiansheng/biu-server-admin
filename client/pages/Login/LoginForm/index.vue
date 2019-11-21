@@ -109,10 +109,10 @@ export default {
                     try {
                         const { account, code, pwd } = this.sendData;
                         const { data: { jwt, user } } = await this.$axios[userLoginForSysAdmin.method](userLoginForSysAdmin.url, { password: util.getMD5UC(pwd), code, account });
-                        if (jwt) util.setCookie('AUTH-MU-HOME-JWT', `Bearer ${jwt}`);
+                        if (jwt) util.setCookie('BIU-SERVER-ADMIN-JWT', `Bearer ${jwt}`);
                         if (user) {
                             if (window && window.localStorage) {
-                                window.localStorage.setItem('MU-HOME-USER-INFO', JSON.stringify(user));
+                                window.localStorage.setItem('BIU-SERVER-ADMIN-INFO', JSON.stringify(user));
                             } else {
                                 alert('你的浏览器不支持localStorage!');
                             }

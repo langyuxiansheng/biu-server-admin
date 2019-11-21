@@ -30,7 +30,6 @@ export default {
         overflow: hidden;
         background-color: #fff;
         padding: 20px;
-        border-radius: 8px;
     }
     .small{
         padding: 22px 46px;

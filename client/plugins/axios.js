@@ -6,7 +6,7 @@ export default ({ $axios, redirect }) => {
     $axios.defaults.baseURL = '/';
     let loading = null;
     $axios.onRequest(config => {
-        config.headers.Authorization = util.getCookie(`AUTH-MU-HOME-JWT`);
+        config.headers.Authorization = util.getCookie(`BIU-SERVER-ADMIN-JWT`);
         loading = Loading.service({
             lock: true,
             text: '拼命加载中...',

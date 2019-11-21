@@ -14,7 +14,7 @@ const getters = {
      * @param {*} state
      */
     userInfo(state) {
-        const user = window.localStorage.getItem('MU-HOME-USER-INFO');
+        const user = window.localStorage.getItem('BIU-SERVER-ADMIN-INFO');
         if (user) return JSON.parse(user);
         return state.userInfo;
     }

@@ -23,6 +23,8 @@ export const {
     getSysAdminBaseInfo,
     getSysRoleMenusToTree,
     updateSysPassword,
+    getFiles,
+    deleteFiles,
     //商家管理
     getBusinessList,
     updateBusiness,

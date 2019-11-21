@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar-menu">
         <h3 class="title">
-            {{ $store.state.config.projectName }}
+            {{ $store.state.config.sidebarTitle }}
         </h3>
         <el-menu background-color="#000c17" text-color="#fff" active-text-color="#1890ff" :default-active="$route.path" unique-opened router>
             <template v-for="(menu,k) in sideMenus">
@@ -127,7 +127,8 @@ export default {
     background: #001529;
     height: 100%;
     .title {
-        padding: 18px 0 18px 50px;
+        padding: 20px 0;
+        text-align: center;
         font-size: 20px;
         color: #fff;
         font-weight: bold;
