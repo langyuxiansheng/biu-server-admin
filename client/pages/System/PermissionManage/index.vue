@@ -58,7 +58,7 @@ export default {
                 cols: [ //表格列配置
                     {
                         key: 'title',
-                        label: '菜单名称',
+                        label: '权限名称',
                         align: 'left'
                     },
                     {

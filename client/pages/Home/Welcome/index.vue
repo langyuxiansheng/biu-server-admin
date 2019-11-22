@@ -3,16 +3,40 @@
         <card-container>
             欢迎您,管理员!
         </card-container>
-        <card-container>
-            <el-row :gutter="20">
-                <el-col :span="12">
+        <el-row :gutter="20">
+            <el-col :sm="24" :lg="8">
+                <card-container>
                     图1
-                </el-col>
-                <el-col :span="12">
+                </card-container>
+            </el-col>
+            <el-col :sm="24" :lg="8">
+                <card-container>
                     图2
-                </el-col>
-            </el-row>
-        </card-container>
+                </card-container>
+            </el-col>
+            <el-col :sm="24" :lg="8">
+                <card-container>
+                    图3
+                </card-container>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20">
+            <el-col :sm="24" :lg="8">
+                <card-container>
+                    图1
+                </card-container>
+            </el-col>
+            <el-col :sm="24" :lg="8">
+                <card-container>
+                    图2
+                </card-container>
+            </el-col>
+            <el-col :sm="24" :lg="8">
+                <card-container>
+                    图3
+                </card-container>
+            </el-col>
+        </el-row>
     </div>
 </template>
 <script>
@@ -26,6 +50,15 @@ export default {
         return {
 
         };
+    },
+    computed: {
+        user() {
+            if (window && window.localStorage) {
+                const user = window.localStorage.getItem(`BIU-SERVER-ADMIN-INFO`);
+                return typeof user === 'string' ? JSON.parse(user) : user || {};
+            }
+            return {};
+        }
     },
     created() {
         this.init();

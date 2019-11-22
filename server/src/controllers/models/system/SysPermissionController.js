@@ -13,7 +13,7 @@ controller.post('/addSysPermission', async(ctx) => {
 
 //查询权限菜单
 controller.get('/getSysPermissionList', async(ctx) => {
-    ctx.body = await service.getSysPermissionList(ctx.request.query);
+    ctx.body = await service.getSysPermissionList(ctx.request.query, ctx.state.user);
 });
 
 //删除权限菜单

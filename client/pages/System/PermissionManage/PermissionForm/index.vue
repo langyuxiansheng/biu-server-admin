@@ -3,8 +3,18 @@
         <el-row class="app-form" :gutter="$store.state.config.dialogFormGutterWidth">
             <el-form ref="AppForm" :model="sendData" :label-position="$store.state.config.labelPosition" :rules="rules" label-width="125px" @submit.native.prevent>
                 <el-col :span="12">
-                    <el-form-item label="菜单名" prop="title">
-                        <el-input v-model="sendData.title" placeholder="请输入菜单名" />
+                    <el-form-item label="权限名" prop="title">
+                        <el-input v-model="sendData.title" placeholder="请输入权限名" />
+                    </el-form-item>
+                    <el-form-item label="权限类型" prop="parentId">
+                        <el-radio-group v-model="sendData.type">
+                            <el-radio label="1">
+                                菜单权限
+                            </el-radio>
+                            <el-radio label="2">
+                                按钮权限
+                            </el-radio>
+                        </el-radio-group>
                     </el-form-item>
                     <el-form-item label="父级菜单" prop="parentId">
                         <el-select v-model="sendData.parentId" class="select-block" placeholder="请选择父级菜单(默认为顶层菜单)" @change="handleNameChange(sendData.component)">
@@ -20,20 +30,24 @@
                             />
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="组件" prop="component">
-                        <el-input v-model="sendData.component" placeholder="请输入组件值" @change="handleNameChange(sendData.component)" />
-                    </el-form-item>
-                    <el-form-item label="菜单值" prop="name">
-                        <el-input v-model="sendData.name" placeholder="请输入菜单值(组件name)" />
-                    </el-form-item>
-                    <el-form-item label="菜单路径" prop="path">
-                        <el-input v-model="sendData.path" placeholder="请输入菜单路径" />
-                    </el-form-item>
+                    <template v-if="sendData.type == 1">
+                        <el-form-item label="组件" prop="component">
+                            <el-input v-model="sendData.component" placeholder="请输入组件值" @change="handleNameChange(sendData.component)" />
+                        </el-form-item>
+                        <el-form-item label="菜单值" prop="name">
+                            <el-input v-model="sendData.name" placeholder="请输入菜单值(组件name)" />
+                        </el-form-item>
+                        <el-form-item label="菜单路径" prop="path">
+                            <el-input v-model="sendData.path" placeholder="请输入菜单路径" />
+                        </el-form-item>
+                    </template>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="菜单图标">
-                        <el-input v-model="sendData.icon" placeholder="请输入菜单图标" />
-                    </el-form-item>
+                    <template v-if="sendData.type == 1">
+                        <el-form-item label="菜单图标">
+                            <el-input v-model="sendData.icon" placeholder="请输入菜单图标" />
+                        </el-form-item>
+                    </template>
                     <el-form-item label="排序">
                         <el-input v-model="sendData.sort" placeholder="请输入序号" />
                     </el-form-item>
@@ -74,6 +88,7 @@ export default {
             sendData: {},
             initData: {
                 title: null, //菜单名
+                type: '1', //权限类型
                 path: null, //菜单名路径
                 name: null, //菜单name
                 component: null, //组件
@@ -84,7 +99,7 @@ export default {
             },
             rules: {
                 title: [
-                    { required: true, message: '请输入菜单名', trigger: 'blur' },
+                    { required: true, message: '请输入权限名', trigger: 'blur' },
                     { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
                 ],
                 parentId: [

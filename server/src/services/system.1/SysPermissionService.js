@@ -17,7 +17,7 @@ module.exports = class {
     }
 
     /**
-     * 添加系统权限
+     * 添加系统权限菜单
      * @param {*} user
      */
     async addSysPermission(data) {
@@ -28,7 +28,7 @@ module.exports = class {
             const count = await SysPermissionModel.count({
                 where: { title, path, isDelete: false }
             });
-            if (count > 0) return result.failed('权限已存在!');
+            if (count > 0) return result.failed('菜单已存在!');
             await SysPermissionModel.create(data); //保存数据
             return result.success();
         } catch (error) {
@@ -41,7 +41,7 @@ module.exports = class {
      * 获取系统权限菜单列表
      * @param {*} param0
      */
-    async getSysPermissionList({ title, page, limit }, { roleId, isAdmin }) {
+    async getSysPermissionList({ title, page, limit }) {
         let queryData = {
             where: { isDelete: false },
             order: [
@@ -49,18 +49,6 @@ module.exports = class {
             ],
             attributes: { exclude: ['isDelete'] }
         };
-
-        //非超级管理员只能获取拥有的权限
-        if (!isAdmin && roleId) {
-            //查询中间表
-            const checkeds = await SysRolesAuthModel.findAll({
-                where: { roleId },
-                attributes: { exclude: ['createdTime', 'updatedTime'] }
-            });
-            console.log(checkeds);
-            queryData.where['roleId'] = roleId;
-        }
-
         if (title) {
             queryData.where['title'] = {
                 [SOP.like]: `%${title}%`
@@ -133,7 +121,7 @@ module.exports = class {
                 // ['createdTime', 'DESC'],
                 ['sort', 'ASC']
             ],
-            attributes: ['permissionId', 'parentId', 'title', 'path', 'type']
+            attributes: ['permissionId', 'parentId', 'title', 'path', 'find', 'add', 'edit', 'del', 'list']
         };
         if (title) {
             queryData.where['title'] = {
@@ -159,22 +147,55 @@ module.exports = class {
      * 获取角色的权限
      * @param {*} param0
      */
-    async getSysRolePermissionListToTree({ roleId }) {
+    async getSysRolePermissionListToTree({ roleId, title, page, limit }) {
         if (!roleId) return result.paramsLack();
+        let queryData = {
+            where: { isDelete: false },
+            order: [
+                // ['createdTime', 'DESC'],
+                ['sort', 'ASC']
+            ],
+            attributes: ['permissionId', 'parentId', 'title', 'path', 'find', 'add', 'edit', 'del', 'list']
+        };
+        if (title) {
+            queryData.where['title'] = {
+                [SOP.like]: `%${title}%`
+            };
+        }
+        //查询中间表
+        let queryAuth = {
+            where: { roleId },
+            attributes: { exclude: ['createdTime', 'updatedTime'] }
+        };
+
+        //分页
+        if (page && limit) {
+            queryData.offset = Number((page - 1) * limit); //开始的数据索引
+            queryData.limit = Number(limit); //每页限制返回的数据条数
+        };
         try {
-            let rows = await SysPermissionModel.findAll({
-                where: { isDelete: false },
-                order: [['sort', 'ASC']],
-                attributes: ['permissionId', 'parentId', 'title', 'path', 'type']
-            });
-            //查询中间表
-            const checkeds = await SysRolesAuthModel.findAll({
-                where: { roleId },
-                attributes: { exclude: ['createdTime', 'updatedTime'] }
-            });
+            let { rows, count } = await SysPermissionModel.findAndCountAll(queryData);
+            const auths = await SysRolesAuthModel.findAll(queryAuth);
+            //处理已有权限的菜单
+            if (auths && auths.length) {
+                const list = rows.map((item) => {
+                    auths.forEach(auth => {
+                        if (auth.permissionId === item.permissionId) {
+                            item.find = auth.find;
+                            item.add = auth.add;
+                            item.edit = auth.edit;
+                            item.del = auth.del;
+                            item.list = auth.list;
+                        }
+                    });
+                    return item;
+                });
+                //转为树形结构
+                return result.success(null, { list: listToTree(list, 'parentId', 'permissionId', 0), total: count });
+            }
             //转为树形结构
             const list = listToTree(rows, 'parentId', 'permissionId', 0);
-            return result.success(null, { list, checkeds });
+            return result.success(null, { list, total: count });
         } catch (error) {
             console.log(error);
             return result.failed(error);
@@ -195,10 +216,10 @@ module.exports = class {
                 if (item.parentId == 0) delete item['parentId'];
                 return item;
             });
-            // let ids = list.map(item => item.permissionId);
+            let ids = list.map(item => item.permissionId);
             console.log(`records`, records);
             //先清除
-            await SysRolesAuthModel.destroy({ where: { roleId } });
+            await SysRolesAuthModel.destroy({ where: { roleId, permissionId: ids } });
             //然后再写入
             await SysRolesAuthModel.bulkCreate(records);
             return result.success();
@@ -231,36 +252,49 @@ module.exports = class {
     async getSysRoleMenusToTree({ roleId, isAdmin }) {
         if (!roleId) return result.paramsLack();
         const table = SysPermissionModel.getTableName();
-        const includes = [`title`, 'type', `path`, `name`, `icon`, `sort`, `remark`, `parentId`];
+        const includes = [`title`, `path`, `name`, `icon`, `sort`, `remark`, `parentId`];
+        //查询中间表
+        let queryData = {
+            where: { roleId },
+            include: [{
+                where: { isDelete: false },
+                model: SysPermissionModel,
+                attributes: []
+            }],
+            order: [
+                [COL(table, 'sort'), 'ASC']
+            ],
+            attributes: [`roleId`, `permissionId`, `find`, `add`, `edit`, `del`, `list`].concat(Attrs(table, includes)),
+            raw: true
+        };
+
+        //超级管理员
+        let queryAdmin = {
+            where: { isDelete: false },
+            order: [
+                ['sort', 'ASC']
+            ],
+            attributes: ['permissionId', 'find', 'add', 'edit', 'del', 'list'].concat(includes)
+        };
+
         try {
             if (isAdmin) { //超级管理员直接返回所有的权限
-                let rows = await SysPermissionModel.findAll({
-                    where: { isDelete: false },
-                    order: [
-                        ['sort', 'ASC']
-                    ],
-                    attributes: ['permissionId'].concat(includes)
+                let rows = await SysPermissionModel.findAll(queryAdmin);
+                let arr = rows.map((item) => { //所有的权限
+                    item.find = 1;
+                    item.add = 1;
+                    item.edit = 1;
+                    item.del = 1;
+                    item.list = 1;
+                    return item;
                 });
                 //转为树形结构
-                const list = listToTree(rows, 'parentId', 'permissionId', 0);
+                const list = listToTree(arr, 'parentId', 'permissionId', 0);
                 return result.success(null, list);
             }
             //建立表关联
             SysRolesAuthModel.belongsTo(SysPermissionModel, { foreignKey: 'permissionId' });
-            //查询中间表
-            let rows = await SysRolesAuthModel.findAll({
-                where: { roleId },
-                include: [{
-                    where: { isDelete: false },
-                    model: SysPermissionModel,
-                    attributes: []
-                }],
-                order: [
-                    [COL(table, 'sort'), 'ASC']
-                ],
-                attributes: [`roleId`, `permissionId`].concat(Attrs(table, includes)),
-                raw: true
-            });
+            let rows = await SysRolesAuthModel.findAll(queryData);
             //转为树形结构
             const list = listToTree(rows, 'parentId', 'permissionId', 0);
             return result.success(null, list);

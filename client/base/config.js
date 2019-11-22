@@ -2,8 +2,10 @@
  * Created by Administrator on 2019年4月3日22:51:28
  * 公共插件功能配置文件
  */
+const pkg = require('../../package.json');
 export default {
-    sidebarTitle:"BiuServerAdmin",
+    name:"BiuServerAdmin",  //系统名称
+    version: `V ${pkg.version}`,   //版本号
     devUrl: 'http://192.168.0.59:8000',
     productionUrl: 'http://192.168.0.59:8000',
     // devUrl: 'https://api.pandaparking.cn',
@@ -70,7 +72,7 @@ export default {
         ]
     },
     //月天数
-    monthDays: function() {
+    monthDays() {
         let arr = [];
         for (let i = 1; i < 32; i++) {
             arr.push(i + '日');
@@ -79,7 +81,7 @@ export default {
     },
 
     //年月份数
-    yearMonths: function() {
+    yearMonths() {
         let arr = [];
         for (let i = 1; i < 13; i++) {
             arr.push(i + '月');
@@ -88,7 +90,7 @@ export default {
     },
 
     //小时数
-    hours: function() {
+    hours() {
         let arr = [];
         for (let i = 0; i < 24; i++) {
             i < 10 ? arr.push('0' + i + ':00') : arr.push(i + ':00');

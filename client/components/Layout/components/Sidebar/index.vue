@@ -1,37 +1,32 @@
 <template>
-    <div class="sidebar-menu">
+    <div class="sidebar-menu" :class="{'sidebar-width': !isCollapse}">
         <h3 :title="isCollapse ? '点击展开' : '点击收起'" class="title" @click="isCollapse = !isCollapse">
             <template v-if="isCollapse">
                 BSA
             </template>
             <template v-else>
-                {{ $store.state.config.sidebarTitle }}
+                {{ $store.state.config.name }}
             </template>
+            <p class="version">
+                {{ $store.state.config.version }}
+            </p>
         </h3>
         <el-menu :collapse-transition="false" :collapse="isCollapse" background-color="#000c17" text-color="#fff" active-text-color="#1890ff" :default-active="$route.path" unique-opened router>
             <template v-for="(menu,k) in sideMenus">
-                <el-submenu v-if="menu.list" :key="k" :index="menu.permissionId" popper-class="sidebar-submenu">
+                <el-submenu :key="k" :index="menu.permissionId" popper-class="sidebar-submenu">
                     <template slot="title">
                         <i :class="menu.icon" />
                         <span>{{ menu.title }}</span>
                     </template>
                     <template v-if="menu.children">
                         <template v-for="item in menu.children">
-                            <el-menu-item v-if="item.list" :key="item.permissionId" :index="`${menu.path}/${item.path}`">
+                            <el-menu-item :key="item.permissionId" :index="`${menu.path}/${item.path}`">
                                 <span class="sidebar-menu-item">
                                     {{ item.title }}
                                 </span>
                             </el-menu-item>
                         </template>
                     </template>
-                    <!-- <el-submenu index="1-4">
-                        <template slot="title">
-                            选项4
-                        </template>
-                        <el-menu-item index="1-4-1">
-                            选项1
-                        </el-menu-item>
-                    </el-submenu> -->
                 </el-submenu>
             </template>
         </el-menu>
@@ -71,6 +66,7 @@ export default {
                 ]
             }];
             this.sideMenus = arr.concat(data) || [];
+            console.log(this.sideMenus);
         }
     }
     /* computed: {
@@ -143,6 +139,10 @@ export default {
         &:hover{
             color: #409eff;
         }
+        .version{
+            font-size: 12px;
+            margin-top: 10px;
+        }
     }
     & /deep/ .el-menu {
         border-right: 0;
@@ -153,5 +153,8 @@ export default {
     .sidebar-submenu {
         background: #ccc;
     }
+}
+.sidebar-width{
+    width: 200px;
 }
 </style>

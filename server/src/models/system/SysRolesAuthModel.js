@@ -27,40 +27,40 @@ module.exports = (sequelize, dataTypes) => {
             allowNull: true
         },
 
-        //查看权限
-        find: {
-            type: dataTypes.INTEGER(2),
-            allowNull: true,
-            defaultValue: 0
-        },
+        // //查看权限
+        // find: {
+        //     type: dataTypes.INTEGER(2),
+        //     allowNull: true,
+        //     defaultValue: 0
+        // },
 
-        //添加权限
-        add: {
-            type: dataTypes.INTEGER(2),
-            allowNull: true,
-            defaultValue: 0
-        },
+        // //添加权限
+        // add: {
+        //     type: dataTypes.INTEGER(2),
+        //     allowNull: true,
+        //     defaultValue: 0
+        // },
 
-        //编辑权限
-        edit: {
-            type: dataTypes.INTEGER(2),
-            allowNull: true,
-            defaultValue: 0
-        },
+        // //编辑权限
+        // edit: {
+        //     type: dataTypes.INTEGER(2),
+        //     allowNull: true,
+        //     defaultValue: 0
+        // },
 
-        //删除权限
-        del: {
-            type: dataTypes.INTEGER(2),
-            allowNull: true,
-            defaultValue: 0
-        },
+        // //删除权限
+        // del: {
+        //     type: dataTypes.INTEGER(2),
+        //     allowNull: true,
+        //     defaultValue: 0
+        // },
 
-        //列表权限
-        list: {
-            type: dataTypes.INTEGER(2),
-            allowNull: true,
-            defaultValue: 0
-        },
+        // //列表权限
+        // list: {
+        //     type: dataTypes.INTEGER(2),
+        //     allowNull: true,
+        //     defaultValue: 0
+        // },
 
         //创建时间
         createdTime: {
