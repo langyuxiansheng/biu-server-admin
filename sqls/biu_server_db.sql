@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地数据库
+Source Server         : 本地服务器
 Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : biu_server_db
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2019-11-21 22:28:08
+Date: 2019-11-22 18:02:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -71,6 +71,7 @@ CREATE TABLE `sys_admin_base` (
 -- Records of sys_admin_base
 -- ----------------------------
 INSERT INTO `sys_admin_base` VALUES ('84A94F76FFA345E2509FFBAE5195FBBA', '狼宇先森', 'admin', '16A8F9EBF4725F46C38E40C971964E06', null, '1', '\\uploads\\20191104\\BIUXS_WEB_69B09D4F1CE6816CEE4E0C5015B9996C.jpg', '超级管理员', 'A4D975D98ADC07E5F991285E6E221538', '0', '1554519993', '1554519993');
+INSERT INTO `sys_admin_base` VALUES ('8978B8FC55A759C39D335D5BDFE20832', '测试账号', 'test', '0C87D344A6209AD16644D147CE3B59EA', null, null, null, '测试人员', 'A4D975D98ADC07E5F991285E6E221538', '0', '1574404541', '1574404541');
 
 -- ----------------------------
 -- Table structure for `sys_permission`
@@ -80,15 +81,11 @@ CREATE TABLE `sys_permission` (
   `permissionId` varchar(255) NOT NULL,
   `parentId` varchar(255) DEFAULT '0',
   `title` varchar(255) DEFAULT NULL,
+  `type` varchar(10) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `component` varchar(255) DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
-  `find` int(2) DEFAULT '1',
-  `add` int(2) DEFAULT '1',
-  `edit` int(2) DEFAULT '1',
-  `del` int(2) DEFAULT '1',
-  `list` int(2) DEFAULT '1',
   `sort` int(11) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `isDelete` tinyint(1) DEFAULT NULL,
@@ -100,11 +97,15 @@ CREATE TABLE `sys_permission` (
 -- ----------------------------
 -- Records of sys_permission
 -- ----------------------------
-INSERT INTO `sys_permission` VALUES ('20C355945C2947C64927CE77D3DF2B3E', '6A7715BE30B7E36F239081784C91A6DB', '角色管理', 'RolesManage', 'RolesManage', 'RolesManage', null, '0', '0', '0', '0', '0', '602', null, '0', '1554514682', '1554514682');
-INSERT INTO `sys_permission` VALUES ('6A7715BE30B7E36F239081784C91A6DB', '0', '系统设置', '/System', 'System', 'System', 'iconfont icon-set', '0', '0', '0', '0', '0', '600', '系统设置模块', '0', '1554512826', '1554512826');
-INSERT INTO `sys_permission` VALUES ('80800ABCB00A99F818F8550B473C8C7C', '6A7715BE30B7E36F239081784C91A6DB', '权限管理', 'PermissionManage', 'PermissionManage', 'PermissionManage', null, '0', '0', '0', '0', '0', '603', null, '0', '1554512923', '1554512923');
-INSERT INTO `sys_permission` VALUES ('94147C10163735F7BC8848C9586342F3', '6A7715BE30B7E36F239081784C91A6DB', '管理员管理', 'AdminManage', 'AdminManage', 'AdminManage', '', '0', '0', '0', '0', '0', '601', null, '0', '1554514703', '1554514703');
-INSERT INTO `sys_permission` VALUES ('C4E0D68694C6FB65C42E217CAA5AFF00', '6A7715BE30B7E36F239081784C91A6DB', '文件管理', 'FilesManage', 'FilesManage', 'FilesManage', null, '0', '0', '0', '0', '0', '604', '文件管理模块,用于管理所有上传在系统里的文件', '0', '1574344851', '1574344851');
+INSERT INTO `sys_permission` VALUES ('20C355945C2947C64927CE77D3DF2B3E', '6A7715BE30B7E36F239081784C91A6DB', '角色管理', '1', 'RolesManage', 'RolesManage', 'RolesManage', null, '602', null, '0', '1554514682', '1554514682');
+INSERT INTO `sys_permission` VALUES ('36ACE04A5487BA82B8751A39B9D4157A', '94147C10163735F7BC8848C9586342F3', '编辑', '2', 'Update', 'Update', 'Update', null, null, null, '0', '1574404613', '1574404613');
+INSERT INTO `sys_permission` VALUES ('6A7715BE30B7E36F239081784C91A6DB', '0', '系统设置', '1', '/System', 'System', 'System', 'iconfont icon-set', '600', '系统设置模块', '0', '1554512826', '1554512826');
+INSERT INTO `sys_permission` VALUES ('80800ABCB00A99F818F8550B473C8C7C', '6A7715BE30B7E36F239081784C91A6DB', '权限管理', '1', 'PermissionManage', 'PermissionManage', 'PermissionManage', null, '603', null, '0', '1554512923', '1554512923');
+INSERT INTO `sys_permission` VALUES ('877B6F4B0FEE8836181800A206F1002F', '94147C10163735F7BC8848C9586342F3', '绑定角色', '2', 'Bind', 'Bind', 'Bind', null, null, null, '0', '1574404580', '1574404580');
+INSERT INTO `sys_permission` VALUES ('9165B8CE9FE66822671CC48F471E4F6F', '94147C10163735F7BC8848C9586342F3', '删除', '2', 'Delete', 'Delete', 'Delete', null, null, null, '0', '1574404636', '1574404636');
+INSERT INTO `sys_permission` VALUES ('94147C10163735F7BC8848C9586342F3', '6A7715BE30B7E36F239081784C91A6DB', '管理员管理', '1', 'AdminManage', 'AdminManage', 'AdminManage', '', '601', null, '0', '1554514703', '1554514703');
+INSERT INTO `sys_permission` VALUES ('B7F1E34F3A27577697ADEB20EE5AB43E', '94147C10163735F7BC8848C9586342F3', '添加', '2', 'Add', 'Add', 'Add', null, null, null, '0', '1574404513', '1574404513');
+INSERT INTO `sys_permission` VALUES ('C4E0D68694C6FB65C42E217CAA5AFF00', '6A7715BE30B7E36F239081784C91A6DB', '文件管理', '1', 'FilesManage', 'FilesManage', 'FilesManage', null, '604', '文件管理模块,用于管理所有上传在系统里的文件', '0', '1574344851', '1574344851');
 
 -- ----------------------------
 -- Table structure for `sys_roles_auth`
@@ -113,12 +114,7 @@ DROP TABLE IF EXISTS `sys_roles_auth`;
 CREATE TABLE `sys_roles_auth` (
   `roleId` varchar(255) NOT NULL,
   `permissionId` varchar(255) NOT NULL,
-  `parentId` varchar(255) DEFAULT '0',
-  `find` int(2) DEFAULT '0',
-  `add` int(2) DEFAULT '0',
-  `edit` int(2) DEFAULT '0',
-  `del` int(2) DEFAULT '0',
-  `list` int(2) DEFAULT '0',
+  `parentId` varchar(255) DEFAULT NULL,
   `createdTime` int(11) DEFAULT NULL,
   `updatedTime` int(11) DEFAULT NULL,
   PRIMARY KEY (`roleId`,`permissionId`)
@@ -127,10 +123,10 @@ CREATE TABLE `sys_roles_auth` (
 -- ----------------------------
 -- Records of sys_roles_auth
 -- ----------------------------
-INSERT INTO `sys_roles_auth` VALUES ('A4D975D98ADC07E5F991285E6E221538', '20C355945C2947C64927CE77D3DF2B3E', '6A7715BE30B7E36F239081784C91A6DB', '1', '1', '1', '1', '1', '1554618343', '1554618343');
-INSERT INTO `sys_roles_auth` VALUES ('A4D975D98ADC07E5F991285E6E221538', '6A7715BE30B7E36F239081784C91A6DB', null, '1', '1', '1', '1', '1', '1554618343', '1554618343');
-INSERT INTO `sys_roles_auth` VALUES ('A4D975D98ADC07E5F991285E6E221538', '80800ABCB00A99F818F8550B473C8C7C', '6A7715BE30B7E36F239081784C91A6DB', '1', '1', '1', '1', '1', '1554618343', '1554618343');
-INSERT INTO `sys_roles_auth` VALUES ('A4D975D98ADC07E5F991285E6E221538', '94147C10163735F7BC8848C9586342F3', '6A7715BE30B7E36F239081784C91A6DB', '1', '1', '1', '1', '1', '1554618343', '1554618343');
+INSERT INTO `sys_roles_auth` VALUES ('A4D975D98ADC07E5F991285E6E221538', '6A7715BE30B7E36F239081784C91A6DB', null, '1574416217', '1574416217');
+INSERT INTO `sys_roles_auth` VALUES ('A4D975D98ADC07E5F991285E6E221538', '80800ABCB00A99F818F8550B473C8C7C', '6A7715BE30B7E36F239081784C91A6DB', '1574416217', '1574416217');
+INSERT INTO `sys_roles_auth` VALUES ('A4D975D98ADC07E5F991285E6E221538', '94147C10163735F7BC8848C9586342F3', '6A7715BE30B7E36F239081784C91A6DB', '1574416217', '1574416217');
+INSERT INTO `sys_roles_auth` VALUES ('A4D975D98ADC07E5F991285E6E221538', 'B7F1E34F3A27577697ADEB20EE5AB43E', '94147C10163735F7BC8848C9586342F3', '1574416217', '1574416217');
 
 -- ----------------------------
 -- Table structure for `sys_roles_base`
