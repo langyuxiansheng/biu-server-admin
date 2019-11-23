@@ -2,7 +2,11 @@
     <div class="login-bg" :style="{backgroundImage:`url(${require(`@/assets/images/login-bg-${bgUrlIndex}.jpg`)})`}">
         <login-form />
         <p class="copyright">
-            Copyright ©  狼丶宇先生 | 蜀ICP备17005357号
+            <a target="_blink" title="开源协议" href="https://github.com/langyuxiansheng/biu-server-admin/blob/master/LICENSE">MIT License</a>
+            |
+            <span>Copyright ©  狼丶宇先森</span>
+            |
+            <a target="_blink" title="访问github" href="https://github.com/langyuxiansheng/biu-server-admin">Github</a>
         </p>
     </div>
 </template>
@@ -49,6 +53,13 @@ export default {
         bottom: 42px;
         left: 0;
         color: #fff;
+        a{
+            color: #fff;
+            transition: color .2s ease-in;
+            &:hover{
+                color: #f00;
+            }
+        }
     }
 }
 </style>
