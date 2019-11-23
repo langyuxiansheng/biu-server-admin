@@ -13,7 +13,9 @@ module.exports = class {
      * 添加管理平台
      * @param {*} param0
      */
-    async addSysAdmin({ adminName, account, password, avatar }) {
+    async addSysAdmin({ adminName, account, password, avatar }, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         if (!account || !password) return result.paramsLack();
         try {
             //查询账号是否存在
@@ -34,7 +36,9 @@ module.exports = class {
      * 获取系统管理员列表
      * @param {*} param0
      */
-    async getSysAdminList({ account, page, limit }) {
+    async getSysAdminList({ account, page, limit }, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         let queryData = {
             where: { isDelete: false },
             order: [
@@ -66,7 +70,9 @@ module.exports = class {
      * 删除系统管理员
      * @param {*} param0
      */
-    async delSysAdminByIds({ ids, isDelete }) {
+    async delSysAdminByIds({ ids, isDelete }, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         if (!ids || !isDelete || !Array.isArray(ids)) return result.paramsLack();
         try {
             //批量软删除
@@ -83,7 +89,9 @@ module.exports = class {
      * 编辑系统管理员
      * @param {*} data
      */
-    async updateSysAdmin(data) {
+    async updateSysAdmin(data, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         if (!data.adminId) return result.paramsLack();
         try {
             await SysAdminBaseModel.update(data, { where: { adminId: data.adminId } });
@@ -98,7 +106,9 @@ module.exports = class {
      * 绑定管理员的角色
      * @param {*} data
      */
-    async bindSysAdminRole({ adminId, roleId, roleName }) {
+    async bindSysAdminRole({ adminId, roleId, roleName }, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         if (!adminId || !roleId || !roleName) return result.paramsLack();
         try {
             const bindData = { roleId, roleName };
@@ -133,8 +143,7 @@ module.exports = class {
      * 修改系统管理的密码
      * @param {*} data
      */
-    async updateSysPassword({ data, user }) {
-        const { adminId, account } = user && user.data;
+    async updateSysPassword({ data }, { adminId, account }) {
         const { password, newPassword } = data;
         if (!adminId || !account || !password || !newPassword) return result.paramsLack();
         let queryData = {

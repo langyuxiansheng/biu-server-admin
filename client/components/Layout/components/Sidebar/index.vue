@@ -20,7 +20,12 @@
                     </template>
                     <template v-if="menu.children">
                         <template v-for="item in menu.children">
-                            <el-menu-item :key="item.permissionId" :index="`${menu.path}/${item.path}`">
+                            <el-menu-item v-if="item.type == 1 && systems.includes(item.path) && user.isAdmin" :key="item.permissionId" :index="`${menu.path}/${item.path}`">
+                                <span class="sidebar-menu-item">
+                                    {{ item.title }}
+                                </span>
+                            </el-menu-item>
+                            <el-menu-item v-else-if="item.type == 1 && !systems.includes(item.path)" :key="item.permissionId" :index="`${menu.path}/${item.path}`">
                                 <span class="sidebar-menu-item">
                                     {{ item.title }}
                                 </span>
@@ -39,8 +44,18 @@ export default {
     data() {
         return {
             isCollapse: false,
-            sideMenus: []
+            sideMenus: [],
+            systems: ['PermissionManage', 'AdminManage', 'RolesManage']
         };
+    },
+    computed: {
+        user() {
+            if (window && window.localStorage) {
+                const user = window.localStorage.getItem(`BIU-SERVER-ADMIN-INFO`);
+                return typeof user === 'string' ? JSON.parse(user) : user || {};
+            }
+            return {};
+        }
     },
     created() {
         this.init();
@@ -69,58 +84,6 @@ export default {
             console.log(this.sideMenus);
         }
     }
-    /* computed: {
-        //菜单
-        sideMenus () {
-            return [{
-                path: '/dashboard',
-                name: 'dashboard',
-                meta: {
-                    requireAuth: true, //菜单权限
-                    title: '系统首页', //菜单名
-                    icon: 'fa fa-bar-chart' //菜单图标
-                },
-                children: [{
-                    path: 'datas',
-                    meta: {
-                        title: '数据分析',
-                        requireAuth: true
-                    }
-                }]
-            },
-            {
-                path: '/System',
-                name: 'System',
-                meta: {
-                    requireAuth: true, //菜单权限
-                    title: '系统管理', //菜单名
-                    icon: 'fa fa-cog' //菜单图标
-                },
-                children: [{
-                    path: 'PermissionMange',
-                    meta: {
-                        title: '权限管理',
-                        requireAuth: true
-                    }
-                },
-                {
-                    path: 'RolesMange',
-                    meta: {
-                        title: '角色管理',
-                        requireAuth: true
-                    }
-                },
-                {
-                    path: 'AdminMange',
-                    meta: {
-                        title: '管理员管理',
-                        requireAuth: true
-                    }
-                }
-                ]
-            }];
-        }
-    } */
 };
 </script>
 <style lang="less" scoped>

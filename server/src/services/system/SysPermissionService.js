@@ -20,7 +20,9 @@ module.exports = class {
      * 添加系统权限
      * @param {*} user
      */
-    async addSysPermission(data) {
+    async addSysPermission(data, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         const { title, path, name } = data;
         if (!title || !path || !name) return result.paramsLack();
         try {
@@ -41,7 +43,9 @@ module.exports = class {
      * 获取系统权限菜单列表
      * @param {*} param0
      */
-    async getSysPermissionList({ title, page, limit }, { roleId, isAdmin }) {
+    async getSysPermissionList({ title, page, limit }, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         let queryData = {
             where: { isDelete: false },
             order: [
@@ -49,17 +53,6 @@ module.exports = class {
             ],
             attributes: { exclude: ['isDelete'] }
         };
-
-        //非超级管理员只能获取拥有的权限
-        if (!isAdmin && roleId) {
-            //查询中间表
-            const checkeds = await SysRolesAuthModel.findAll({
-                where: { roleId },
-                attributes: { exclude: ['createdTime', 'updatedTime'] }
-            });
-            console.log(checkeds);
-            queryData.where['roleId'] = roleId;
-        }
 
         if (title) {
             queryData.where['title'] = {
@@ -84,7 +77,9 @@ module.exports = class {
      * 删除系统权限菜单
      * @param {*} param0
      */
-    async delSysPermissionByIds({ ids, isDelete }) {
+    async delSysPermissionByIds({ ids, isDelete }, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         if (!ids || !isDelete || !Array.isArray(ids)) return result.paramsLack();
         try {
             //批量软删除
@@ -111,7 +106,9 @@ module.exports = class {
      * 编辑系统权限菜单
      * @param {*} data
      */
-    async updateSysPermission(data) {
+    async updateSysPermission(data, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         if (!data.permissionId) return result.paramsLack();
         try {
             await SysPermissionModel.update(data, { where: { permissionId: data.permissionId } });
@@ -123,10 +120,12 @@ module.exports = class {
     }
 
     /**
-     * 获取树状菜单
+     * 获取树状权限列表
      * @param {*} param0
      */
-    async getSysPermissionListToTree({ title, page, limit }) {
+    async getSysPermissionListToTree({ title, page, limit }, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         let queryData = {
             where: { isDelete: false },
             order: [
@@ -156,7 +155,7 @@ module.exports = class {
     }
 
     /**
-     * 获取角色的权限
+     * 获取角色的权限(权限设置)
      * @param {*} param0
      */
     async getSysRolePermissionListToTree({ roleId }) {
@@ -185,7 +184,9 @@ module.exports = class {
      * 设置系统角色的权限
      * @param {*} data
      */
-    async setSysRolePermission(data) {
+    async setSysRolePermission(data, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         if (!data.roleId || !Array.isArray(data.list)) return result.paramsLack();
         const { list, roleId } = data;
         try {
@@ -195,8 +196,6 @@ module.exports = class {
                 if (item.parentId == 0) delete item['parentId'];
                 return item;
             });
-            // let ids = list.map(item => item.permissionId);
-            console.log(`records`, records);
             //先清除
             await SysRolesAuthModel.destroy({ where: { roleId } });
             //然后再写入
@@ -212,7 +211,9 @@ module.exports = class {
      * 清除角色的所有权限
      * @param {*} data
      */
-    async clearSysRoleAllPermission({ roleId }) {
+    async clearSysRoleAllPermission({ roleId }, { isAdmin }) {
+        //非超级管理员不可获取此菜单
+        if (!isAdmin) return result.noAuthority();
         if (!roleId) return result.paramsLack();
         try {
             //从中间表删除角色权限

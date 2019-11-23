@@ -20,7 +20,8 @@ module.exports = {
         SUCCESS: `SUCCESS!`,
         FAILED: `操作失败!`,
         PARAMS_LACK: `参数不齐!`,
-        AUTHORITIES: `登陆失效或身份过期!` //身份验证失败
+        AUTHORITIES: `登陆失效或身份过期!`, //身份验证失败
+        NO_AUTHORITY: `无权访问!` //无权限
     },
 
     /**
@@ -70,6 +71,20 @@ module.exports = {
             code: code || this.CODE.AUTHORITIES,
             data,
             msg: msg || this.MESSAGE.AUTHORITIES
+        };
+    },
+
+    /**
+     * 无权访问
+     * @param {*} msg
+     * @param {*} code
+     * @param {*} data
+     */
+    noAuthority(msg, code, data) {
+        return {
+            data,
+            code: code || this.CODE.NO_AUTHORITY,
+            msg: msg || this.MESSAGE.NO_AUTHORITY
         };
     },
 
