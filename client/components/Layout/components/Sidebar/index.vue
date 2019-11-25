@@ -21,12 +21,12 @@
                     <template v-if="menu.children">
                         <template v-for="item in menu.children">
                             <el-menu-item v-if="item.type == 1 && systems.includes(item.path) && user.isAdmin" :key="item.permissionId" :index="`${menu.path}/${item.path}`">
-                                <span class="sidebar-menu-item">
+                                <span class="sidebar-menu-item" @click="setPermission(item)">
                                     {{ item.title }}
                                 </span>
                             </el-menu-item>
                             <el-menu-item v-else-if="item.type == 1 && !systems.includes(item.path)" :key="item.permissionId" :index="`${menu.path}/${item.path}`">
-                                <span class="sidebar-menu-item">
+                                <span class="sidebar-menu-item" @click="setPermission(item)">
                                     {{ item.title }}
                                 </span>
                             </el-menu-item>
@@ -81,7 +81,16 @@ export default {
                 ]
             }];
             this.sideMenus = arr.concat(data) || [];
-            console.log(this.sideMenus);
+        },
+
+        /**
+         * 设置权限
+         */
+        setPermission(item) {
+            console.log(item);
+            if (item.children) {
+                this.$store.dispatch('setPermission', item.children.map(v => v.name) || []);
+            }
         }
     }
 };

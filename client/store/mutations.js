@@ -7,27 +7,10 @@
 import types from './types.js';
 const mutations = {
 
-    /**
-     * 侧边栏导航
-     */
-    [types.SIDE_BAR_MENUS] (state, data) {
-        state.sideBarMenus = data;
-    },
-
-    /**
-     * 七牛token
-     */
-    [types.GET_QI_NIU_TOKEN] (state, data) {
-        state.qiNiuToken = data;
-    },
-
-    /**
-     * 路由表
-     */
-    [types.GET_ROUTE_OPTIONS] (state, data) {
-        state.routeOptions = data;
+    //设置权限
+    [types.SET_PERMISSION] (state, data) {
+        state.permission = data;
     }
-
 };
 
 export default mutations;

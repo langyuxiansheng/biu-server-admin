@@ -2,7 +2,7 @@
     <card-container>
         <app-tables :table="table" :utils="table.utils" @pageChange="handleCurrentChange">
             <template>
-                <el-button slot="add" type="primary" icon="el-icon-circle-plus" plain @click="showDialog({type:'add'})">
+                <el-button v-if="$store.state.permission.includes('add')" slot="add" type="primary" icon="el-icon-circle-plus" plain @click="showDialog({type:'add'})">
                     上传文件
                 </el-button>
                 <!-- <el-button type="text" @click="handleDel({type:1})">
@@ -17,7 +17,7 @@
                     <!-- <el-button type="text" @click="showDialog({type:'update',data:data.row})">
                         编辑
                     </el-button> -->
-                    <el-button type="text" @click="handleDel(data.row)">
+                    <el-button v-if="$store.state.permission.includes('delete')" type="text" @click="handleDel(data.row)">
                         删除
                     </el-button>
                 </template>
@@ -118,7 +118,7 @@ export default {
     },
     created() {
         this.init();
-        console.log(this.$route);
+        console.log(this.$store.state.permission);
     },
 
     methods: {

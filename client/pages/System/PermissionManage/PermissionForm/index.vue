@@ -30,12 +30,12 @@
                             />
                         </el-select>
                     </el-form-item>
+                    <el-form-item label="菜单值" prop="name">
+                        <el-input v-model="sendData.name" placeholder="请输入菜单值(组件name)" />
+                    </el-form-item>
                     <template v-if="sendData.type == 1">
                         <el-form-item label="组件" prop="component">
                             <el-input v-model="sendData.component" placeholder="请输入组件值" @change="handleNameChange(sendData.component)" />
-                        </el-form-item>
-                        <el-form-item label="菜单值" prop="name">
-                            <el-input v-model="sendData.name" placeholder="请输入菜单值(组件name)" />
                         </el-form-item>
                         <el-form-item label="菜单路径" prop="path">
                             <el-input v-model="sendData.path" placeholder="请输入菜单路径" />
