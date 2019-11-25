@@ -19,8 +19,6 @@
                     图3
                 </card-container>
             </el-col>
-        </el-row>
-        <el-row :gutter="20">
             <el-col :sm="24" :lg="8">
                 <card-container>
                     图1
@@ -34,6 +32,21 @@
             <el-col :sm="24" :lg="8">
                 <card-container>
                     图3
+                </card-container>
+            </el-col>
+            <el-col :sm="24" :lg="12">
+                <card-container>
+                    图4
+                </card-container>
+            </el-col>
+            <el-col :sm="24" :lg="12">
+                <card-container>
+                    图5
+                </card-container>
+            </el-col>
+            <el-col :sm="24" :lg="24">
+                <card-container>
+                    图8
                 </card-container>
             </el-col>
         </el-row>

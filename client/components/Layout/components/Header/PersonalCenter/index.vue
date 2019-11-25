@@ -31,7 +31,26 @@
             <el-col :span="24">
                 <div class="app-row">
                     <span class="app-title">
-                        账号:
+                        头像
+                    </span>
+                    <el-upload
+                        title="点击更换头像"
+                        class="upload-avatar"
+                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :before-remove="beforeRemove"
+                        multiple
+                        :limit="3"
+                        :on-exceed="handleExceed"
+                        :file-list="fileList"
+                    >
+                        <el-avatar class="avatar" fit="cover" src="\uploads\20191104\BIUXS_WEB_69B09D4F1CE6816CEE4E0C5015B9996C.jpg" />
+                    </el-upload>
+                </div>
+                <div class="app-row">
+                    <span class="app-title">
+                        账号
                     </span>
                     <span class="app-label">
                         {{ user.account }}
@@ -39,7 +58,7 @@
                 </div>
                 <div class="app-row">
                     <span class="app-title">
-                        姓名:
+                        姓名
                     </span>
                     <span class="app-label">
                         {{ user.adminName }}
@@ -47,7 +66,7 @@
                 </div>
                 <div class="app-row">
                     <span class="app-title">
-                        联系方式:
+                        联系方式
                     </span>
                     <span class="app-label">
                         {{ user.phone || '暂无' }}
@@ -55,7 +74,7 @@
                 </div>
                 <div class="app-row">
                     <span class="app-title">
-                        角色:
+                        角色
                     </span>
                     <span class="app-label">
                         {{ user.roleName }}
@@ -179,14 +198,24 @@ export default {
     .app-detail{
         font-size: 16px;
         .app-row{
-            margin-bottom: 10px;
-            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
             .app-title{
+                min-width: 64px;
                 font-weight: bold;
+                text-align: justify;
+                text-align-last: justify;
             }
             .app-label{
-                margin-left: 10px;
+                margin-left: 20px;
+            }
+            .avatar{
+                vertical-align: middle;
             }
         }
+    }
+    .upload-avatar{
+        margin-left: 20px;
     }
 </style>

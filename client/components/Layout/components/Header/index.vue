@@ -32,8 +32,8 @@
 </template>
 <script  type="text/ecmascript-6">
 import util from '@/lib/util';
-import BreadcrumbBar from '../BreadcrumbBar';
-import PersonalCenter from '../PersonalCenter';
+import BreadcrumbBar from './BreadcrumbBar';
+import PersonalCenter from './PersonalCenter';
 export default {
     name: 'HeaderTop',
     components: {
