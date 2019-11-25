@@ -65,7 +65,6 @@ export default {
             const { data } = await this.$axios[getSysRoleMenusToTree.method](getSysRoleMenusToTree.url);
             let arr = [{
                 'permissionId': '6A7715BE30B7E36F239081784C91A1DB',
-                'list': 1,
                 'title': '首页',
                 'path': '/Home',
                 'name': 'Home',
@@ -73,7 +72,7 @@ export default {
                 'children': [
                     {
                         'permissionId': '94147C10163735F7BC8848C9586342F9',
-                        'list': 1,
+                        'type': 1,
                         'title': '欢迎页',
                         'path': 'Welcome',
                         'name': 'Welcome'
