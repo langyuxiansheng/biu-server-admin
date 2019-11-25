@@ -27,17 +27,17 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexPersistence from 'vuex-persist';
+// import VuexPersistence from 'vuex-persist';
 import state from './state';
 import getters from './getters';
 import actions from './actions';
 import mutations from './mutations';
 import users from './models/users';
 import tabsview from './models/tabsview';
-const vuexLocal = new VuexPersistence({
-    storage: window.localStorage,
-    key: 'BIU-SERVER-ADMIN-STORE-VUEX'
-});
+// const vuexLocal = new VuexPersistence({
+//     storage: window.localStorage,
+//     key: 'BIU-SERVER-ADMIN-STORE-VUEX'
+// });
 
 Vue.use(Vuex);
 
@@ -49,8 +49,8 @@ const store = () => new Vuex.Store({
     modules: {
         users,
         tabsview
-    },
-    plugins: [vuexLocal.plugin]
+    }
+    // plugins: [vuexLocal.plugin]
 });
 
 export default store;
