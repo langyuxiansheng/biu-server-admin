@@ -5,6 +5,11 @@
                 <el-button v-if="$store.state.permission.includes('add')" slot="add" type="primary" icon="el-icon-circle-plus" plain @click="showDialog({type:'add'})">
                     上传文件
                 </el-button>
+                <el-select v-if="$store.state.permission.includes('select')" slot="select" v-model="table.queryData.isDelete" placeholder="文件筛选" @change="init()">
+                    <el-option label="全部" :value="null" />
+                    <el-option label="正常" :value="0" />
+                    <el-option label="已标记为删除" :value="1" />
+                </el-select>
                 <!-- <el-button type="text" @click="handleDel({type:1})">
                     删除
                 </el-button> -->
@@ -26,14 +31,26 @@
                 </template>
                 <template v-else-if="data.col.key === 'view'">
                     <template v-if="['image/jpeg','image/png'].includes(data.row.type)">
-                        <img v-image-preview class="app-image-previewer" height="50" :src="data.row.path" :alt="data.row.fileName">
+                        <el-image
+                            fit="cover"
+                            :src="data.row.path"
+                            :preview-src-list="table.data.filter(item => ['image/jpeg','image/png'].includes(item.type)).map(item => item.path)"
+                        />
                     </template>
                     <template v-else>
                         暂不支持预览
                     </template>
                 </template>
                 <template v-else-if="data.col.key === 'status'">
-                    {{ data.row[data.col.key] ? '禁用' : '正常' }}
+                    <el-tag v-if="data.row[data.col.key] " type="warning">
+                        禁用
+                    </el-tag>
+                    <el-tag v-else-if="data.row.isDelete" type="danger">
+                        已删除
+                    </el-tag>
+                    <el-tag v-else type="success">
+                        正常
+                    </el-tag>
                 </template>
                 <template v-else>
                     {{ data.row[data.col.key] || '-' }}
@@ -55,6 +72,8 @@ export default {
         return {
             table: {
                 queryData: {
+                    keyword: null,
+                    isDelete: null, //筛选被删除的文件
                     page: 1, //获取第几页的数据，默认为1
                     limit: 10//每页数据条数，默认为10
                 },
@@ -62,7 +81,7 @@ export default {
                 total: 0, //总页数
                 tableType: 1, //表格类型
                 utils: { //表格工具栏
-                    left: [{ slot: 'add' }],
+                    left: [{ slot: 'add' }, { slot: 'select' }],
                     right: [{ slot: 'search' }],
                     cols: [12, 12]
                 },
@@ -89,7 +108,8 @@ export default {
                     },
                     {
                         key: 'view',
-                        label: '预览'
+                        label: '预览',
+                        overflow: true
                     },
                     {
                         key: 'status',
@@ -125,7 +145,7 @@ export default {
 
         async init () {
             try {
-                const { data: { total, list } } = await this.$axios[getFiles.method](getFiles.url, this.table.queryData);
+                const { data: { total, list } } = await this.$axios[getFiles.method](getFiles.url, { params: this.table.queryData });
                 this.table.data = list;
                 this.table.total = total;
             } catch (error) {

@@ -169,37 +169,45 @@ module.exports = class {
             const queryData = {
                 where: {
                     userId,
-                    fileId: { [SOP.in]: ids }
-                    // isDelete: false
+                    fileId: { [SOP.in]: ids },
+                    isDelete: false
                 }
             };
-            if (isAdmin && (roleName === '超级管理员')) delete queryData['userId']; //超级管理员会获取所有的文件
+            if (isAdmin && (roleName === '超级管理员')) { //超级管理员会获取所有的文件
+                delete queryData.where['userId'];
+                delete queryData.where['isDelete'];
+            }
             //查询相关文件
             const files = await FilesBaseModel.findAll(queryData);
             if (files && files.length) { //获取数据库里的文件数据
-                const deleteFiles = files.map((file) => {
-                    return new Promise((resolve, reject) => {
-                        fs.unlink(path.join(config.staticPath, file.path), (err) => { //删除文件
-                            if (err) {
-                                reject(new Error(`删除文件: ${file.path} 异常！`));
-                            } else {
-                                console.log(`文件: ${file.path} 删除成功！`);
-                                resolve(file);
-                            }
+                if (isAdmin && (roleName === '超级管理员')) { //只有超级管理员才能真正的删除文件,普通用户为软删除
+                    const deleteFiles = files.map((file) => {
+                        return new Promise((resolve, reject) => {
+                            fs.unlink(path.join(config.staticPath, file.path), (err) => { //删除文件
+                                if (err) {
+                                    reject(new Error(`删除文件: ${file.path} 异常！`));
+                                } else {
+                                    console.log(`文件: ${file.path} 删除成功！`);
+                                    resolve(file);
+                                }
+                            });
                         });
                     });
-                });
-
-                //返回删除文件的结果
-                const delData = await Promise.all(deleteFiles);
-                //批量删除数据库的数据
-                await FilesBaseModel.destroy({
-                    where: {
-                        userId,
-                        fileId: delData.map(file => file.fileId)
-                    }
-                });
-                return result.success(null, delData);
+                    //返回删除文件的结果
+                    const delData = await Promise.all(deleteFiles);
+                    //批量删除数据库的数据
+                    await FilesBaseModel.destroy({
+                        where: {
+                            userId,
+                            fileId: delData.map(file => file.fileId)
+                        }
+                    });
+                    return result.success(null, delData);
+                } else {
+                    //批量软删除
+                    await FilesBaseModel.update({ isDelete: true }, { where: { fileId: ids } });
+                    return result.success(null);
+                }
             }
             return result.success(`未发现需要删除的文件!`);
         } catch (error) {
@@ -214,19 +222,27 @@ module.exports = class {
      */
     async getFiles({ state, query }) {
         const { userId, isAdmin, roleName } = state.user.data;
-        const { keyword, page, limit } = query;
+        const { keyword, isDelete, page, limit } = query;
         let queryData = {
             where: { userId, isDelete: false },
             order: [
                 ['createdTime', 'DESC']
-            ],
-            attributes: { exclude: ['isDelete'] }
+            ]
+            // attributes: { exclude: ['isDelete'] }
         };
-        if (isAdmin && (roleName === '超级管理员')) delete queryData['userId']; //超级管理员会获取所有的文件
+        if (isAdmin && (roleName === '超级管理员')) {
+            delete queryData.where['userId']; //超级管理员会获取所有的文件
+            delete queryData.where['isDelete'];
+        }
         if (keyword) {
             queryData.where['fileName'] = {
                 [SOP.like]: `%${keyword}%`
             };
+        }
+
+        if (isDelete != undefined || isDelete != null) {
+            console.log(isDelete);
+            queryData.where['isDelete'] = isDelete != 0;
         }
 
         if (page && limit) { //分页

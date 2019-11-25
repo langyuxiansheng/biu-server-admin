@@ -88,7 +88,7 @@ export default {
         setPermission(item) {
             console.log(item);
             if (item.children) {
-                this.$store.dispatch('setPermission', item.children.map(v => v.name) || []);
+                this.$store.dispatch('setPermission', item.children.map(v => v.name));
             }
         }
     }
