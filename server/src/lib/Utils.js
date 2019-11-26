@@ -286,20 +286,10 @@ const Utils = {
      * @param {*} filename
      */
     getExtname(filename) {
-        if (!filename || typeof filename != 'string') return '';
-        let s = ''; //声明一个string类型的变量
-        let arr = ['.jpg', '.png', '.gif'];//声明一个数组arr存放指定扩展名
-        let num = filename.lastIndexOf('.');//获取参数filename左后一个“.”的下标位置num
-        let Ts = filename.substring(0, num);//获取参数下标位置从0到num的字符串Ts
-        if (num !== -1 & Ts !== '') { //当num不为-1就是有“.”符号存在参数里和Ts不为空就是获取下标位置从0到num的字符串存在时
-            let str = filename.substring(num); //获取下标位置从num开始的参数的字符str
-            for (let i = 0; i < arr.length; i++) { //遍历数组arr,和str进行对比
-                if (str == arr[i]) { //如果str中与arr[i]的值相等
-                    s = str;//把str保存到s变量中
-                }
-            }
-        }
-        return s;//返回s
+        if (!filename || typeof filename != 'string') return false;
+        const a = filename.split('').reverse().join('');
+        const b = a.substring(0, a.search(/\./)).split('').reverse().join('');
+        return b;
     }
 
 };
