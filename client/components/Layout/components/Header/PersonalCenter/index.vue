@@ -37,13 +37,8 @@
                         title="点击更换头像"
                         class="upload-avatar"
                         action="https://jsonplaceholder.typicode.com/posts/"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
                         multiple
                         :limit="3"
-                        :on-exceed="handleExceed"
-                        :file-list="fileList"
                     >
                         <el-avatar class="avatar" fit="cover" src="\uploads\20191104\BIUXS_WEB_69B09D4F1CE6816CEE4E0C5015B9996C.jpg" />
                     </el-upload>

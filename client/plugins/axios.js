@@ -7,6 +7,7 @@ export default ({ $axios, redirect }) => {
     let loading = null;
     $axios.onRequest(config => {
         config.headers.Authorization = util.getCookie(`BIU-SERVER-ADMIN-JWT`);
+        if (config.url.indexOf('api.tryto.cn') > -1) return config;
         loading = Loading.service({
             lock: true,
             text: '拼命加载中...',
