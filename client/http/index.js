@@ -24,11 +24,5 @@ export const {
     getSysRoleMenusToTree,
     updateSysPassword,
     getFiles,
-    deleteFiles,
-    //商家管理
-    getBusinessList,
-    updateBusiness,
-    addBusinessByAdmin,
-    delBusinessByIds,
-    getBusinessShopListByAdmin
+    deleteFiles
 } = apis;
