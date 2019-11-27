@@ -33,15 +33,16 @@
                     <span class="app-title">
                         头像
                     </span>
-                    <el-upload
-                        title="点击更换头像"
+                    <el-avatar title="点击更换头像" class="avatar" fit="cover" src="\uploads\20191104\BIUXS_WEB_69B09D4F1CE6816CEE4E0C5015B9996C.jpg" />
+                    <!-- <el-upload
+
                         class="upload-avatar"
                         action="https://jsonplaceholder.typicode.com/posts/"
                         multiple
                         :limit="3"
                     >
-                        <el-avatar class="avatar" fit="cover" src="\uploads\20191104\BIUXS_WEB_69B09D4F1CE6816CEE4E0C5015B9996C.jpg" />
-                    </el-upload>
+
+                    </el-upload> -->
                 </div>
                 <div class="app-row">
                     <span class="app-title">
@@ -205,12 +206,10 @@ export default {
             .app-label{
                 margin-left: 20px;
             }
-            .avatar{
-                vertical-align: middle;
-            }
         }
     }
-    .upload-avatar{
+    .avatar{
         margin-left: 20px;
+        cursor: pointer;
     }
 </style>

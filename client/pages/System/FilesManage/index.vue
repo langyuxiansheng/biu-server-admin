@@ -34,7 +34,7 @@
                         <el-image
                             fit="cover"
                             :src="data.row.path"
-                            :preview-src-list="table.data.filter(item => ['image/jpeg','image/png'].includes(item.type)).map(item => item.path)"
+                            :preview-src-list="[data.row.path]"
                         />
                     </template>
                     <template v-else>
