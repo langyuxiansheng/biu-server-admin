@@ -5,36 +5,24 @@
                 <el-button slot="add" type="primary" icon="el-icon-circle-plus" plain @click="showDialog({type:'add'})">
                     添加
                 </el-button>
-                <!-- <el-button type="text" @click="handleDel({type:1})">
-                    删除
-                </el-button> -->
-                <!-- <el-button slot="export" plain @click="excelAllDownload()">
-                    导出
-                </el-button> -->
             </template>
             <template slot="column" slot-scope="{data}">
                 <template v-if="data.col.key === 'operation'">
-                    <el-button type="text" @click="$router.push(`/System/RolesManage/Settings/${data.row.roleId}`)">
-                        权限设置
-                    </el-button>
-                    <el-button type="text" @click="showDialog({type:'update',data:data.row})">
-                        编辑
-                    </el-button>
-                    <el-button type="text" @click="handleDel(data.row)">
-                        删除
-                    </el-button>
-                </template>
-                <template v-else-if="data.col.key === 'avatar'">
-                    <img v-if="data.row[data.col.key]" v-image-preview class="app-image-previewer" height="50" :src="data.row[data.col.key]" :alt=" data.row.adminName">
-                    <span v-else>
-                        -
-                    </span>
+                    <el-button-group>
+                        <el-button type="primary" @click="$router.push(`/System/RolesManage/Settings/${data.row.roleId}`)">
+                            权限设置
+                        </el-button>
+                        <el-button title="编辑" type="warning" icon="el-icon-edit" @click="showDialog({type:'update',data:data.row})" />
+                        <el-button title="删除" type="danger" icon="el-icon-delete" @click="handleDel(data.row)" />
+                    </el-button-group>
                 </template>
                 <template v-else-if="data.col.key === 'status'">
-                    {{ data.row[data.col.key] ? '禁用' : '正常' }}
-                </template>
-                <template v-else-if="data.col.key === 'roleName'">
-                    {{ data.row.isAdmin ? '超级管理员' :data.row[data.col.key] || '-' }}
+                    <el-tag v-if="data.row[data.col.key]" type="success">
+                        禁用
+                    </el-tag>
+                    <el-tag v-else type="warning">
+                        正常
+                    </el-tag>
                 </template>
                 <template v-else>
                     {{ data.row[data.col.key] || '-' }}
@@ -75,8 +63,12 @@ export default {
                         label: '角色'
                     },
                     {
+                        key: 'status',
+                        label: '状态'
+                    },
+                    {
                         key: 'operation',
-                        width: '160px',
+                        width: '220px',
                         label: '操作'
                     }
                 ]

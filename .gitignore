@@ -82,3 +82,5 @@ dist
 
 #自定义忽略
 /nuxt-dist
+/yarn.lock
+/biu-server-admin.zip

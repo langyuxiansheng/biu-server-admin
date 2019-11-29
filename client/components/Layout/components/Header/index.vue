@@ -103,11 +103,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@import '~@/assets/styles/common/constant.less';
 @header-height: 55px;
 .header-top {
     display: flex;
     background: #fff;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid @app-boder-color;
     .header-right {
         flex: 1;
         .box {
@@ -137,7 +138,6 @@ export default {
                 }
                 .el-dropdown {
                     vertical-align: middle;
-                    color: #000;
                     margin-left: 8px;
                     font-size: 12px;
                     cursor: pointer;

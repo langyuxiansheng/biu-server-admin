@@ -11,7 +11,7 @@
                 {{ $store.state.config.version }}
             </p>
         </h3>
-        <el-menu :collapse-transition="false" :collapse="isCollapse" background-color="#000c17" text-color="#fff" active-text-color="#1890ff" :default-active="$route.path" unique-opened router>
+        <el-menu :collapse-transition="false" :collapse="isCollapse" background-color="rgba(0,0,0,0)" text-color="#fff" active-text-color="#ffcb04" :default-active="$route.path" unique-opened router>
             <template v-for="(menu,k) in sideMenus">
                 <el-submenu :key="k" :index="menu.permissionId" popper-class="sidebar-submenu">
                     <template slot="title">
@@ -21,12 +21,12 @@
                     <template v-if="menu.children">
                         <template v-for="item in menu.children">
                             <el-menu-item v-if="item.type == 1 && systems.includes(item.path) && user.isAdmin" :key="item.permissionId" :index="`${menu.path}/${item.path}`">
-                                <span class="sidebar-menu-item" @click="setPermission(item)">
+                                <span class="sidebar-menu-item" @click="setPermission(item.children || [])">
                                     {{ item.title }}
                                 </span>
                             </el-menu-item>
                             <el-menu-item v-else-if="item.type == 1 && !systems.includes(item.path)" :key="item.permissionId" :index="`${menu.path}/${item.path}`">
-                                <span class="sidebar-menu-item" @click="setPermission(item)">
+                                <span class="sidebar-menu-item" @click="setPermission(item.children || [])">
                                     {{ item.title }}
                                 </span>
                             </el-menu-item>
@@ -85,19 +85,17 @@ export default {
         /**
          * 设置权限
          */
-        setPermission(item) {
-            console.log(item);
-            if (item.children) {
-                this.$store.dispatch('setPermission', item.children.map(v => v.name));
-            }
+        setPermission(list) {
+            console.log(list);
+            this.$store.dispatch('setPermission', list.map(v => v.name));
         }
     }
 };
 </script>
 <style lang="less" scoped>
+@import '~@/assets/styles/common/constant.less';
 .sidebar-menu {
-    // width: 210px;
-    background: #001529;
+    background: linear-gradient(160deg, #7faadc, @app-theme-color 66%);
     height: 100%;
     .title {
         padding: 20px 0;
@@ -107,8 +105,9 @@ export default {
         font-weight: bold;
         cursor: pointer;
         transition: color .2s ease-in;
+        border-bottom: 1px solid @app-boder-color;
         &:hover{
-            color: #409eff;
+            color: #faad14;
         }
         .version{
             font-size: 12px;
@@ -120,12 +119,15 @@ export default {
         .sidebar-menu-item {
             padding-left: 20px;
         }
+        .el-submenu__title i{
+            color: inherit;
+        }
     }
     .sidebar-submenu {
         background: #ccc;
     }
 }
 .sidebar-width{
-    width: 200px;
+    width: 240px;
 }
 </style>

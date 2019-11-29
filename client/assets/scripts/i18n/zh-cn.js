@@ -41,7 +41,7 @@ export default {
         login: '登录',
         logout: '退出登录',
         immediately_add: '立即添加',
-        refill: '重新填写',
+        refill: '重置',
         add_platform_admin: '添加平台管理员'
 
     },
