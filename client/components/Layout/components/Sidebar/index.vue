@@ -11,7 +11,7 @@
                 {{ $store.state.config.version }}
             </p>
         </h3>
-        <el-menu :collapse-transition="false" :collapse="isCollapse" background-color="rgba(0,0,0,0)" text-color="#fff" active-text-color="#faad14" :default-active="$route.path" unique-opened router>
+        <el-menu :collapse-transition="false" :collapse="isCollapse" background-color="rgba(0,0,0,0)" text-color="#fff" active-text-color="#ffcb04" :default-active="$route.path" unique-opened router>
             <template v-for="(menu,k) in sideMenus">
                 <el-submenu :key="k" :index="menu.permissionId" popper-class="sidebar-submenu">
                     <template slot="title">
@@ -105,7 +105,7 @@ export default {
         font-weight: bold;
         cursor: pointer;
         transition: color .2s ease-in;
-        border-bottom: 1px solid #bdbff9;
+        border-bottom: 1px solid @app-boder-color;
         &:hover{
             color: #faad14;
         }

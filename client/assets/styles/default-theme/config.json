@@ -1,1 +1,1 @@
-{"global":{"$--color-primary":"#8A8DEC","$--color-success":"#5CCD5E","$--color-warning":"#E7AC53","$--color-danger":"#FF8A8A","$--color-info":"#A6AAB3"},"local":{}}
+{"global":{"$--color-primary":"#8A8DEC","$--color-success":"#5CCD5E","$--color-warning":"#E7AC53","$--color-danger":"#FF8A8A","$--color-info":"#A6AAB3"},"local":{"$--table-border-color":"#BDBFF9","$--table-row-hover-background-color":"#E6E7FE","$--table-header-background-color":"#FBFBFB"}}

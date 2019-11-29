@@ -31,6 +31,7 @@ export default {
         background-color: #fff;
         padding: 20px;
         margin-bottom: 20px;
+        box-shadow: 0 4px 6px #d7d8fd;
     }
     .small{
         padding: 22px 46px;

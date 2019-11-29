@@ -175,15 +175,15 @@ export default {
 .tags-view-container {
     padding: 0 20px;
     background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    box-shadow: -2px 4px 4px #d7d8fd;
     .tags-view-wrapper {
         height: 36px;
         .tags-view-item {
             display: inline-block;
             position: relative;
             padding: 0 5px 0 10px;
-            color: #606266;
-            border: 1px solid #606266;
+            color: @app-font-color;
+            border: 1px solid @app-font-color;
             font-size: 12px;
             line-height: 24px;
             margin: 5px 10px 5px 0;
@@ -204,7 +204,7 @@ export default {
         border-radius: 4px;
         font-size: 12px;
         font-weight: 400;
-        color: #333;
+        color: @app-font-color;
         box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
         li {
             margin: 0;

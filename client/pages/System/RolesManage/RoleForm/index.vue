@@ -14,7 +14,7 @@
                                 保存
                             </el-button>
                             <el-button @click="resetForm('AppForm')">
-                                重新填写
+                                重置
                             </el-button>
                         </el-form-item>
                     </div>
