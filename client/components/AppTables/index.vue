@@ -37,7 +37,7 @@
                 v-if="!table.selection"
                 type="selection"
                 align="center"
-                width="60"
+                width="50"
             />
             <el-table-column
                 v-for="(col,k) in table.cols"
