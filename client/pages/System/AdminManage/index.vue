@@ -18,15 +18,13 @@
                         无权限
                     </template>
                     <template v-else>
-                        <el-button type="text" @click="showDialog({type:'bindRole',data:data.row})">
-                            绑定角色
-                        </el-button>
-                        <el-button type="text" @click="showDialog({type:'update',data:data.row})">
-                            编辑
-                        </el-button>
-                        <el-button type="text" @click="handleDel(data.row)">
-                            删除
-                        </el-button>
+                        <el-button-group>
+                            <el-button type="primary" @click="showDialog({type:'bindRole',data:data.row})">
+                                绑定角色
+                            </el-button>
+                            <el-button title="编辑" type="warning" icon="el-icon-edit" @click="showDialog({type:'update',data:data.row})" />
+                            <el-button title="删除" type="danger" icon="el-icon-delete" @click="handleDel(data.row)" />
+                        </el-button-group>
                     </template>
                 </template>
                 <template v-else-if="data.col.key === 'avatar'">
@@ -36,10 +34,15 @@
                     </span>
                 </template>
                 <template v-else-if="data.col.key === 'status'">
-                    {{ data.row[data.col.key] ? '禁用' : '正常' }}
+                    <el-tag v-if="data.row[data.col.key]" type="success">
+                        禁用
+                    </el-tag>
+                    <el-tag v-else type="warning">
+                        正常
+                    </el-tag>
                 </template>
                 <template v-else-if="data.col.key === 'roleName'">
-                    {{ data.row.isAdmin ? '超级管理员' :data.row[data.col.key] || '-' }}
+                    {{ data.row.isAdmin ? '超级管理员' : data.row[data.col.key] || '-' }}
                 </template>
                 <template v-else>
                     {{ data.row[data.col.key] || '-' }}
@@ -97,7 +100,7 @@ export default {
                     },
                     {
                         key: 'operation',
-                        width: '180px',
+                        width: '220px',
                         label: '操作'
                     }
                 ]

@@ -19,12 +19,10 @@
             </template>
             <template slot="column" slot-scope="{data}">
                 <template v-if="data.col.key === 'operation'">
-                    <!-- <el-button type="text" @click="showDialog({type:'update',data:data.row})">
-                        编辑
-                    </el-button> -->
-                    <el-button v-if="$store.state.permission.includes('delete')" type="text" @click="handleDel(data.row)">
-                        删除
-                    </el-button>
+                    <el-button-group>
+                        <!-- <el-button title="编辑" type="warning" icon="el-icon-edit" @click="showDialog({type:'update',data:data.row})" /> -->
+                        <el-button v-if="$store.state.permission.includes('delete')" title="删除" type="danger" icon="el-icon-delete" @click="handleDel(data.row)" />
+                    </el-button-group>
                 </template>
                 <template v-else-if="data.col.key === 'size'">
                     {{ data.row[data.col.key] | formatFileSize }}

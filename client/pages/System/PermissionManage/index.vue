@@ -16,12 +16,10 @@
                 <app-tree-table :data="table.data" :cols="table.cols" border expand-all>
                     <template slot="operation" slot-scope="{data}">
                         <template v-if="data.col.key === 'operation'">
-                            <el-button type="text" @click="showDialog({type:'update',data:data.row})">
-                                编辑
-                            </el-button>
-                            <el-button type="text" @click="handleDel(data.row)">
-                                删除
-                            </el-button>
+                            <el-button-group>
+                                <el-button title="编辑" type="warning" icon="el-icon-edit" @click="showDialog({type:'update',data:data.row})" />
+                                <el-button title="删除" type="danger" icon="el-icon-delete" @click="handleDel(data.row)" />
+                            </el-button-group>
                         </template>
                     </template>
                 </app-tree-table>
@@ -88,7 +86,7 @@ export default {
                     },
                     {
                         key: 'operation',
-                        width: '100px',
+                        width: '120px',
                         label: '操作',
                         operation: true
                     }
