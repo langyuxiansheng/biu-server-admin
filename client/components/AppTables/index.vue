@@ -29,15 +29,15 @@
         <el-table
             v-if="table.tableType === 1"
             :data="table.data"
-            border
-            stripe
+            :border="table.border"
+            :stripe="!table.stripe"
             @selection-change="handleSelectionChange"
         >
             <el-table-column
                 v-if="!table.selection"
                 type="selection"
                 align="center"
-                width="40"
+                width="60"
             />
             <el-table-column
                 v-for="(col,k) in table.cols"
@@ -64,8 +64,8 @@
         <el-table
             v-if="table.tableType === 2"
             :data="table.data"
-            border
-            stripe
+            :border="table.border"
+            :stripe="!table.stripe"
         >
             <template v-for="(col,k) in table.cols">
                 <el-table-column
@@ -125,6 +125,7 @@ export default {
             }
         },
         table: {
+            border: false,
             type: Object,
             data: [], //表格数据
             page: 1, //页码索引

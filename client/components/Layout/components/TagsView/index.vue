@@ -171,72 +171,73 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '~@/assets/styles/common/constant.less';
 .tags-view-container {
-  padding: 0 20px;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  .tags-view-wrapper {
-    height: 36px;
-    .tags-view-item {
-      display: inline-block;
-      position: relative;
-      padding: 0 5px 0 10px;
-      color: #606266;
-      border: 1px solid #606266;
-      font-size: 12px;
-      line-height: 24px;
-      margin: 5px 10px 5px 0;
-    }
-
-    & .active {
-      color: #409eff;
-      border-color: #409eff;
-    }
-  }
-
-  .contextmenu {
-    margin: 0;
+    padding: 0 20px;
     background: #fff;
-    z-index: 2;
-    position: absolute;
-    list-style-type: none;
-    padding: 5px 0;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 400;
-    color: #333;
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
-    li {
-      margin: 0;
-      padding: 7px 16px;
-      cursor: pointer;
-      & :hover {
-        background: #eee;
-      }
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    .tags-view-wrapper {
+        height: 36px;
+        .tags-view-item {
+            display: inline-block;
+            position: relative;
+            padding: 0 5px 0 10px;
+            color: #606266;
+            border: 1px solid #606266;
+            font-size: 12px;
+            line-height: 24px;
+            margin: 5px 10px 5px 0;
+        }
+        & .active {
+            color: @app-theme-color;
+            border-color: @app-theme-color;
+        }
     }
-  }
+
+    .contextmenu {
+        margin: 0;
+        background: #fff;
+        z-index: 2;
+        position: absolute;
+        list-style-type: none;
+        padding: 5px 0;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #333;
+        box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+        li {
+            margin: 0;
+            padding: 7px 16px;
+            cursor: pointer;
+            &:hover {
+                color: @app-theme-color;
+                background: #eee;
+            }
+        }
+    }
 }
 
 .tags-view-wrapper {
-  .tags-view-item {
-    .el-icon-close {
-      width: 16px;
-      height: 16px;
-      vertical-align: middle;
-      border-radius: 50%;
-      text-align: center;
-      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      transform-origin: 100% 50%;
-      & :before {
-        transform: scale(0.6);
-        display: inline-block;
-        vertical-align: -3px;
-      }
-      & :hover {
-        background-color: #b4bccc;
-        color: #fff;
-      }
+    .tags-view-item {
+        .el-icon-close {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            border-radius: 50%;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-origin: 100% 50%;
+            & :before {
+                transform: scale(0.6);
+                display: inline-block;
+                vertical-align: -3px;
+            }
+            & :hover {
+                background-color: #b4bccc;
+                color: #fff;
+            }
+        }
     }
-  }
 }
 </style>

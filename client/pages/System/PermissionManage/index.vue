@@ -48,6 +48,7 @@ export default {
                     limit: 10//每页数据条数，默认为10
                 },
                 data: [], //表格数据
+                hidePagination: true, //隐藏分页器
                 total: 0, //总页数
                 tableType: 3, //表格类型
                 utils: { //表格工具栏
