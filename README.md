@@ -60,6 +60,88 @@ const config = {
     }
 };
 ```
+# nodejs中使用别名映射,兼容webpack的@和best-require 的:xxx 别名映射
 
+1. 安装库 best-require 进行别名映射
 
+```bash
+npm i best-require --save
+```
+
+2. 映射别名. 实例在本项目中 server/index.js 中
+
+```javascript
+const path = require('path');
+const ROOT_PATH = process.cwd();
+const SRC_PATH = path.join(ROOT_PATH, `/server/src`);
+console.log(ROOT_PATH, SRC_PATH);
+//映射目录别名
+require('best-require')(ROOT_PATH, {
+    root: ROOT_PATH,
+    src: SRC_PATH,
+    controllers: path.join(SRC_PATH, '/controllers'),
+    models: path.join(SRC_PATH, '/models'),
+    routes: path.join(SRC_PATH, '/routes'),
+    crawlers: path.join(SRC_PATH, '/crawlers'),
+    services: path.join(SRC_PATH, '/services'),
+    middleware: path.join(SRC_PATH, '/middleware'),
+    lib: path.join(SRC_PATH, '/lib'),
+    config: path.join(SRC_PATH, '/config'),
+    logs: path.join(SRC_PATH, '/logs')
+});
+
+//运行服务
+require('./src/bin/Server').run();
+
+```
+
+3. 设置 jsconfig.json 
+
+```json
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["client/*"],
+            ":root/*": ["*"],
+            ":config/*": ["server/src/config/*"],
+            ":lib/*": ["server/src/lib/*"],
+            ":services/*": ["server/src/services/*"],
+            ":controllers/*":["server/src/controllers/*"],
+            ":models/*": ["server/src/models/*"],
+            ":routes/*": ["server/src/routes/*"],
+            ":crawlers/*": ["server/src/crawlers/*"],
+            ":middleware/*": ["server/src/middleware/*"],
+            ":logs/*": ["server/src/logs/*"]
+        }
+    },
+    "include": ["server/**/*","client/*"],
+    "exclude": [
+        "node_modules",
+        "nuxt-dist",
+        "server-dist"
+    ]
+}
+```
+4. vscode要安装  path-intellisense 插件
+
+```json
+{
+    "path-intellisense.mappings": {
+        "@": "${workspaceRoot}/client",
+        ":root": "${workspaceRoot}",
+        ":lib": "${workspaceRoot}/server/src/lib",
+        ":controllers": "${workspaceRoot}/server/src/controllers",
+        ":models": "${workspaceRoot}/server/src/models",
+        ":routes": "${workspaceRoot}/server/src/routes",
+        ":crawlers": "${workspaceRoot}/server/src/crawlers",
+        ":services": "${workspaceRoot}/server/src/services",
+        ":middleware": "${workspaceRoot}/server/src/middleware",
+        ":config": "${workspaceRoot}/server/src/config",
+        ":logs": "${workspaceRoot}/server/src/logs",
+    }
+}
+```
  
+5. 重启vscode,试试看吧!
