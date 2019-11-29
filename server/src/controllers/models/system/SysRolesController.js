@@ -2,7 +2,7 @@
  * 角色管理
  */
 const KoaRouter = require('koa-router');
-const { system: { SysRolesService } } = require(':services');
+const SysRolesService = require(':services/system/SysRolesService');
 const controller = new KoaRouter();
 const service = new SysRolesService();
 

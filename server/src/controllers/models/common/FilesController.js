@@ -2,7 +2,7 @@
  *  公共信息入口
  */
 const KoaRouter = require('koa-router');
-const { common: { FilesService } } = require(':services');
+const FilesService = require(':services/common/FilesService');
 const controller = new KoaRouter();
 const service = new FilesService();
 

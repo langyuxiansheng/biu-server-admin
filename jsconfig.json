@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["client/*"],
+            ":root/*": ["*"],
+            ":config/*": ["server/src/config/*"],
+            ":lib/*": ["server/src/lib/*"],
+            ":services/*": ["server/src/services/*"],
+            ":controllers/*":["server/src/controllers/*"],
+            ":models/*": ["server/src/models/*"],
+            ":routes/*": ["server/src/routes/*"],
+            ":crawlers/*": ["server/src/crawlers/*"],
+            ":middleware/*": ["server/src/middleware/*"],
+            ":logs/*": ["server/src/logs/*"]
+        }
+    },
+    "include": ["server/**/*","client/*"],
+    "exclude": [
+        "node_modules",
+        "nuxt-dist",
+        "server-dist"
+    ]
+}

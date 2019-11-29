@@ -2,7 +2,7 @@
  * 用户登录路由入口
  */
 const KoaRouter = require('koa-router');
-const { common: { LoginService } } = require(':services');
+const LoginService = require(':services/common/LoginService');
 const controller = new KoaRouter();
 const service = new LoginService();
 

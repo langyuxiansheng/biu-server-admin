@@ -2,7 +2,7 @@
  * 系统管理员管理
  */
 const KoaRouter = require('koa-router');
-const { system: { SysPermissionService } } = require(':services');
+const SysPermissionService = require(':services/system/SysPermissionService');
 const controller = new KoaRouter();
 const service = new SysPermissionService();
 

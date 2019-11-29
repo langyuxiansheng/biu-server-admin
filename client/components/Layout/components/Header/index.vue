@@ -6,8 +6,11 @@
                 <div class="user-menu">
                     <i class="iconfont icon-xiaoxi" />
                     <span class="vertical-line" />
-                    <img v-if="user.avatar" v-image-preview class="user-avatar" :src="user.avatar" alt="avatar">
-                    <img v-else class="user-avatar" :src="require(`@/assets/images/default-avatar.png`)" alt="avatar">
+                    <el-image
+                        class="user-avatar"
+                        fit="cover"
+                        :src="user.avatar || require(`@/assets/images/default-avatar.png`)"
+                    />
                     <el-dropdown @command="handleCommand">
                         <div class="user-content">
                             <h5>{{ user.adminName || '暂无' }}</h5>

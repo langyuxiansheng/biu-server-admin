@@ -8,9 +8,11 @@ const result = require(':lib/Result');
 const config = require(':config/server.base.config'); //配置文件
 const { MODELS_PATH, getExtname, getTimeStampUUID, getYearMonthDay, getFileNameUUID32 } = require(':lib/Utils');
 const { BiuDB, SOP } = require(':lib/sequelize');
+const Email = require(':lib/Email');
 const FilesBaseModel = BiuDB.import(`${MODELS_PATH}/common/FilesBaseModel`);
 module.exports = class {
     constructor() {
+        console.log(Email);
         FilesBaseModel.sync().then((res) => {
             console.log(`FilesBaseModel 同步成功`, res);
         });

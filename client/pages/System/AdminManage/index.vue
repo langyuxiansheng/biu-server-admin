@@ -33,6 +33,17 @@
                         -
                     </span>
                 </template>
+                <template v-else-if="data.col.key === 'avatar'">
+                    <template v-if="data.row[data.col.key]">
+                        <el-image
+                            fit="cover"
+                            :src="data.row[data.col.key]"
+                        />
+                    </template>
+                    <template v-else>
+                        暂不支持预览
+                    </template>
+                </template>
                 <template v-else-if="data.col.key === 'status'">
                     <el-tag v-if="data.row[data.col.key]" type="success">
                         禁用
