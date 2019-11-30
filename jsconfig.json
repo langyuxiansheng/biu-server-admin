@@ -16,7 +16,7 @@
             ":logs/*": ["server/src/logs/*"]
         }
     },
-    "include": ["server/**/*","client/*"],
+    "include": ["server/**/*","client/**/*"],
     "exclude": [
         "node_modules",
         "nuxt-dist",

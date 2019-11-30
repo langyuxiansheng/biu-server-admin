@@ -51,7 +51,6 @@ export default {
                 callback();
             }
         };
-
         // 用户密码
         let validatePass = (rule, value, callback) => {
             if (value === null) {
