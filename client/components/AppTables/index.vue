@@ -29,7 +29,7 @@
         <el-table
             v-if="table.tableType === 1"
             :data="table.data"
-            :border="table.border"
+            :border="!table.border"
             :stripe="!table.stripe"
             @selection-change="handleSelectionChange"
         >
@@ -64,7 +64,7 @@
         <el-table
             v-if="table.tableType === 2"
             :data="table.data"
-            :border="table.border"
+            :border="!table.border"
             :stripe="!table.stripe"
         >
             <template v-for="(col,k) in table.cols">

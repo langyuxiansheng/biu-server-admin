@@ -4,7 +4,7 @@
  * @param {*} dataTypes
  * 此模型仅限关系型数据库使用
  */
-const { getTimeStampUUID } = require(':lib/Utils');
+const Utils = require(':lib/Utils');
 module.exports = (sequelize, dataTypes) => {
     return sequelize.define('Region', {
 
@@ -13,7 +13,7 @@ module.exports = (sequelize, dataTypes) => {
             type: dataTypes.STRING(50),
             allowNull: false,
             primaryKey: true,
-            defaultValue: () => getTimeStampUUID()
+            defaultValue: () => Utils.getTimeStampUUID()
         },
 
         //名称

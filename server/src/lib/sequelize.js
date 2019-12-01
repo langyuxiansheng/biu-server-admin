@@ -79,11 +79,9 @@ BiuDB.authenticate().then((res) => {
 }).catch(err => {
     throw new Error(`连接数据库：${config.dbs[0].database} 出错${err}`);
 });
-
 //同步数据库模型专用 此操作将会删除数据库的表重新创建,请谨慎使用
 // BiuDB.sync({ force: true }).then(function(result) {
 //     console.log('result');
 // });
-
 //配置关系型数据库ORM
-module.exports = { Sequelize, BiuDB, SOP, COL, Attrs };
+module.exports = { Sequelize, BiuDB, SOP, COL, Attrs, DataTypes: Sequelize.DataTypes };
