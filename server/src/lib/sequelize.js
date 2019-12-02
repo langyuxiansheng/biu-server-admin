@@ -2,7 +2,7 @@
  * Sequelize.js api说明文档
  * https: //itbilu.com/nodejs/npm/V1PExztfb.html
  */
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize/index');
 const config = require(':config/server.base.config'); //配置文件
 const SOP = Sequelize.Op;
 /**
