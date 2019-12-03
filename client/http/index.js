@@ -24,5 +24,7 @@ export const {
     getSysRoleMenusToTree,
     updateSysPassword,
     getFiles,
-    deleteFiles
+    deleteFiles,
+    getSysLogList
+    //555
 } = apis;

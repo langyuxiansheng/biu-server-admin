@@ -196,6 +196,15 @@ export default {
     deleteFiles: {
         url: `${API_SERVER}/common/deleteFiles`,
         method: 'delete'
+    },
+
+    /**
+     * 获取系统日志列表
+     * @param {*} data
+     */
+    getSysLogList: {
+        url: `${API_SERVER}/system/getSysLogList`,
+        method: 'get'
     }
 
 };

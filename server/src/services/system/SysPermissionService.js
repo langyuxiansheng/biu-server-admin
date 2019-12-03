@@ -23,7 +23,7 @@ module.exports = class {
     async addSysPermission(data, { isAdmin }) {
         //非超级管理员不可获取此菜单
         if (!isAdmin) return result.noAuthority();
-        const { title, type, path, name } = data;
+        const { title, type, path, name, parentId } = data;
         if (type == 1 && (!title || !path || !name)) {
             return result.paramsLack();
         } else if (type == 2 && (!title || !name)) {
@@ -31,10 +31,14 @@ module.exports = class {
         }
 
         try {
-            //查询账号是否存在
-            const count = await SysPermissionModel.count({
+            let queryData = {
                 where: { title, path, isDelete: false }
-            });
+            };
+            if (type == 2) {
+                queryData.where.parentId = parentId;
+            }
+            //查询是否存在
+            const count = await SysPermissionModel.count(queryData);
             if (count > 0) return result.failed('权限已存在!');
             await SysPermissionModel.create(data); //保存数据
             return result.success();
