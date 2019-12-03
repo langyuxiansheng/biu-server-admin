@@ -10,7 +10,7 @@ const config = require(':config/server.base.config'); //配置文件
 const nuxtConfig = require(':root/nuxt.config'); //nuxt配置文件
 const controllers = require(':controllers/index'); //路由入口
 const ErrorRoutesCatch = require(':middleware/ErrorRoutesCatch'); //全局错误捕获
-// require(':crawlers')(); //爬虫注册中心
+const { accessLogger } = require(':lib/logger4'); //日志系统
 const app = new Koa2();
 const host = process.env.HOST || config.host || '127.0.0.1';
 const port = process.env.PORT || config.port || 3000;
@@ -24,6 +24,7 @@ module.exports = class Server {
                 await builder.build();
             }
         }
+        app.use(accessLogger());
         app.use(responseTime({ hrtime: true }));
         app.use(KoaCors());
         app.use(ErrorRoutesCatch);

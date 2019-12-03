@@ -84,3 +84,4 @@ dist
 /nuxt-dist
 /yarn.lock
 /biu-server-admin.zip
+/.vscode

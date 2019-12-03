@@ -3,6 +3,7 @@
  */
 const result = require(':lib/Result');
 const { MODELS_PATH, getLC, signJWT, deepCloneObject } = require(':lib/Utils');
+const { systemLogger } = require(':lib/logger4');
 const { BiuDB } = require(':lib/sequelize');
 const SysAdminBaseModel = BiuDB.import(`${MODELS_PATH}/system/SysAdminBaseModel`);
 module.exports = class {
@@ -32,8 +33,8 @@ module.exports = class {
             const jwt = signJWT(info, '2h'); //验证通过签发jwt,2小时有效!
             return result.success(null, { jwt, user: info });
         } catch (error) {
-            console.log(error);
-            return result.failed(error);
+            systemLogger.error(`管理员登录`, `LoginService.userLoginForSysAdmin`, error);
+            return result.failed();
         }
     }
 };
