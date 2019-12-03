@@ -55,10 +55,7 @@ log4js.configure({
 });
 
 module.exports = {
-    accessLogger: (ctx) => {
-        console.log(`object`, ctx);
-        return log4js.koaLogger(log4js.getLogger('access'));
-    }, // 记录所有访问级别的日志
+    accessLogger: () => log4js.koaLogger(log4js.getLogger('access')), // 记录所有访问级别的日志
     systemLogger: log4js.getLogger('application'), //记录所有应用级别的日志
     accessErrorLogger: log4js.getLogger('accessErrorLogger'), //记录所有访问时报错的日志
     accessSimpleLogger: log4js.getLogger('accessSimpleLogger'), //记录所有简单访问时报错的日志
