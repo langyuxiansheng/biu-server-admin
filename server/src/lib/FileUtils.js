@@ -71,7 +71,7 @@ const FileUtils = {
                 }));
                 resolve(files);
             } catch (error) {
-                reject(new Error({ status: 400, msg: error }));
+                reject(error);
             }
         });
     },
@@ -195,6 +195,28 @@ const FileUtils = {
                 } else {
                     console.log(`删除文件:${fileFullPath}成功！`);
                     resolve({ code: 200, path: fileFullPath });
+                }
+            });
+        });
+    },
+
+    /**
+     * 写内容到文件
+     * @param {*} path
+     * @param encode 编码格式
+     * @returns { code,data}
+     */
+    async writeFile(fileFullPath, content) {
+        return new Promise((resolve, reject) => {
+            fs.writeFile(fileFullPath, content, (err, data) => {
+                if (err) {
+                    console.log(`写入文件:${fileFullPath}内容失败,${err}`);
+                    reject(err);
+                } else if (content) {
+                    console.log(`写入文件:${fileFullPath}成功！`);
+                    resolve({ code: 200, data: data.toString(content || 'utf-8') });
+                } else {
+                    resolve({ code: 200, data });
                 }
             });
         });
