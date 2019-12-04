@@ -84,8 +84,8 @@ const FileUtils = {
         return new Promise((resolve, reject) => {
             fs.readdir(readPath, (err, files) => {
                 if (err) {
-                    console.warn(err);
-                    reject(new Error('获取文件列表失败' + err));
+                    console.log(`获取文件列表失败`);
+                    reject(err);
                 } else {
                     resolve(files);
                 }
@@ -101,7 +101,8 @@ const FileUtils = {
         return new Promise((resolve, reject) => {
             fs.stat(filepath, (eror, stats) => {
                 if (eror) {
-                    reject(new Error('获取文件stats失败' + eror));
+                    console.log(`获取文件stats失败`);
+                    reject(eror);
                 } else {
                     if (stats.isFile()) { //是文件
                         resolve({ isFile: true, filepath, ...stats });
@@ -123,9 +124,10 @@ const FileUtils = {
      */
     async readerFile(fileFullPath, encode) {
         return new Promise((resolve, reject) => {
-            fs.readFile(fileFullPath, (eror, data) => {
-                if (eror) {
-                    reject(new Error(`读取文件:${fileFullPath}内容失败,${eror}`));
+            fs.readFile(fileFullPath, (err, data) => {
+                if (err) {
+                    console.log(`读取文件:${fileFullPath}内容失败,${err}`);
+                    reject(err);
                 } else if (encode) {
                     console.log(`读取文件:${fileFullPath}成功！`);
                     resolve({ code: 200, data: data.toString(encode || 'utf-8') });
@@ -146,7 +148,7 @@ const FileUtils = {
             fs.mkdir(filepath, (err) => {
                 if (err) {
                     console.log(`创建文件夹:${filepath}失败！`);
-                    reject(new Error(err));
+                    reject(err);
                 } else {
                     console.log(`创建文件夹:${filepath}成功！`);
                     resolve(true);
@@ -188,7 +190,8 @@ const FileUtils = {
         return new Promise((resolve, reject) => {
             fs.unlink(fileFullPath, (err) => { //上传成功后删除临时文件
                 if (err) {
-                    reject(new Error(`删除文件:${fileFullPath}异常！`));
+                    console.log(`删除文件:${fileFullPath}异常!`);
+                    reject(err);
                 } else {
                     console.log(`删除文件:${fileFullPath}成功！`);
                     resolve({ code: 200, path: fileFullPath });

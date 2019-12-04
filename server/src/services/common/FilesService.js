@@ -148,13 +148,12 @@ module.exports = class {
             const files = await FilesBaseModel.findAll(queryData);
             if (files && files.length) { //获取数据库里的文件数据
                 if (isAdmin && (roleName === '超级管理员')) { //只有超级管理员才能真正的删除文件,普通用户为软删除
-                    const deleteFiles = files.map(async (file) => {
+                    const deleteFiles = files.map((file) => {
                         return new Promise(async (resolve, reject) => {
                             const res = await deleteFile(path.join(config.staticPath, file.path)); //上传成功后删除临时文件
                             if (res && res.code == 200) {
                                 resolve(file);
                             } else {
-                                console.log(`文件: ${file.path} 删除失败！`);
                                 reject(res);
                             }
                         });
@@ -164,7 +163,6 @@ module.exports = class {
                     //批量删除数据库的数据
                     await FilesBaseModel.destroy({
                         where: {
-                            userId,
                             fileId: delData.map(file => file.fileId)
                         }
                     });
