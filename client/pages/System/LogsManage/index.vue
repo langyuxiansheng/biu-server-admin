@@ -17,24 +17,12 @@
             <template slot="column" slot-scope="{data}">
                 <template v-if="data.col.key === 'operation'">
                     <el-button-group>
-                        <!-- <el-button title="编辑" type="warning" icon="el-icon-edit" @click="showDialog({type:'update',data:data.row})" /> -->
+                        <read-log-dialog :path="data.row.path" />
                         <el-button v-if="$store.state.permission.includes('delete')" title="删除" type="danger" icon="el-icon-delete" @click="handleDel(data.row)" />
                     </el-button-group>
                 </template>
                 <template v-else-if="data.col.key === 'size'">
                     {{ data.row[data.col.key] | formatFileSize }}
-                </template>
-                <template v-else-if="data.col.key === 'view'">
-                    <template v-if="['image/jpeg','image/png'].includes(data.row.type)">
-                        <el-image
-                            fit="cover"
-                            :src="data.row.path"
-                            :preview-src-list="[data.row.path]"
-                        />
-                    </template>
-                    <template v-else>
-                        暂不支持预览
-                    </template>
                 </template>
                 <template v-else>
                     {{ data.row[data.col.key] || '-' }}
@@ -45,11 +33,13 @@
 </template>
 <script>
 import { getSysLogList, deleteFiles } from '@/http';
+import ReadLogDialog from './ReadLogDialog';
 export default {
     head: {
         title: '系统日志'
     },
     name: 'LogsManage',
+    components: { ReadLogDialog },
     data () {
         return {
             table: {
@@ -80,12 +70,14 @@ export default {
                     },
                     {
                         key: 'size',
-                        label: '大小'
+                        label: '大小',
+                        width: '100px'
                     },
                     {
                         key: 'view',
                         label: '预览',
-                        overflow: true
+                        overflow: true,
+                        width: '100px'
                     },
                     {
                         key: 'operation',

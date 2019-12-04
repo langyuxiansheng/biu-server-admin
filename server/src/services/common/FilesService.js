@@ -6,8 +6,8 @@ const path = require('path');
 const crypto = require('crypto');
 const result = require(':lib/Result');
 const config = require(':config/server.base.config'); //配置文件
-const { MODELS_PATH, getExtname, getTimeStampUUID, getYearMonthDay, getFileNameUUID32 } = require(':lib/Utils');
-const { isDirExists, deleteFile } = require(':lib/FileUtils');
+const { MODELS_PATH, SRC_PATH, getExtname, getTimeStampUUID, getYearMonthDay, getFileNameUUID32 } = require(':lib/Utils');
+const { isDirExists, deleteFile, readerFile } = require(':lib/FileUtils');
 const { BiuDB, SOP } = require(':lib/sequelize');
 const Email = require(':lib/Email');
 const FilesBaseModel = BiuDB.import(`${MODELS_PATH}/common/FilesBaseModel`);
@@ -237,6 +237,24 @@ module.exports = class {
                 attributes: ['fileId', 'path', 'fileName']
             });
             return result.success(null, file);
+        } catch (error) {
+            console.log(error);
+            return result.failed(error);
+        }
+    }
+
+    /**
+     * 读取文件内容
+     * @param {*} param0
+     */
+    async readeFileContent({ filePath }) {
+        if (!filePath) return result.paramsLack();
+        try {
+            const { code, data } = await readerFile(path.join(SRC_PATH, '/public', filePath), 'utf-8');
+            if (code == 200) {
+                return result.success(null, data);
+            }
+            return result.failed('读取文件失败!'); // return result.success(null, file);
         } catch (error) {
             console.log(error);
             return result.failed(error);

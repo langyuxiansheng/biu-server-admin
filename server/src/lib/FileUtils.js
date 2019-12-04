@@ -123,12 +123,12 @@ const FileUtils = {
      */
     async readerFile(fileFullPath, encode) {
         return new Promise((resolve, reject) => {
-            fs.readFile(fileFullPath, 'utf-8', (eror, data) => {
+            fs.readFile(fileFullPath, (eror, data) => {
                 if (eror) {
                     reject(new Error(`读取文件:${fileFullPath}内容失败,${eror}`));
                 } else if (encode) {
                     console.log(`读取文件:${fileFullPath}成功！`);
-                    resolve({ code: 200, data: data.toString(encode) });
+                    resolve({ code: 200, data: data.toString(encode || 'utf-8') });
                 } else {
                     resolve({ code: 200, data });
                 }

@@ -35,6 +35,9 @@
                             :preview-src-list="[data.row.path]"
                         />
                     </template>
+                    <template v-else-if="['text/plain'].includes(data.row.type)">
+                        <read-file-dialog :path="data.row.path" />
+                    </template>
                     <template v-else>
                         暂不支持预览
                     </template>
