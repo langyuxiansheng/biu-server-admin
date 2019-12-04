@@ -4,7 +4,7 @@
  * @param {*} dataTypes
  * 此模型仅限关系型数据库使用
  */
-const Utils = require(':lib/Utils');
+const { getTimeStampUUID } = require(':lib/Utils');
 module.exports = (sequelize, dataTypes) => {
     return sequelize.define('sys_roles_base', {
         //角色ID
@@ -12,7 +12,7 @@ module.exports = (sequelize, dataTypes) => {
             type: dataTypes.STRING(),
             allowNull: false,
             primaryKey: true,
-            defaultValue: () => Utils.getTimeStampUUID()
+            defaultValue: () => getTimeStampUUID()
         },
 
         //角色名称

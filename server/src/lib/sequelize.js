@@ -52,6 +52,5 @@ module.exports = {
     SOP,
     COL,
     Attrs,
-    DataTypes: Sequelize.DataTypes,
     BiuDB
 };

@@ -28,7 +28,7 @@
                     {{ data.row[data.col.key] | formatFileSize }}
                 </template>
                 <template v-else-if="data.col.key === 'view'">
-                    <template v-if="['image/jpeg','image/png'].includes(data.row.type)">
+                    <template v-if="['image/jpeg','image/png','image/gif'].includes(data.row.type)">
                         <el-image
                             fit="cover"
                             :src="data.row.path"

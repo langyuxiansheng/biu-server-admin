@@ -47,7 +47,7 @@
 import { getSysLogList, deleteFiles } from '@/http';
 export default {
     head: {
-        title: '文件管理'
+        title: '系统日志'
     },
     name: 'LogsManage',
     data () {

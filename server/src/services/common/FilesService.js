@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const result = require(':lib/Result');
 const config = require(':config/server.base.config'); //配置文件
 const { MODELS_PATH, getExtname, getTimeStampUUID, getYearMonthDay, getFileNameUUID32 } = require(':lib/Utils');
+const { isDirExists, deleteFile } = require(':lib/FileUtils');
 const { BiuDB, SOP } = require(':lib/sequelize');
 const Email = require(':lib/Email');
 const FilesBaseModel = BiuDB.import(`${MODELS_PATH}/common/FilesBaseModel`);
@@ -28,32 +29,14 @@ module.exports = class {
         try {
             if (Array.isArray(file)) { //只能上传单文件,需要删除临时文件
                 file.forEach((file) => {
-                    fs.unlink(file.path, (err) => { //上传成功后删除临时文件
-                        if (err) {
-                            throw new Error('删除临时文件异常！');
-                        } else {
-                            console.log(`文件: ${file.path} 删除成功！`);
-                        }
-                    });
+                    deleteFile(file.path); //上传成功后删除临时文件
                 });
                 return result.failed(`只能上传单文件!`);
             };
             //创建文件夹
             const time = getYearMonthDay(); //获取时间
             let uploadPath = path.join(config.staticPath, `/uploads/`, time.replace(/-/g, '')); //文件上传存放路径
-            const existsSync = await new Promise((resolve, reject) => {
-                if (!fs.existsSync(uploadPath)) { //判断文件夹是否存在
-                    fs.mkdir(uploadPath, (err) => {
-                        if (err) {
-                            reject(new Error(err));
-                        } else {
-                            resolve(true);
-                        }
-                    });
-                } else {
-                    resolve(true);
-                }
-            });
+            const existsSync = await isDirExists(uploadPath, true); //判断文件夹是否存在,不存在就创建
             if (existsSync) { //确认成功之后再进行操作
                 const data = await this.__filePromise(file, uploadPath, state.user.data); //调用文件上传方法
                 await FilesBaseModel.create(data); //保存文件到数据库
@@ -78,19 +61,7 @@ module.exports = class {
             //创建文件夹
             const time = getYearMonthDay(); //获取时间
             let uploadPath = path.join(config.staticPath, `/uploads/`, time.replace(/-/g, '')); //文件上传存放路径
-            const existsSync = await new Promise((resolve, reject) => {
-                if (!fs.existsSync(uploadPath)) { //判断文件夹是否存在
-                    fs.mkdir(uploadPath, (err) => {
-                        if (err) {
-                            reject(new Error(err));
-                        } else {
-                            resolve(true);
-                        }
-                    });
-                } else {
-                    resolve(true);
-                }
-            });
+            const existsSync = await isDirExists(uploadPath, true); //判断文件夹是否存在,不存在就创建
             if (existsSync) { //确认成功之后再进行操作
                 //多文件上传
                 const saveFiles = await Promise.all(fileList.map((file) => {
@@ -142,13 +113,7 @@ module.exports = class {
                     data.fileMD5 = md5sum.digest('hex').toUpperCase();
                     console.log(`fileMD5:`, data.fileMD5);
                     reader.close(); //关闭文件
-                    fs.unlink(file.path, (err) => { //上传成功后删除临时文件
-                        if (err) {
-                            reject(new Error('删除临时文件异常！'));
-                        } else {
-                            console.log(`文件: ${file.path} 删除成功！`);
-                        }
-                    });
+                    deleteFile(file.path); //上传成功后删除临时文件
                     console.log(`文件:${name} 上传成功!`);
                     resolve(data);
                 });
@@ -183,16 +148,15 @@ module.exports = class {
             const files = await FilesBaseModel.findAll(queryData);
             if (files && files.length) { //获取数据库里的文件数据
                 if (isAdmin && (roleName === '超级管理员')) { //只有超级管理员才能真正的删除文件,普通用户为软删除
-                    const deleteFiles = files.map((file) => {
-                        return new Promise((resolve, reject) => {
-                            fs.unlink(path.join(config.staticPath, file.path), (err) => { //删除文件
-                                if (err) {
-                                    reject(new Error(`删除文件: ${file.path} 异常！`));
-                                } else {
-                                    console.log(`文件: ${file.path} 删除成功！`);
-                                    resolve(file);
-                                }
-                            });
+                    const deleteFiles = files.map(async (file) => {
+                        return new Promise(async (resolve, reject) => {
+                            const res = await deleteFile(path.join(config.staticPath, file.path)); //上传成功后删除临时文件
+                            if (res && res.code == 200) {
+                                resolve(file);
+                            } else {
+                                console.log(`文件: ${file.path} 删除失败！`);
+                                reject(res);
+                            }
                         });
                     });
                     //返回删除文件的结果
