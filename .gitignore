@@ -86,3 +86,4 @@ dist
 /biu-server-admin.zip
 /.vscode
 /docs/docs/yarn.lock
+/docs-v1.0.0/yarn.lock
