@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2019-11-26 17:01:12
+Date: 2019-12-04 09:28:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -107,9 +107,11 @@ INSERT INTO `sys_permission` VALUES ('9165B8CE9FE66822671CC48F471E4F6F', '94147C
 INSERT INTO `sys_permission` VALUES ('94147C10163735F7BC8848C9586342F3', '6A7715BE30B7E36F239081784C91A6DB', '管理员管理', '1', 'AdminManage', 'AdminManage', 'AdminManage', '', '601', null, '0', '1554514703', '1554514703');
 INSERT INTO `sys_permission` VALUES ('A6AAF5F91DF0A5A8039FFA4F63F40C57', 'C4E0D68694C6FB65C42E217CAA5AFF00', '删除', '2', null, 'delete', null, null, null, null, '0', '1574669328', '1574669328');
 INSERT INTO `sys_permission` VALUES ('B7F1E34F3A27577697ADEB20EE5AB43E', '94147C10163735F7BC8848C9586342F3', '添加', '2', 'Add', 'Add', 'Add', null, null, null, '0', '1574404513', '1574404513');
+INSERT INTO `sys_permission` VALUES ('BFA99EFDEEAB428CE72C79FD58B746B8', '6A7715BE30B7E36F239081784C91A6DB', '系统日志', '1', 'LogsManage', 'LogsManage', 'LogsManage', null, '605', null, '0', '1575367511', '1575367511');
 INSERT INTO `sys_permission` VALUES ('C4E0D68694C6FB65C42E217CAA5AFF00', '6A7715BE30B7E36F239081784C91A6DB', '文件管理', '1', 'FilesManage', 'FilesManage', 'FilesManage', null, '604', '文件管理模块,用于管理所有上传在系统里的文件', '0', '1574344851', '1574344851');
 INSERT INTO `sys_permission` VALUES ('E8423171735D0CFA74810B85BCC1E189', 'C4E0D68694C6FB65C42E217CAA5AFF00', '上传文件', '2', 'add', 'add', 'add', null, null, null, '0', '1574669078', '1574669078');
 INSERT INTO `sys_permission` VALUES ('F0F70F5841A704F3112BC64C34F2FCD2', 'C4E0D68694C6FB65C42E217CAA5AFF00', '文件筛选', '2', null, 'select', null, null, null, null, '0', '1574676011', '1574676011');
+INSERT INTO `sys_permission` VALUES ('FD4452AF06723FEE0E550F46D396E664', 'BFA99EFDEEAB428CE72C79FD58B746B8', '删除', '2', null, 'delete', null, null, null, null, '0', '1575368137', '1575368137');
 
 -- ----------------------------
 -- Table structure for `sys_roles_auth`
@@ -150,4 +152,5 @@ CREATE TABLE `sys_roles_base` (
 -- ----------------------------
 -- Records of sys_roles_base
 -- ----------------------------
+INSERT INTO `sys_roles_base` VALUES ('9EFAB8D4D654D64F550DFA96E0B7CA87', '编辑人员', '0', '1575359566', '1575359566');
 INSERT INTO `sys_roles_base` VALUES ('A4D975D98ADC07E5F991285E6E221538', '测试人员', '0', '1554512974', '1554512974');
