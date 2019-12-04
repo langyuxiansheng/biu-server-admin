@@ -5,6 +5,9 @@
             <div v-if="detail" class="detail">
                 {{ detail }}
             </div>
+            <p v-else class="no-logs">
+                暂无日志信息
+            </p>
         </DialogContainer>
     </el-button>
 </template>
@@ -33,7 +36,7 @@ export default {
                 closeOnClickModal: true,
                 appendToBody: true
             },
-            detail: {}
+            detail: null
         };
     },
     methods: {
@@ -45,7 +48,7 @@ export default {
             this.dialogConf.title = this.title || '预览详情';
             try {
                 const { data } = await this.$axios[readeFileContent.method](readeFileContent.url, { params: { filePath: this.path } });
-                this.detail = data || {};
+                this.detail = data;
             } catch (error) {
                 console.log(error);
             }
@@ -60,5 +63,8 @@ export default {
     color: @app-font-color;
     max-height: 600px;
     overflow: auto;
+}
+.no-logs{
+    text-align: center;
 }
 </style>

@@ -11,7 +11,7 @@
                     </template>
                 </ul>
             </div>
-            <p class="no-logs">
+            <p v-else class="no-logs">
                 暂无日志信息
             </p>
         </DialogContainer>
@@ -77,5 +77,8 @@ export default {
             padding: 10px 0;
         }
     }
+}
+.no-logs{
+    text-align: center;
 }
 </style>
