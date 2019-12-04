@@ -221,6 +221,13 @@ export default {
     getSysLogContent: {
         url: `${API_SERVER}/system/getSysLogContent`,
         method: 'get'
-    }
+    },
 
+    /**
+     * 删除系统日志
+     */
+    delSysLogByPaths: {
+        url: `${API_SERVER}/system/delSysLogByPaths`,
+        method: 'delete'
+    }
 };

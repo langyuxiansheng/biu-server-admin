@@ -16,7 +16,7 @@ controller.get('/getSysLogContent', async(ctx) => {
     ctx.body = await service.getSysLogContent(ctx.request.query, ctx.state.user.data);
 });
 
-//删除系统管理员
+//删除系统日志
 controller.delete('/delSysLogByPaths', async(ctx) => {
     ctx.body = await service.delSysLogByPaths(ctx.request.body, ctx.state.user.data);
 });

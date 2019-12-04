@@ -4,7 +4,7 @@
 const path = require('path');
 const result = require(':lib/Result');
 const { SRC_PATH } = require(':lib/Utils');
-const { getLogsFileList, readerFile } = require(':lib/FileUtils');
+const { getLogsFileList, readerFile, writeFile } = require(':lib/FileUtils');
 module.exports = class {
     /**
      * 获取系统日志列表
@@ -42,37 +42,33 @@ module.exports = class {
         }
     }
 
-    // /**
-    //  * 获取管理员的基础信息
-    //  * @param {*} param0
-    //  */
-    // async getSysAdminBaseInfo({ adminId }) {
-    //     if (!adminId) return result.paramsLack();
-    //     let queryData = {
-    //         where: { adminId, isDelete: false },
-    //         attributes: { exclude: ['isDelete', 'createdTime', 'updatedTime', 'password'] }
-    //     };
-    //     try {
-    //         const info = await SysAdminBaseModel.findOne(queryData);
-    //         return result.success(null, info);
-    //     } catch (error) {
-    //         console.log(error);
-    //         return result.failed(error);
-    //     }
-    // }
-
     /**
-     * 删除系统日志
+     * 删除系统日志内容
      * @param {*} param0
+     * @description 只能清空内容不能直接删除文件,否则没释放资源的情况下会报错
      */
     async delSysLogByPaths({ paths, isDelete }, { isAdmin }) {
         //非超级管理员不可获取此菜单
         if (!isAdmin) return result.noAuthority();
         if (!paths || !isDelete || !Array.isArray(paths)) return result.paramsLack();
         try {
-            //批量软删除
-            // const del = { where: { adminId: ids } };
-            return result.success();
+            const deleteFiles = paths.map((logPath) => { //批量删除
+                return new Promise(async (resolve, reject) => {
+                    try {
+                        const res = await writeFile(path.join(SRC_PATH, logPath), ''); //上传成功后删除临时文件
+                        if (res && res.code == 200) {
+                            resolve(logPath);
+                        } else {
+                            reject(res);
+                        }
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+            //返回删除文件的结果
+            const delData = await Promise.all(deleteFiles);
+            return result.success(null, { list: delData });
         } catch (error) {
             console.log(error);
             return result.failed(error);

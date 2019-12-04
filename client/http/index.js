@@ -27,6 +27,7 @@ export const {
     readeFileContent,
     deleteFiles,
     getSysLogList,
-    getSysLogContent
+    getSysLogContent,
+    delSysLogByPaths
     //555
 } = apis;

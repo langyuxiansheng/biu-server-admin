@@ -32,7 +32,7 @@
     </card-container>
 </template>
 <script>
-import { getSysLogList, deleteFiles } from '@/http';
+import { getSysLogList, delSysLogByPaths } from '@/http';
 import ReadLogDialog from './ReadLogDialog';
 export default {
     head: {
@@ -52,6 +52,7 @@ export default {
                 data: [], //表格数据
                 total: 0, //总页数
                 tableType: 1, //表格类型
+                hidePagination: true, //隐藏分页器
                 utils: { //表格工具栏
                     left: [{ slot: 'delete' }],
                     right: [{ slot: 'search' }],
@@ -100,9 +101,8 @@ export default {
 
         async init () {
             try {
-                const { data: { total, list } } = await this.$axios[getSysLogList.method](getSysLogList.url, { params: this.table.queryData });
+                const { data: { list } } = await this.$axios[getSysLogList.method](getSysLogList.url, { params: this.table.queryData });
                 this.table.data = list;
-                this.table.total = total;
             } catch (error) {
                 console.error(error);
             }
@@ -131,14 +131,14 @@ export default {
          * 删除
          */
         handleDel ({ path, paths }) {
-            this.$confirm(`此操作将会删除此日志文件,是否继续?`, '提示', {
+            this.$confirm(`此操作将会清空此日志文件的内容,是否继续?`, '提示', {
                 cancelButtonText: '取消',
                 confirmButtonText: '确定',
                 type: 'warning',
                 center: true,
                 customClass: 'bg-warning'
             }).then(async () => {
-                const { code } = await this.$axios[deleteFiles.method](deleteFiles.url, {
+                const { code } = await this.$axios[delSysLogByPaths.method](delSysLogByPaths.url, {
                     data: { paths: paths || [path], isDelete: true }
                 });
                 if (code == 200) {
