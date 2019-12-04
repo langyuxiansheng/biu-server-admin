@@ -100,9 +100,9 @@ export default {
          * 上传限制
          */
         beforeUpload(file) {
-            const isMax = file.size / 1024 / 1024 < 4096;
+            const isMax = file.size / 1024 / 1024 < 200;
             if (!isMax) {
-                this.$message.error('上传文件大小不能超过 4GB!');
+                this.$message.error('上传文件大小不能超过 200M!');
             }
             return isMax;
         },

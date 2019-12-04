@@ -32,7 +32,9 @@ module.exports = class {
                     deleteFile(file.path); //上传成功后删除临时文件
                 });
                 return result.failed(`只能上传单文件!`);
-            };
+            } else if (file.size / 1024 / 1024 < 200) { //单位是M
+                return result.failed(`上传文件不能超过200M!`);
+            }
             //创建文件夹
             const time = getYearMonthDay(); //获取时间
             let uploadPath = path.join(config.staticPath, `/uploads/`, time.replace(/-/g, '')); //文件上传存放路径
@@ -58,6 +60,14 @@ module.exports = class {
         //兼容单文件上传
         const fileList = Array.isArray(files.file) ? files.file : [files.file];
         try {
+            const maxSize = fileList.map(item => item.size).reduce((a, b) => (a + b), 0);
+            if (maxSize / 1024 / 1024 < 200) { //单位是M
+                fileList.forEach((file) => {
+                    deleteFile(file.path); //上传成功后删除临时文件
+                });
+                return result.failed(`批量上传文件总大小不能超过200M!`);
+            }
+
             //创建文件夹
             const time = getYearMonthDay(); //获取时间
             let uploadPath = path.join(config.staticPath, `/uploads/`, time.replace(/-/g, '')); //文件上传存放路径
