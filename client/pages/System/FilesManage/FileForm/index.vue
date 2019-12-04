@@ -3,10 +3,31 @@
         <el-row class="app-form" :gutter="$store.state.config.dialogFormGutterWidth">
             <el-form ref="AppForm" :label-position="$store.state.config.labelPosition" label-width="125px" @submit.native.prevent>
                 <el-col :span="24">
-                    <el-form-item label="上传文件" prop="account">
+                    <el-form-item label="单个文件" prop="account">
                         <el-upload
                             class="app-upload"
                             :action="uploadURL"
+                            :before-upload="beforeUpload"
+                            :on-preview="handlePreview"
+                            :before-remove="handleBeforeRemove"
+                            :on-success="handleSuccess"
+                            :file-list="fileList"
+                            list-type="picture"
+                            :headers="headers"
+                        >
+                            <el-button size="small" type="primary">
+                                点击上传
+                            </el-button>
+                            <div slot="tip" class="el-upload__tip">
+                                只能上传小于1G的文件
+                            </div>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item label="批量上传" prop="account">
+                        <el-upload
+                            multiple
+                            class="app-upload"
+                            :action="uploadsURL"
                             :before-upload="beforeUpload"
                             :on-preview="handlePreview"
                             :before-remove="handleBeforeRemove"
@@ -43,13 +64,14 @@
 <script type="text/ecmascript-6">
 import { deleteFiles } from '@/http';
 import util from '@/lib/util';
-import { FILE_UPLOAD_URL } from '@/http/models/types';
+import { FILE_UPLOAD_URL, FILES_UPLOAD_URL } from '@/http/models/types';
 export default {
     name: 'FileForm',
     data () {
         const { dialogSingleFormWidth } = this.$store.state.config;
         return {
             uploadURL: FILE_UPLOAD_URL, //文件上传地址
+            uploadsURL: FILES_UPLOAD_URL, //文件上传地址
             dialogConf: {
                 width: dialogSingleFormWidth,
                 isShow: false,
@@ -78,11 +100,11 @@ export default {
          * 上传限制
          */
         beforeUpload(file) {
-            const isLt1G = file.size / 1024 / 1024 < 1024;
-            if (!isLt1G) {
-                this.$message.error('上传文件大小不能超过 1GB!');
+            const isMax = file.size / 1024 / 1024 < 200;
+            if (!isMax) {
+                this.$message.error('上传文件大小不能超过 200M!');
             }
-            return isLt1G;
+            return isMax;
         },
 
         /**
@@ -104,14 +126,16 @@ export default {
          */
         async handleBeforeRemove(file, fileList) {
             try {
-                const { code } = await this.$axios[deleteFiles.method](deleteFiles.url, {
-                    data: { ids: [file.response.data.fileId], isDelete: true }
-                });
-                if (code == 200) {
-                    this.$message.success(this.$t('msg.deleted_success'));
-                    return Promise.resolve(true);
-                } else {
-                    return Promise.resolve(false);
+                if (file && file.response && file.response.data) {
+                    const { code } = await this.$axios[deleteFiles.method](deleteFiles.url, {
+                        data: { ids: [file.response.data.fileId], isDelete: true }
+                    });
+                    if (code == 200) {
+                        this.$message.success(this.$t('msg.deleted_success'));
+                        return Promise.resolve(true);
+                    } else {
+                        return Promise.resolve(false);
+                    }
                 }
             } catch (error) {
                 console.error(error);

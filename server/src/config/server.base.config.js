@@ -1,4 +1,5 @@
 const path = require('path'); //路径模块
+
 /**
  * 主配置
  */
@@ -26,34 +27,40 @@ module.exports = {
             pass: 'kqpzjioamhbdbaec'
         }
     },
-    dbs: [ //数据源配置
-        {
-            DB_type: 'mysql', // 数据库类型
-            host: 'localhost', // 服务器地址
-            port: 3306, // 数据库端口号
-            username: 'root', // 数据库用户名
-            password: 'root', // 数据库密码
-            database: 'biu_server_db', // 数据库名称
-            dialectOptions: { // MySQL > 5.5，其它数据库删除此项
-                charset: 'utf8mb4',
-                supportBigNumbers: true,
-                bigNumberStrings: true
-                //collate: 'utf8mb4_unicode_520_ci',
-                //requestTimeout: 60 * 1000 //设置连接超时时间
-            },
-            define: {
-                underscored: false, //	转换列名的驼峰命名规则为下划线命令规则
-                freezeTableName: true, //设置为true时，sequelize不会改变表名，否则可能会按其规则有所调整
-                charset: 'utf8mb4',
-                timestamps: false //为模型添加 createdAt 和 updatedAt 两个时间戳字段
-            },
-            pool: {
-                max: 50, // 连接池中最大连接数量
-                min: 0, // 连接池中最小连接数量
-                idle: 10000 // 如果一个线程 10 秒钟内没有被使用过的话，那么就释放线程
+    dbs: { //数据源配置
+        BiuDB: {
+            name: 'BiuDB', //ORM中使用的名称 建议和key一样的名称
+            type: 'sequelize', //orm类型 类型可选sequelize redis等
+            config: {
+                username: 'biu_server_db', // 数据库用户名
+                password: 'mWTNrJ7ewJFDkAd5', // 数据库密码
+                database: 'biu_server_db', // 数据库名称
+                options: { //配置项
+                    dialect: 'mysql', // 数据库类型
+                    host: '111.231.225.103', // 服务器地址
+                    port: 3306, // 数据库端口号
+                    dialectOptions: { // MySQL > 5.5，其它数据库删除此项
+                        charset: 'utf8mb4',
+                        supportBigNumbers: true,
+                        bigNumberStrings: true
+                        //collate: 'utf8mb4_unicode_520_ci',
+                        //requestTimeout: 60 * 1000 //设置连接超时时间
+                    },
+                    define: {
+                        underscored: false, //	转换列名的驼峰命名规则为下划线命令规则
+                        freezeTableName: true, //设置为true时，sequelize不会改变表名，否则可能会按其规则有所调整
+                        charset: 'utf8mb4',
+                        timestamps: false //为模型添加 createdAt 和 updatedAt 两个时间戳字段
+                    },
+                    pool: {
+                        max: 50, // 连接池中最大连接数量
+                        min: 0, // 连接池中最小连接数量
+                        idle: 10000 // 如果一个线程 10 秒钟内没有被使用过的话，那么就释放线程
+                    }
+                }
             }
         }
-    ],
+    },
     unlessPath: [ //url白名单 如果不设置默认都是没权限访问的,会返回{code:401}
         /^\/public/, //公共资源
         /^\/_nuxt/, //nuxt页面

@@ -31,4 +31,9 @@ controller.get('/getFileById/:fileId', async(ctx) => {
     ctx.body = await service.getFileById(ctx.params);
 });
 
+//获取文件列表接口
+controller.get('/readeFileContent', async(ctx) => {
+    ctx.body = await service.readeFileContent(ctx.request.query);
+});
+
 module.exports = controller;

@@ -5,6 +5,7 @@
         :width="dialogConf.width"
         :center="dialogConf.center"
         :visible.sync="dialogConf.isShow"
+        :append-to-body="dialogConf.appendToBody || false"
     >
         <span slot="title">
             {{ dialogConf.title }}
@@ -28,7 +29,8 @@ export default {
                     isShow: false,
                     center: true,
                     title: null,
-                    closeOnClickModal: true
+                    closeOnClickModal: true,
+                    appendToBody: false
                 };
             }
         }

@@ -1,6 +1,6 @@
 <template>
     <card-container>
-        <app-tables :table="table" :utils="table.utils" @pageChange="handleCurrentChange">
+        <app-tables :table="table" :utils="table.utils" @pageChange="handleCurrentChange" @selectionChange="handleSelectionChange">
             <template>
                 <el-button v-if="$store.state.permission.includes('add')" slot="add" type="primary" icon="el-icon-circle-plus" plain @click="showDialog({type:'add'})">
                     上传文件
@@ -10,6 +10,17 @@
                     <el-option label="正常" :value="0" />
                     <el-option label="已标记为删除" :value="1" />
                 </el-select>
+                <el-button
+                    v-if="$store.state.permission.includes('delete')"
+                    slot="delete"
+                    plain
+                    type="danger"
+                    icon="el-icon-delete"
+                    :disabled="!deleteData.ids.length"
+                    @click="handleDel(deleteData)"
+                >
+                    批量删除
+                </el-button>
                 <!-- <el-button type="text" @click="handleDel({type:1})">
                     删除
                 </el-button> -->
@@ -28,12 +39,15 @@
                     {{ data.row[data.col.key] | formatFileSize }}
                 </template>
                 <template v-else-if="data.col.key === 'view'">
-                    <template v-if="['image/jpeg','image/png'].includes(data.row.type)">
+                    <template v-if="['image/jpeg','image/png','image/gif'].includes(data.row.type)">
                         <el-image
                             fit="cover"
                             :src="data.row.path"
                             :preview-src-list="[data.row.path]"
                         />
+                    </template>
+                    <template v-else-if="['text/plain'].includes(data.row.type)">
+                        <read-file-dialog :path="data.row.path" />
                     </template>
                     <template v-else>
                         暂不支持预览
@@ -79,7 +93,7 @@ export default {
                 total: 0, //总页数
                 tableType: 1, //表格类型
                 utils: { //表格工具栏
-                    left: [{ slot: 'add' }, { slot: 'select' }],
+                    left: [{ slot: 'add' }, { slot: 'delete' }, { slot: 'select' }],
                     right: [{ slot: 'search' }],
                     cols: [12, 12]
                 },
@@ -131,6 +145,9 @@ export default {
                         label: '操作'
                     }
                 ]
+            },
+            deleteData: {
+                ids: []
             }
         };
     },
@@ -173,8 +190,8 @@ export default {
         /**
          * 删除
          */
-        handleDel ({ fileId }) {
-            this.$confirm(`此操作将会删除此文件,是否继续?`, '提示', {
+        handleDel ({ fileId, ids }) {
+            this.$confirm(`此操作将会删除文件,是否继续?`, '提示', {
                 cancelButtonText: '取消',
                 confirmButtonText: '确定',
                 type: 'warning',
@@ -182,13 +199,20 @@ export default {
                 customClass: 'bg-warning'
             }).then(async () => {
                 const { code } = await this.$axios[deleteFiles.method](deleteFiles.url, {
-                    data: { ids: [fileId], isDelete: true }
+                    data: { ids: ids || [fileId], isDelete: true }
                 });
                 if (code == 200) {
                     this.$message.success(this.$t('msg.deleted_success'));
                     this.init();
                 }
             }).catch(() => {});
+        },
+
+        /**
+         * 批量删除
+         */
+        handleSelectionChange(list) {
+            this.deleteData.ids = list.map(item => item.fileId);
         }
     }
 };

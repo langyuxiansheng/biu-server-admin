@@ -4,7 +4,7 @@
  * @param {*} dataTypes
  * 此模型仅限关系型数据库使用
  */
-const Utils = require(':lib/Utils');
+const { getTimeStampUUID } = require(':lib/Utils');
 module.exports = (sequelize, dataTypes) => {
     return sequelize.define('sys_permission', {
 
@@ -13,7 +13,7 @@ module.exports = (sequelize, dataTypes) => {
             type: dataTypes.STRING(),
             allowNull: false,
             primaryKey: true,
-            defaultValue: () => Utils.getTimeStampUUID()
+            defaultValue: () => getTimeStampUUID()
         },
 
         //权限父级ID

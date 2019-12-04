@@ -199,11 +199,27 @@ export default {
     },
 
     /**
+     * 读取文件
+     */
+    readeFileContent: {
+        url: `${API_SERVER}/common/readeFileContent`,
+        method: 'get'
+    },
+
+    /**
      * 获取系统日志列表
      * @param {*} data
      */
     getSysLogList: {
         url: `${API_SERVER}/system/getSysLogList`,
+        method: 'get'
+    },
+
+    /**
+     * 获取系统日志的内容
+     */
+    getSysLogContent: {
+        url: `${API_SERVER}/system/getSysLogContent`,
         method: 'get'
     }
 
