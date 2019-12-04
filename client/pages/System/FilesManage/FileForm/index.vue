@@ -100,11 +100,11 @@ export default {
          * 上传限制
          */
         beforeUpload(file) {
-            const isLt1G = file.size / 1024 / 1024 < 1024;
-            if (!isLt1G) {
-                this.$message.error('上传文件大小不能超过 1GB!');
+            const isMax = file.size / 1024 / 1024 < 4096;
+            if (!isMax) {
+                this.$message.error('上传文件大小不能超过 4GB!');
             }
-            return isLt1G;
+            return isMax;
         },
 
         /**
@@ -126,14 +126,16 @@ export default {
          */
         async handleBeforeRemove(file, fileList) {
             try {
-                const { code } = await this.$axios[deleteFiles.method](deleteFiles.url, {
-                    data: { ids: [file.response.data.fileId], isDelete: true }
-                });
-                if (code == 200) {
-                    this.$message.success(this.$t('msg.deleted_success'));
-                    return Promise.resolve(true);
-                } else {
-                    return Promise.resolve(false);
+                if (file && file.response && file.response.data) {
+                    const { code } = await this.$axios[deleteFiles.method](deleteFiles.url, {
+                        data: { ids: [file.response.data.fileId], isDelete: true }
+                    });
+                    if (code == 200) {
+                        this.$message.success(this.$t('msg.deleted_success'));
+                        return Promise.resolve(true);
+                    } else {
+                        return Promise.resolve(false);
+                    }
                 }
             } catch (error) {
                 console.error(error);
