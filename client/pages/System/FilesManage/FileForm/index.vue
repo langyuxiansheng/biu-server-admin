@@ -3,10 +3,31 @@
         <el-row class="app-form" :gutter="$store.state.config.dialogFormGutterWidth">
             <el-form ref="AppForm" :label-position="$store.state.config.labelPosition" label-width="125px" @submit.native.prevent>
                 <el-col :span="24">
-                    <el-form-item label="上传文件" prop="account">
+                    <el-form-item label="单个文件" prop="account">
                         <el-upload
                             class="app-upload"
                             :action="uploadURL"
+                            :before-upload="beforeUpload"
+                            :on-preview="handlePreview"
+                            :before-remove="handleBeforeRemove"
+                            :on-success="handleSuccess"
+                            :file-list="fileList"
+                            list-type="picture"
+                            :headers="headers"
+                        >
+                            <el-button size="small" type="primary">
+                                点击上传
+                            </el-button>
+                            <div slot="tip" class="el-upload__tip">
+                                只能上传小于1G的文件
+                            </div>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item label="批量上传" prop="account">
+                        <el-upload
+                            multiple
+                            class="app-upload"
+                            :action="uploadsURL"
                             :before-upload="beforeUpload"
                             :on-preview="handlePreview"
                             :before-remove="handleBeforeRemove"
@@ -43,13 +64,14 @@
 <script type="text/ecmascript-6">
 import { deleteFiles } from '@/http';
 import util from '@/lib/util';
-import { FILE_UPLOAD_URL } from '@/http/models/types';
+import { FILE_UPLOAD_URL, FILES_UPLOAD_URL } from '@/http/models/types';
 export default {
     name: 'FileForm',
     data () {
         const { dialogSingleFormWidth } = this.$store.state.config;
         return {
             uploadURL: FILE_UPLOAD_URL, //文件上传地址
+            uploadsURL: FILES_UPLOAD_URL, //文件上传地址
             dialogConf: {
                 width: dialogSingleFormWidth,
                 isShow: false,

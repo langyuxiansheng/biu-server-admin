@@ -150,22 +150,22 @@ module.exports = class {
                 if (isAdmin && (roleName === '超级管理员')) { //只有超级管理员才能真正的删除文件,普通用户为软删除
                     const deleteFiles = files.map((file) => {
                         return new Promise(async (resolve, reject) => {
-                            const res = await deleteFile(path.join(config.staticPath, file.path)); //上传成功后删除临时文件
-                            if (res && res.code == 200) {
-                                resolve(file);
-                            } else {
-                                reject(res);
+                            try {
+                                const res = await deleteFile(path.join(config.staticPath, file.path)); //上传成功后删除临时文件
+                                if (res && res.code == 200) {
+                                    await FilesBaseModel.destroy({ where: { fileId: file.fileId } });
+                                    resolve(file);
+                                } else {
+                                    reject(res);
+                                }
+                            } catch (error) {
+                                reject(error);
                             }
                         });
                     });
                     //返回删除文件的结果
                     const delData = await Promise.all(deleteFiles);
                     //批量删除数据库的数据
-                    await FilesBaseModel.destroy({
-                        where: {
-                            fileId: delData.map(file => file.fileId)
-                        }
-                    });
                     return result.success(null, delData);
                 } else {
                     //批量软删除
@@ -176,7 +176,7 @@ module.exports = class {
             return result.success(`未发现需要删除的文件!`);
         } catch (error) {
             console.log(error);
-            return result.failed(`删除文件出错!`);
+            return result.failed(`删除部分文件出错!`);
         }
     }
 
