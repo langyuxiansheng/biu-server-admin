@@ -2,14 +2,22 @@
 defaultHome: true
 home: true
 # heroImage: /images/logo.png
+# heroText: Hero 标题
+# tagline: Hero 副标题
 actionText: 快速上手 →
-actionLink: /zh/
+actionLink: /zh/guide/
 features:
-- title: RESTful 架构
-  details: 遵循统一接口原则,使用标准的HTTP请求方法,
-- title: Vue驱动
-  details: 享受 Vue + webpack 的开发体验，在 Markdown 中使用 Vue 组件，同时可以使用 Vue 来开发自定义主题。
-- title: 高性能
-  details: VuePress 为每个页面预渲染生成静态的 HTML，同时在页面被加载的时候，将作为 SPA 运行。
+- title: RESTful API
+  details: 遵循统一接口原则,使用标准的HTTP请求方法，统一状态码等，返回标准的JSON格式。
+- title: Nodejs Koa2
+  details: 基于现在比较流行的koa2服务器框架，高性能和高可用性，实现毫秒级响应。
+- title: 工程化项目
+  details: 使用清晰明了的项目结构，统一方法封装等，使整个项目内容有条不紊。
+- title: 易用
+  details: 假如你已经有ES6和koa相关的知识，分分钟即可上手。
+- title: 灵活
+  details: 模块化的应用开发，一个接口分分钟搞定，可选的管理后台页面（基于Nuxt开发，只要你会Vue即可开发）。
+- title: 高效
+  details: 使用JWT身份认证,项目中使用了MySQL数据库，集成Sequelize等ORM工具。
 footer: MIT Licensed | Copyright © 2018-present 狼丶宇先生
 ---

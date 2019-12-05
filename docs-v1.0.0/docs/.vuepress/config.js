@@ -7,7 +7,7 @@ module.exports = {
     serviceWorker: true, // 是否开启 PWA
     base: '/', // 这是部署到github相关的配置
     markdown: {
-        lineNumbers: false // 代码块显示行号
+        lineNumbers: true // 代码块显示行号
     },
     locales: {
         // 键名是该语言所属的子路径
@@ -15,7 +15,7 @@ module.exports = {
         '/': {
             lang: 'zh-CN',
             title: 'BiuServerAdmin',
-            description: '基于node koa2的RESTful API 应用级Node服务器'
+            description: '基于Node Koa2的RESTful API 应用级Node服务器'
         },
         '/en/': {
             lang: 'en-US', // 将会被设置为 <html> 的 lang 属性
@@ -26,6 +26,8 @@ module.exports = {
     themeConfig: {
         locales: {
             '/': {
+                smoothScroll: true, //启用页面滚动效果
+                sidebarDepth: 2, //提取的侧边栏深度 6
                 // 多语言下拉菜单的标题
                 selectText: '选择语言',
                 // 该语言在下拉菜单中的标签
@@ -42,16 +44,14 @@ module.exports = {
                 // 当前 locale 的 algolia docsearch 选项
                 algolia: {},
                 nav: [
-                    { text: '嵌套', link: '/zh/nested/' }
+                    { text: '指南', link: '/zh/guide/' },
+                    { text: '了解更多', link: 'https://google.com' },
                 ],
-                sidebar: {
-                    // '/zh/': [
-                    //     '/',
-                    //     'test',
-                    //     ['/test/a']
-                    // ],
-                    // '/zh/nested/': [/* ... */]
-                }
+                sidebar: [
+                    ['/zh/guide/','简介'],
+                    ['/zh/guide/install','安装'],
+                    ['/zh/guide/directory-structure', '目录结构']
+                ]
             },
             '/en/': {
                 selectText: 'Languages',
@@ -64,15 +64,9 @@ module.exports = {
                         buttonText: "Refresh"
                     }
                 },
-                algolia: {},
-                nav: [
-                    { text: 'Nested', link: '/nested/', ariaLabel: 'Nested' }
-                ],
-                sidebar: {
-                    '/': [/* ... */],
-                    '/nested/': [/* ... */]
-                }
+                algolia: {}
             }
         }
-    }
+    },
+    plugins: ['autobar']
 }
