@@ -30,7 +30,11 @@ module.exports = class {
             const info = deepCloneObject(user);//克隆一个对象
             info['userId'] = user.adminId; //设置通用id名
             info['userName'] = user.adminName; //设置通用用户名
-            const jwt = signJWT(info, '2h'); //验证通过签发jwt,2小时有效!
+            const jwt = signJWT({
+                userId: user.adminId,
+                isAdmin: user.isAdmin,
+                roleId: user.roleId
+            }, '2h'); //验证通过签发jwt,2小时有效!
             return result.success(null, { jwt, user: info });
         } catch (error) {
             systemLogger.error(`管理员登录`, `LoginService.userLoginForSysAdmin`, error);
