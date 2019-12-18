@@ -82,8 +82,10 @@
  |   |     |  |-- UtilsService.js    // 工具逻辑类
  |   |     |
  |   |     |-- system                   //系统业务逻辑目录
- |   |        |-- PermissionService.js    //权限逻辑类
  |   |        |-- AdminService.js    // 文件业务逻辑类
+ |   |        |-- LogsService.js    // 文件业务逻辑类
+ |   |        |-- PermissionService.js    //权限逻辑类
+ |   |        |-- RolesService.js    // 文件业务逻辑类
  |   |
  |   |__ index.js                       // 服务端启动文件
  |
