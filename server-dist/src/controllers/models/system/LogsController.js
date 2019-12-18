@@ -14,9 +14,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 系统管理员管理
  */
 var KoaRouter = require('koa-router');
-var SysLogsService = require(':services/system/SysLogsService');
+var LogsService = require(':services/system/LogsService');
 var controller = new KoaRouter();
-var service = new SysLogsService();
+var service = new LogsService();
 
 //获取系统日志
 controller.get('/getSysLogList', function () {

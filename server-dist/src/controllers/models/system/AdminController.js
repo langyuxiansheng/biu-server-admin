@@ -14,9 +14,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 系统管理员管理
  */
 var KoaRouter = require('koa-router');
-var SysAdminService = require(':services/system/SysAdminService');
+var AdminService = require(':services/system/AdminService');
 var controller = new KoaRouter();
-var service = new SysAdminService();
+var service = new AdminService();
 
 //添加
 controller.post('/addSysAdmin', function () {

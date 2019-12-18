@@ -2,9 +2,9 @@
  * 角色管理
  */
 const KoaRouter = require('koa-router');
-const SysRolesService = require(':services/system/SysRolesService');
+const RolesService = require(':services/system/RolesService');
 const controller = new KoaRouter();
-const service = new SysRolesService();
+const service = new RolesService();
 
 //添加角色
 controller.post('/addSysRole', async(ctx) => {

@@ -2,9 +2,9 @@
  * 系统管理员管理
  */
 const KoaRouter = require('koa-router');
-const SysLogsService = require(':services/system/SysLogsService');
+const LogsService = require(':services/system/LogsService');
 const controller = new KoaRouter();
-const service = new SysLogsService();
+const service = new LogsService();
 
 //获取系统日志
 controller.get('/getSysLogList', async(ctx) => {

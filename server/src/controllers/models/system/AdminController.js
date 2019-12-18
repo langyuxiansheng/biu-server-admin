@@ -2,9 +2,9 @@
  * 系统管理员管理
  */
 const KoaRouter = require('koa-router');
-const SysAdminService = require(':services/system/SysAdminService');
+const AdminService = require(':services/system/AdminService');
 const controller = new KoaRouter();
-const service = new SysAdminService();
+const service = new AdminService();
 
 //添加
 controller.post('/addSysAdmin', async(ctx) => {

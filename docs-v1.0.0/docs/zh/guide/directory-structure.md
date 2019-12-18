@@ -1,6 +1,7 @@
 ### 目录结构
 
 ---
+
 ```bash
  biu-server-admin                     // 源码根目录
  |-- client
@@ -16,7 +17,7 @@
  |   |   |__ models                   // 项目API接口模块化目录
  |   |   |__ index.js                   // 项目API接口声明及输出
  |   |                    // 项目API接口模块化目录
- |   |-- layouts                   // nuxt默认布局模板目录 
+ |   |-- layouts                   // nuxt默认布局模板目录
  |   |-- lib                   // 管理后台常用工具库
  |   |-- middleware                   // ssr渲染的时候中间件目录
  |   |-- pages                   // 管理后台页面组件目录
@@ -54,22 +55,36 @@
  |   |  |  |-- sequelize.js                   // 数据库ORM工具
  |   |  |  |-- userAgents.js                   // 代理头
  |   |  |  |-- Utils.js                   // 工具类
- |   |  | 
- |   |  |-- logs                   // 服务端日志文件输出目录(具体的目录见lib/logger4.js的配置注释) 
+ |   |  |
+ |   |  |-- logs                   // 服务端日志文件输出目录(具体的目录见lib/logger4.js的配置注释)
  |   |  |-- middleware                   // 服务端中间件目录
  |   |  |  |-- ErrorRoutesCatch.js       // 统一错误捕获中间件,koa中间存放目录
- |   |  | 
+ |   |  |
  |   |  |-- models                   // 数据库数据模型存放目录
  |   |  |  |-- common                   // 系统路由
  |   |  |  |  |-- FilesBaseModel.js    // 文件表数据模型
  |   |  |  |  |-- RegionModel.js       //  地址表数据模型
- |   |  |  | 
+ |   |  |  |
  |   |  |  |-- system                   // 系统路由
- |   |  |     |-- FilesBaseModel.js    // 文件表数据模型
- |   |  |     |-- RegionModel.js       //  地址表数据模型
- |   |  |    
+ |   |  |     |-- AdminBaseModel.js    // 系统用户表数据模型
+ |   |  |     |-- PermissionModel.js       // 系统权限表数据模型
+ |   |  |     |-- RolesAuthModel.js       //  角色权限中间表数据模型
+ |   |  |     |-- RolesBaseModel.js       // 系统角色表数据模型
+ |   |  |
  |   |  |-- public                   // 服务端静态文件存放目录
+ |   |  |  |-- 20191104                   //文件上传生成的目录
+ |   |  |  |-- tmp                   //文件上传临时存储的目录
+ |   |  |  
  |   |  |-- services                   // 服务端业务代码存放目录
+ |   |     |-- common                   //公共业务逻辑目录
+ |   |     |  |-- FilesService.js    // 文件业务逻辑类
+ |   |     |  |-- LoginService.js    // 登录逻辑类
+ |   |     |  |-- UtilsService.js    // 工具逻辑类
+ |   |     |
+ |   |     |-- system                   //系统业务逻辑目录
+ |   |        |-- PermissionService.js    //权限逻辑类
+ |   |        |-- AdminService.js    // 文件业务逻辑类
+ |   |
  |   |__ index.js                       // 服务端启动文件
  |
  |-- server-dist                      // 项目服务端构建代码输出目录product

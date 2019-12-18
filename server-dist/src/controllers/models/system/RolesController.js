@@ -14,9 +14,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 角色管理
  */
 var KoaRouter = require('koa-router');
-var SysRolesService = require(':services/system/SysRolesService');
+var RolesService = require(':services/system/RolesService');
 var controller = new KoaRouter();
-var service = new SysRolesService();
+var service = new RolesService();
 
 //添加角色
 controller.post('/addSysRole', function () {
