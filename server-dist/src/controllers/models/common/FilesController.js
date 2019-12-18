@@ -14,10 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  公共信息入口
  */
 var KoaRouter = require('koa-router');
-
-var _require = require(':services'),
-    FilesService = _require.common.FilesService;
-
+var FilesService = require(':services/common/FilesService');
 var controller = new KoaRouter();
 var service = new FilesService();
 
@@ -148,6 +145,32 @@ controller.get('/getFileById/:fileId', function () {
 
     return function (_x5) {
         return _ref5.apply(this, arguments);
+    };
+}());
+
+//获取文件列表接口
+controller.get('/readeFileContent', function () {
+    var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(ctx) {
+        return _regenerator2.default.wrap(function _callee6$(_context6) {
+            while (1) {
+                switch (_context6.prev = _context6.next) {
+                    case 0:
+                        _context6.next = 2;
+                        return service.readeFileContent(ctx.request.query);
+
+                    case 2:
+                        ctx.body = _context6.sent;
+
+                    case 3:
+                    case 'end':
+                        return _context6.stop();
+                }
+            }
+        }, _callee6, undefined);
+    }));
+
+    return function (_x6) {
+        return _ref6.apply(this, arguments);
     };
 }());
 

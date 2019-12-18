@@ -14,12 +14,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 系统管理员管理
  */
 var KoaRouter = require('koa-router');
-
-var _require = require(':services'),
-    SysPermissionService = _require.system.SysPermissionService;
-
+var PermissionService = require(':services/system/PermissionService');
 var controller = new KoaRouter();
-var service = new SysPermissionService();
+var service = new PermissionService();
 
 //添加权限菜单
 controller.post('/addSysPermission', function () {
@@ -29,7 +26,7 @@ controller.post('/addSysPermission', function () {
                 switch (_context.prev = _context.next) {
                     case 0:
                         _context.next = 2;
-                        return service.addSysPermission(ctx.request.body);
+                        return service.addSysPermission(ctx.request.body, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context.sent;
@@ -55,7 +52,7 @@ controller.get('/getSysPermissionList', function () {
                 switch (_context2.prev = _context2.next) {
                     case 0:
                         _context2.next = 2;
-                        return service.getSysPermissionList(ctx.request.query);
+                        return service.getSysPermissionList(ctx.request.query, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context2.sent;
@@ -81,7 +78,7 @@ controller.delete('/delSysPermissionByIds', function () {
                 switch (_context3.prev = _context3.next) {
                     case 0:
                         _context3.next = 2;
-                        return service.delSysPermissionByIds(ctx.request.body);
+                        return service.delSysPermissionByIds(ctx.request.body, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context3.sent;
@@ -107,7 +104,7 @@ controller.put('/updateSysPermission', function () {
                 switch (_context4.prev = _context4.next) {
                     case 0:
                         _context4.next = 2;
-                        return service.updateSysPermission(ctx.request.body);
+                        return service.updateSysPermission(ctx.request.body, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context4.sent;
@@ -133,7 +130,7 @@ controller.get('/getSysPermissionListToTree', function () {
                 switch (_context5.prev = _context5.next) {
                     case 0:
                         _context5.next = 2;
-                        return service.getSysPermissionListToTree(ctx.request.query);
+                        return service.getSysPermissionListToTree(ctx.request.query, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context5.sent;
@@ -159,7 +156,7 @@ controller.get('/getSysRolePermissionListToTree', function () {
                 switch (_context6.prev = _context6.next) {
                     case 0:
                         _context6.next = 2;
-                        return service.getSysRolePermissionListToTree(ctx.request.query);
+                        return service.getSysRolePermissionListToTree(ctx.request.query, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context6.sent;
@@ -185,7 +182,7 @@ controller.put('/setSysRolePermission', function () {
                 switch (_context7.prev = _context7.next) {
                     case 0:
                         _context7.next = 2;
-                        return service.setSysRolePermission(ctx.request.body);
+                        return service.setSysRolePermission(ctx.request.body, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context7.sent;
@@ -211,7 +208,7 @@ controller.delete('/clearSysRoleAllPermission', function () {
                 switch (_context8.prev = _context8.next) {
                     case 0:
                         _context8.next = 2;
-                        return service.clearSysRoleAllPermission(ctx.request.body);
+                        return service.clearSysRoleAllPermission(ctx.request.body, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context8.sent;
@@ -232,19 +229,17 @@ controller.delete('/clearSysRoleAllPermission', function () {
 //获取角色的树形菜单
 controller.get('/getSysRoleMenusToTree', function () {
     var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee9(ctx) {
-        var data;
         return _regenerator2.default.wrap(function _callee9$(_context9) {
             while (1) {
                 switch (_context9.prev = _context9.next) {
                     case 0:
-                        data = ctx.state.user.data;
-                        _context9.next = 3;
-                        return service.getSysRoleMenusToTree(data);
+                        _context9.next = 2;
+                        return service.getSysRoleMenusToTree(ctx.state.user.data);
 
-                    case 3:
+                    case 2:
                         ctx.body = _context9.sent;
 
-                    case 4:
+                    case 3:
                     case 'end':
                         return _context9.stop();
                 }

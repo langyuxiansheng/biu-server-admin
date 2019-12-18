@@ -2,9 +2,9 @@
  * 系统管理员管理
  */
 const KoaRouter = require('koa-router');
-const SysPermissionService = require(':services/system/SysPermissionService');
+const PermissionService = require(':services/system/PermissionService');
 const controller = new KoaRouter();
-const service = new SysPermissionService();
+const service = new PermissionService();
 
 //添加权限菜单
 controller.post('/addSysPermission', async(ctx) => {

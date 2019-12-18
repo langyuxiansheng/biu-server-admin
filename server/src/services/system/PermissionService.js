@@ -4,15 +4,15 @@
 const result = require(':lib/Result');
 const { MODELS_PATH, listToTree } = require(':lib/Utils');
 const { Attrs, SOP, BiuDB, COL } = require(':lib/sequelize');
-const SysPermissionModel = BiuDB.import(`${MODELS_PATH}/system/SysPermissionModel`);
-const SysRolesAuthModel = BiuDB.import(`${MODELS_PATH}/system/SysRolesAuthModel`);
+const PermissionModel = BiuDB.import(`${MODELS_PATH}/system/PermissionModel`);
+const RolesAuthModel = BiuDB.import(`${MODELS_PATH}/system/RolesAuthModel`);
 module.exports = class {
     constructor() {
-        SysPermissionModel.sync().then((res) => {
-            console.log(`SysPermissionModel 同步成功`, res);
+        PermissionModel.sync().then((res) => {
+            console.log(`PermissionModel 同步成功`, res);
         });
-        SysRolesAuthModel.sync().then((res) => {
-            console.log(`SysRolesAuthModel 同步成功`, res);
+        RolesAuthModel.sync().then((res) => {
+            console.log(`RolesAuthModel 同步成功`, res);
         });
     }
 
@@ -38,9 +38,9 @@ module.exports = class {
                 queryData.where.parentId = parentId;
             }
             //查询是否存在
-            const count = await SysPermissionModel.count(queryData);
+            const count = await PermissionModel.count(queryData);
             if (count > 0) return result.failed('权限已存在!');
-            await SysPermissionModel.create(data); //保存数据
+            await PermissionModel.create(data); //保存数据
             return result.success();
         } catch (error) {
             console.log(error);
@@ -74,7 +74,7 @@ module.exports = class {
             queryData.limit = Number(limit); //每页限制返回的数据条数
         };
         try {
-            const { rows, count } = await SysPermissionModel.findAndCountAll(queryData);
+            const { rows, count } = await PermissionModel.findAndCountAll(queryData);
             return result.success(null, { list: rows, total: count });
         } catch (error) {
             console.log(error);
@@ -97,9 +97,9 @@ module.exports = class {
                     [SOP.or]: [{ permissionId: ids }, { parentId: ids }]
                 }
             };
-            await SysPermissionModel.update({ isDelete }, del);
+            await PermissionModel.update({ isDelete }, del);
             //从中间表删除对应的权限
-            SysRolesAuthModel.destroy({
+            RolesAuthModel.destroy({
                 where: {
                     [SOP.or]: [{ permissionId: ids }, { parentId: ids }]
                 }
@@ -120,7 +120,7 @@ module.exports = class {
         if (!isAdmin) return result.noAuthority();
         if (!data.permissionId) return result.paramsLack();
         try {
-            await SysPermissionModel.update(data, { where: { permissionId: data.permissionId } });
+            await PermissionModel.update(data, { where: { permissionId: data.permissionId } });
             return result.success();
         } catch (error) {
             console.log(error);
@@ -154,7 +154,7 @@ module.exports = class {
             queryData.limit = Number(limit); //每页限制返回的数据条数
         };
         try {
-            let { rows, count } = await SysPermissionModel.findAndCountAll(queryData);
+            let { rows, count } = await PermissionModel.findAndCountAll(queryData);
             const list = listToTree(rows, 'parentId', 'permissionId', 0);
             return result.success(null, { list, total: count });
         } catch (error) {
@@ -170,13 +170,13 @@ module.exports = class {
     async getSysRolePermissionListToTree({ roleId }) {
         if (!roleId) return result.paramsLack();
         try {
-            let rows = await SysPermissionModel.findAll({
+            let rows = await PermissionModel.findAll({
                 where: { isDelete: false },
                 order: [['sort', 'ASC']],
                 attributes: ['permissionId', 'parentId', 'title', 'path', 'type']
             });
             //查询中间表
-            const checkeds = await SysRolesAuthModel.findAll({
+            const checkeds = await RolesAuthModel.findAll({
                 where: { roleId },
                 attributes: { exclude: ['createdTime', 'updatedTime'] }
             });
@@ -206,9 +206,9 @@ module.exports = class {
                 return item;
             });
             //先清除
-            await SysRolesAuthModel.destroy({ where: { roleId } });
+            await RolesAuthModel.destroy({ where: { roleId } });
             //然后再写入
-            await SysRolesAuthModel.bulkCreate(records);
+            await RolesAuthModel.bulkCreate(records);
             return result.success();
         } catch (error) {
             console.log(error);
@@ -226,7 +226,7 @@ module.exports = class {
         if (!roleId) return result.paramsLack();
         try {
             //从中间表删除角色权限
-            await SysRolesAuthModel.destroy({ where: { roleId } });
+            await RolesAuthModel.destroy({ where: { roleId } });
             return result.success();
         } catch (error) {
             console.log(error);
@@ -240,11 +240,11 @@ module.exports = class {
      */
     async getSysRoleMenusToTree({ roleId, isAdmin }) {
         if (!roleId) return result.paramsLack();
-        const table = SysPermissionModel.getTableName();
+        const table = PermissionModel.getTableName();
         const includes = [`title`, 'type', `path`, `name`, `icon`, `sort`, `remark`, `parentId`];
         try {
             if (isAdmin) { //超级管理员直接返回所有的权限
-                let rows = await SysPermissionModel.findAll({
+                let rows = await PermissionModel.findAll({
                     where: { isDelete: false },
                     order: [
                         ['sort', 'ASC']
@@ -256,13 +256,13 @@ module.exports = class {
                 return result.success(null, list);
             }
             //建立表关联
-            SysRolesAuthModel.belongsTo(SysPermissionModel, { foreignKey: 'permissionId' });
+            RolesAuthModel.belongsTo(PermissionModel, { foreignKey: 'permissionId' });
             //查询中间表
-            let rows = await SysRolesAuthModel.findAll({
+            let rows = await RolesAuthModel.findAll({
                 where: { roleId },
                 include: [{
                     where: { isDelete: false },
-                    model: SysPermissionModel,
+                    model: PermissionModel,
                     attributes: []
                 }],
                 order: [

@@ -34,7 +34,7 @@ var _require2 = require(':lib/sequelize'),
     SOP = _require2.SOP,
     BiuDB = _require2.BiuDB;
 
-var SysRolesBaseModel = BiuDB.import(MODELS_PATH + '/system/SysRolesBaseModel');
+var RolesBaseModel = BiuDB.import(MODELS_PATH + '/system/RolesBaseModel');
 module.exports = function () {
     function _class() {
         (0, _classCallCheck3.default)(this, _class);
@@ -65,7 +65,7 @@ module.exports = function () {
                             case 2:
                                 _context.prev = 2;
                                 _context.next = 5;
-                                return SysRolesBaseModel.count({
+                                return RolesBaseModel.count({
                                     where: { roleName: roleName, isDelete: false }
                                 });
 
@@ -83,7 +83,7 @@ module.exports = function () {
                                 save = { roleName: roleName }; //保存数据
 
                                 _context.next = 11;
-                                return SysRolesBaseModel.create(save);
+                                return RolesBaseModel.create(save);
 
                             case 11:
                                 return _context.abrupt('return', result.success());
@@ -145,7 +145,7 @@ module.exports = function () {
                                 };
                                 _context2.prev = 4;
                                 _context2.next = 7;
-                                return SysRolesBaseModel.findAndCountAll(queryData);
+                                return RolesBaseModel.findAndCountAll(queryData);
 
                             case 7:
                                 _ref5 = _context2.sent;
@@ -204,7 +204,7 @@ module.exports = function () {
                                 //批量软删除
                                 del = { where: { roleId: ids } };
                                 _context3.next = 6;
-                                return SysRolesBaseModel.update({ isDelete: isDelete }, del);
+                                return RolesBaseModel.update({ isDelete: isDelete }, del);
 
                             case 6:
                                 return _context3.abrupt('return', result.success());
@@ -254,7 +254,7 @@ module.exports = function () {
                             case 2:
                                 _context4.prev = 2;
                                 _context4.next = 5;
-                                return SysRolesBaseModel.update(data, { where: { roleId: data.roleId } });
+                                return RolesBaseModel.update(data, { where: { roleId: data.roleId } });
 
                             case 5:
                                 return _context4.abrupt('return', result.success());

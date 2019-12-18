@@ -11,22 +11,22 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * 用户登录路由入口
+ * 系统管理员管理
  */
 var KoaRouter = require('koa-router');
-var LoginService = require(':services/common/LoginService');
+var SysLogsService = require(':services/system/SysLogsService');
 var controller = new KoaRouter();
-var service = new LoginService();
+var service = new SysLogsService();
 
-//系统管理员登录
-controller.post('/userLoginForSysAdmin', function () {
+//获取系统日志
+controller.get('/getSysLogList', function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(ctx) {
         return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
                         _context.next = 2;
-                        return service.userLoginForSysAdmin({ data: ctx.request.body, cookies: ctx.cookies });
+                        return service.getSysLogList(ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context.sent;
@@ -44,15 +44,15 @@ controller.post('/userLoginForSysAdmin', function () {
     };
 }());
 
-//商家登录
-controller.post('/loginForBusiness', function () {
+//获取系统日志内容
+controller.get('/getSysLogContent', function () {
     var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(ctx) {
         return _regenerator2.default.wrap(function _callee2$(_context2) {
             while (1) {
                 switch (_context2.prev = _context2.next) {
                     case 0:
                         _context2.next = 2;
-                        return service.loginForBusiness({ data: ctx.request.body, cookies: ctx.cookies });
+                        return service.getSysLogContent(ctx.request.query, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context2.sent;
@@ -67,6 +67,32 @@ controller.post('/loginForBusiness', function () {
 
     return function (_x2) {
         return _ref2.apply(this, arguments);
+    };
+}());
+
+//删除系统日志
+controller.delete('/delSysLogByPaths', function () {
+    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(ctx) {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
+            while (1) {
+                switch (_context3.prev = _context3.next) {
+                    case 0:
+                        _context3.next = 2;
+                        return service.delSysLogByPaths(ctx.request.body, ctx.state.user.data);
+
+                    case 2:
+                        ctx.body = _context3.sent;
+
+                    case 3:
+                    case 'end':
+                        return _context3.stop();
+                }
+            }
+        }, _callee3, undefined);
+    }));
+
+    return function (_x3) {
+        return _ref3.apply(this, arguments);
     };
 }());
 

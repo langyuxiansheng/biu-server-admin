@@ -65,6 +65,11 @@ module.exports = function (sequelize, dataTypes) {
             allowNull: true
         },
 
+        fileMD5: { //文件指纹
+            type: dataTypes.STRING(40),
+            allowNull: true
+        },
+
         //文件状态
         status: {
             type: dataTypes.INTEGER(2),
@@ -104,6 +109,6 @@ module.exports = function (sequelize, dataTypes) {
             }
         }
     }, {
-        tableName: 'mu_files_base'
+        tableName: 'biu_files_base'
     });
 };

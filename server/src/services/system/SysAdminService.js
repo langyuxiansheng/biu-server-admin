@@ -4,10 +4,10 @@
 const result = require(':lib/Result');
 const { MODELS_PATH } = require(':lib/Utils');
 const { SOP, BiuDB } = require(':lib/sequelize');
-const SysAdminBaseModel = BiuDB.import(`${MODELS_PATH}/system/SysAdminBaseModel`);
-// BiuDB.import(`${MODELS_PATH}/system/SysPermissionModel`);
-// BiuDB.import(`${MODELS_PATH}/system/SysRolesAuthModel`);
-// BiuDB.import(`${MODELS_PATH}/system/SysRolesBaseModel`);
+const AdminBaseModel = BiuDB.import(`${MODELS_PATH}/system/AdminBaseModel`);
+// BiuDB.import(`${MODELS_PATH}/system/PermissionModel`);
+// BiuDB.import(`${MODELS_PATH}/system/RolesAuthModel`);
+// BiuDB.import(`${MODELS_PATH}/system/RolesBaseModel`);
 module.exports = class {
     /**
      * 添加管理平台
@@ -19,12 +19,12 @@ module.exports = class {
         if (!account || !password) return result.paramsLack();
         try {
             //查询账号是否存在
-            const count = await SysAdminBaseModel.count({
+            const count = await AdminBaseModel.count({
                 where: { account, isDelete: false }
             });
             if (count > 0) return result.failed('用户已存在!');
             const save = { adminName, account, password, avatar }; //保存数据
-            await SysAdminBaseModel.create(save);
+            await AdminBaseModel.create(save);
             return result.success();
         } catch (error) {
             console.log(error);
@@ -58,7 +58,7 @@ module.exports = class {
         };
         try {
             //查询账号是否存在
-            const { rows, count } = await SysAdminBaseModel.findAndCountAll(queryData);
+            const { rows, count } = await AdminBaseModel.findAndCountAll(queryData);
             return result.success(null, { list: rows, total: count });
         } catch (error) {
             console.log(error);
@@ -77,7 +77,7 @@ module.exports = class {
         try {
             //批量软删除
             const del = { where: { adminId: ids } };
-            await SysAdminBaseModel.update({ isDelete }, del);
+            await AdminBaseModel.update({ isDelete }, del);
             return result.success();
         } catch (error) {
             console.log(error);
@@ -94,7 +94,7 @@ module.exports = class {
         if (!isAdmin) return result.noAuthority();
         if (!data.adminId) return result.paramsLack();
         try {
-            await SysAdminBaseModel.update(data, { where: { adminId: data.adminId } });
+            await AdminBaseModel.update(data, { where: { adminId: data.adminId } });
             return result.success();
         } catch (error) {
             console.log(error);
@@ -112,7 +112,7 @@ module.exports = class {
         if (!adminId || !roleId || !roleName) return result.paramsLack();
         try {
             const bindData = { roleId, roleName };
-            await SysAdminBaseModel.update(bindData, { where: { adminId } });
+            await AdminBaseModel.update(bindData, { where: { adminId } });
             return result.success();
         } catch (error) {
             console.log(error);
@@ -131,7 +131,7 @@ module.exports = class {
             attributes: { exclude: ['isDelete', 'createdTime', 'updatedTime', 'password'] }
         };
         try {
-            const info = await SysAdminBaseModel.findOne(queryData);
+            const info = await AdminBaseModel.findOne(queryData);
             return result.success(null, info);
         } catch (error) {
             console.log(error);
@@ -151,10 +151,10 @@ module.exports = class {
             attributes: { exclude: ['isDelete', 'createdTime', 'updatedTime'] }
         };
         try {
-            const info = await SysAdminBaseModel.findOne(queryData);
+            const info = await AdminBaseModel.findOne(queryData);
             if (!info) return result.failed(`用户不存在!`);
             if (password !== info.password) return result.failed(`密码错误!`);
-            const res = await SysAdminBaseModel.update({ password: newPassword }, { where: { adminId, account } });
+            const res = await AdminBaseModel.update({ password: newPassword }, { where: { adminId, account } });
             return result.success(null, res);
         } catch (error) {
             console.log(error);

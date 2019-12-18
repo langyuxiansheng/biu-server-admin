@@ -5,7 +5,7 @@ const result = require(':lib/Result');
 const { MODELS_PATH, getLC, signJWT, deepCloneObject } = require(':lib/Utils');
 const { systemLogger } = require(':lib/logger4');
 const { BiuDB } = require(':lib/sequelize');
-const SysAdminBaseModel = BiuDB.import(`${MODELS_PATH}/system/SysAdminBaseModel`);
+const AdminBaseModel = BiuDB.import(`${MODELS_PATH}/system/AdminBaseModel`);
 module.exports = class {
     /**
      * 管理员登录
@@ -23,7 +23,7 @@ module.exports = class {
             attributes: { exclude: ['isDelete', 'createdTime', 'updatedTime'] }
         };
         try {
-            const user = await SysAdminBaseModel.findOne(queryData);
+            const user = await AdminBaseModel.findOne(queryData);
             if (!user) return result.failed('用户不存在!');
             if (password !== user.password) return result.failed('账号或密码输入错误!'); //对比密码
             if (!user.roleId) return result.failed('账号异常请联系管理员,异常信息:"未设置用户的角色!"');

@@ -14,10 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 系统管理员管理
  */
 var KoaRouter = require('koa-router');
-
-var _require = require(':services'),
-    SysAdminService = _require.system.SysAdminService;
-
+var SysAdminService = require(':services/system/SysAdminService');
 var controller = new KoaRouter();
 var service = new SysAdminService();
 
@@ -29,7 +26,7 @@ controller.post('/addSysAdmin', function () {
                 switch (_context.prev = _context.next) {
                     case 0:
                         _context.next = 2;
-                        return service.addSysAdmin(ctx.request.body);
+                        return service.addSysAdmin(ctx.request.body, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context.sent;
@@ -55,7 +52,7 @@ controller.get('/getSysAdminList', function () {
                 switch (_context2.prev = _context2.next) {
                     case 0:
                         _context2.next = 2;
-                        return service.getSysAdminList(ctx.request.query);
+                        return service.getSysAdminList(ctx.request.query, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context2.sent;
@@ -81,7 +78,7 @@ controller.delete('/delSysAdminByIds', function () {
                 switch (_context3.prev = _context3.next) {
                     case 0:
                         _context3.next = 2;
-                        return service.delSysAdminByIds(ctx.request.body);
+                        return service.delSysAdminByIds(ctx.request.body, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context3.sent;
@@ -133,7 +130,7 @@ controller.put('/bindSysAdminRole', function () {
                 switch (_context5.prev = _context5.next) {
                     case 0:
                         _context5.next = 2;
-                        return service.bindSysAdminRole(ctx.request.body);
+                        return service.bindSysAdminRole(ctx.request.body, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context5.sent;
@@ -185,7 +182,7 @@ controller.put('/updateSysPassword', function () {
                 switch (_context7.prev = _context7.next) {
                     case 0:
                         _context7.next = 2;
-                        return service.updateSysPassword({ data: ctx.request.body, user: ctx.state.user });
+                        return service.updateSysPassword({ data: ctx.request.body }, ctx.state.user.data);
 
                     case 2:
                         ctx.body = _context7.sent;

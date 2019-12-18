@@ -4,7 +4,7 @@
 const result = require(':lib/Result');
 const { MODELS_PATH } = require(':lib/Utils');
 const { SOP, BiuDB } = require(':lib/sequelize');
-const SysRolesBaseModel = BiuDB.import(`${MODELS_PATH}/system/SysRolesBaseModel`);
+const RolesBaseModel = BiuDB.import(`${MODELS_PATH}/system/RolesBaseModel`);
 module.exports = class {
     /**
      * 添加系统角色
@@ -14,12 +14,12 @@ module.exports = class {
         if (!roleName) return result.paramsLack();
         try {
             //查询角色是否存在
-            const count = await SysRolesBaseModel.count({
+            const count = await RolesBaseModel.count({
                 where: { roleName, isDelete: false }
             });
             if (count > 0) return result.failed('角色已存在!');
             const save = { roleName }; //保存数据
-            await SysRolesBaseModel.create(save);
+            await RolesBaseModel.create(save);
             return result.success();
         } catch (error) {
             console.log(error);
@@ -50,7 +50,7 @@ module.exports = class {
             queryData.limit = Number(limit); //每页限制返回的数据条数
         };
         try {
-            const { rows, count } = await SysRolesBaseModel.findAndCountAll(queryData);
+            const { rows, count } = await RolesBaseModel.findAndCountAll(queryData);
             return result.success(null, { list: rows, total: count });
         } catch (error) {
             console.log(error);
@@ -67,7 +67,7 @@ module.exports = class {
         try {
             //批量软删除
             const del = { where: { roleId: ids } };
-            await SysRolesBaseModel.update({ isDelete }, del);
+            await RolesBaseModel.update({ isDelete }, del);
             return result.success();
         } catch (error) {
             console.log(error);
@@ -82,7 +82,7 @@ module.exports = class {
     async updateSysRole(data) {
         if (!data.roleId) return result.paramsLack();
         try {
-            await SysRolesBaseModel.update(data, { where: { roleId: data.roleId } });
+            await RolesBaseModel.update(data, { where: { roleId: data.roleId } });
             return result.success();
         } catch (error) {
             console.log(error);
