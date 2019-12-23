@@ -10,7 +10,7 @@ features:
 - title: RESTful API
   details: 遵循统一接口原则,使用标准的HTTP请求方法，统一状态码等，返回标准的JSON格式。
 - title: Nodejs Koa2
-  details: 基于现在比较流行的koa2服务器框架，高性能和高可用性，实现毫秒级响应。
+  details: 基于现在主流的koa2服务框架，高性能和高可用性，毫秒级请求响应。
 - title: 工程化项目
   details: 使用清晰明了的项目结构，统一方法封装等，使整个项目内容有条不紊。
 - title: 易用
