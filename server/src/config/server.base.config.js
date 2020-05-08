@@ -24,7 +24,7 @@ module.exports = {
         // 我们需要登录到网页邮箱中，然后配置SMTP和POP3服务器的密码
         auth: {
             user: '1096432936@qq.com',
-            pass: 'kqpzjioamhbdbaec'
+            pass: 'k1q2p41zj41ioamhbdbaec'
         }
     },
     dbs: { //数据源配置
@@ -33,11 +33,11 @@ module.exports = {
             type: 'sequelize', //orm类型 类型可选sequelize redis等
             config: {
                 username: 'biu_server_db', // 数据库用户名
-                password: 'mWTNrJ7ewJFDkAd5', // 数据库密码
+                password: 'm24WTNrJ7ewJFDkAd5', // 数据库密码
                 database: 'biu_server_db', // 数据库名称
                 options: { //配置项
                     dialect: 'mysql', // 数据库类型
-                    host: '111.231.225.103', // 服务器地址
+                    host: '111.231.225.106', // 服务器地址
                     port: 3306, // 数据库端口号
                     dialectOptions: { // MySQL > 5.5，其它数据库删除此项
                         charset: 'utf8mb4',
