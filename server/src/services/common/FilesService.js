@@ -32,7 +32,7 @@ module.exports = class {
                     deleteFile(file.path); //上传成功后删除临时文件
                 });
                 return result.failed(`只能上传单文件!`);
-            } else if (file.size / 1024 / 1024 < 200) { //单位是M
+            } else if (file.size / 1024 / 1024 > 200) { //单位是M
                 return result.failed(`上传文件不能超过200M!`);
             }
             //创建文件夹
