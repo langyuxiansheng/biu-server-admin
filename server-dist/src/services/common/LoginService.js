@@ -29,10 +29,13 @@ var _require = require(':lib/Utils'),
     signJWT = _require.signJWT,
     deepCloneObject = _require.deepCloneObject;
 
-var _require2 = require(':lib/sequelize'),
-    BiuDB = _require2.BiuDB;
+var _require2 = require(':lib/logger4'),
+    systemLogger = _require2.systemLogger;
 
-var SysAdminBaseModel = BiuDB.import(MODELS_PATH + '/system/SysAdminBaseModel');
+var _require3 = require(':lib/sequelize'),
+    BiuDB = _require3.BiuDB;
+
+var AdminBaseModel = BiuDB.import(MODELS_PATH + '/system/AdminBaseModel');
 module.exports = function () {
     function _class() {
         (0, _classCallCheck3.default)(this, _class);
@@ -89,7 +92,7 @@ module.exports = function () {
                                 };
                                 _context.prev = 9;
                                 _context.next = 12;
-                                return SysAdminBaseModel.findOne(queryData);
+                                return AdminBaseModel.findOne(queryData);
 
                             case 12:
                                 user = _context.sent;
@@ -122,7 +125,11 @@ module.exports = function () {
 
                                 info['userId'] = user.adminId; //设置通用id名
                                 info['userName'] = user.adminName; //设置通用用户名
-                                jwt = signJWT(info, '2h'); //验证通过签发jwt,2小时有效!
+                                jwt = signJWT({
+                                    userId: user.adminId,
+                                    isAdmin: user.isAdmin,
+                                    roleId: user.roleId
+                                }, '2h'); //验证通过签发jwt,2小时有效!
 
                                 return _context.abrupt('return', result.success(null, { jwt: jwt, user: info }));
 
@@ -130,8 +137,8 @@ module.exports = function () {
                                 _context.prev = 26;
                                 _context.t0 = _context['catch'](9);
 
-                                console.log(_context.t0);
-                                return _context.abrupt('return', result.failed(_context.t0));
+                                systemLogger.error('\u7BA1\u7406\u5458\u767B\u5F55', 'LoginService.userLoginForSysAdmin', _context.t0);
+                                return _context.abrupt('return', result.failed());
 
                             case 30:
                             case 'end':

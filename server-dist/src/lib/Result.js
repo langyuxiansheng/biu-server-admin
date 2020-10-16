@@ -1,28 +1,41 @@
-"use strict";
+'use strict';
 
 /**
  * 返回数据实体对象
  */
 module.exports = {
     /**
-     * 状态码
+     * 状态码 获取表示
+     * 变更时获取表示（缓存）
+     * 200（OK） - 表示已在响应中发出
+     * 204（无内容） - 资源有空表示
+     * 301（Moved Permanently） - 资源的URI已被更新
+     * 303（See Other） - 其他（如，负载均衡）
+     * 304（not modified）- 资源未更改（缓存）
+     * 400 （bad request）- 指代坏请求（如，参数错误）
+     * 404 （not found）- 资源不存在
+     * 406 （not acceptable）- 服务端不支持所需表示
+     * 500 （internal server error）- 通用错误响应
+     * 503 （Service Unavailable）- 服务端当前无法处理请求
      */
     CODE: {
-        SUCCESS: 200, //成功
-        OTHER: 204, //其它状态
+        SUCCESS: 200, //表示已在响应中发出
+        OTHER: 204, //（无内容） - 资源有空表示
         FAILED: 400, //操作失败
         AUTHORITIES: 401, //身份验证失败
-        NO_AUTHORITY: 403 //无权限
+        NO_AUTHORITY: 403, //无权限
+        SERVER_ERROR: 500 //通用服务器内部错误响应
     },
-
     /**
      * 返回提示
      */
     MESSAGE: {
-        SUCCESS: "SUCCESS!",
-        FAILED: "\u64CD\u4F5C\u5931\u8D25!",
-        PARAMS_LACK: "\u53C2\u6570\u4E0D\u9F50!",
-        AUTHORITIES: "\u767B\u9646\u5931\u6548\u6216\u8EAB\u4EFD\u8FC7\u671F!" //身份验证失败
+        SUCCESS: 'SUCCESS!',
+        FAILED: '\u64CD\u4F5C\u5931\u8D25!',
+        PARAMS_LACK: '\u53C2\u6570\u4E0D\u9F50!',
+        AUTHORITIES: '\u767B\u9646\u5931\u6548\u6216\u8EAB\u4EFD\u8FC7\u671F!', //身份验证失败
+        NO_AUTHORITY: '\u65E0\u6743\u8BBF\u95EE!', //无权限
+        SERVER_ERROR: '\u670D\u52A1\u5668\u5185\u5BB9\u9519\u8BEF!'
     },
 
     /**
@@ -75,6 +88,36 @@ module.exports = {
             code: code || this.CODE.AUTHORITIES,
             data: data,
             msg: msg || this.MESSAGE.AUTHORITIES
+        };
+    },
+
+
+    /**
+     * 无权访问
+     * @param {*} msg
+     * @param {*} code
+     * @param {*} data
+     */
+    noAuthority: function noAuthority(msg, code, data) {
+        return {
+            data: data,
+            code: code || this.CODE.NO_AUTHORITY,
+            msg: msg || this.MESSAGE.NO_AUTHORITY
+        };
+    },
+
+
+    /**
+     * 服务器内容错误
+     * @param {*} msg
+     * @param {*} code
+     * @param {*} data
+     */
+    serverError: function serverError(err, msg, code) {
+        return {
+            error: err || '-',
+            msg: msg || this.MESSAGE.SERVER_ERROR,
+            code: code || this.CODE.SERVER_ERROR
         };
     },
 

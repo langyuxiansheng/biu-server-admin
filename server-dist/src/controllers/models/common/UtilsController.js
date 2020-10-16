@@ -14,10 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 用户登录路由入口
  */
 var KoaRouter = require('koa-router');
-
-var _require = require(':services'),
-    UtilsService = _require.common.UtilsService;
-
+var UtilsService = require(':services/common/UtilsService');
 var controller = new KoaRouter();
 var service = new UtilsService();
 //登录

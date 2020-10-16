@@ -22,12 +22,12 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var path = require('path'); //路径模块
 var Koa2 = require('koa'); //koa
 var KoaCors = require('koa-cors'); //核心文件
 var KoaBody = require('koa-body'); //koa文件上传
 var koaJWT = require('koa-jwt'); //jwt生成解析
 var koaStatic = require('koa-static'); //静态文件
+var responseTime = require('koa-response-time');
 var consola = require('consola'); //打印
 
 var _require = require('nuxt'),
@@ -37,12 +37,16 @@ var _require = require('nuxt'),
 
 var config = require(':config/server.base.config'); //配置文件
 var nuxtConfig = require(':root/nuxt.config'); //nuxt配置文件
-var controllers = require(':controllers'); //路由入口
+var controllers = require(':controllers/index'); //路由入口
 var ErrorRoutesCatch = require(':middleware/ErrorRoutesCatch'); //全局错误捕获
-// require(':crawlers')(); //爬虫注册中心
+
+var _require2 = require(':lib/logger4'),
+    accessLogger = _require2.accessLogger; //日志系统
+
+
 var app = new Koa2();
-var host = process.env.HOST || config.host;
-var port = process.env.PORT || config.port;
+var host = process.env.HOST || config.host || '127.0.0.1';
+var port = process.env.PORT || config.port || 3000;
 config.dev = !(app.env === 'production');
 module.exports = function () {
     function Server() {
@@ -75,6 +79,8 @@ module.exports = function () {
                                 return builder.build();
 
                             case 6:
+                                app.use(accessLogger());
+                                app.use(responseTime({ hrtime: true }));
                                 app.use(KoaCors());
                                 app.use(ErrorRoutesCatch);
                                 app.use(koaStatic(config.staticPath));
@@ -82,7 +88,7 @@ module.exports = function () {
                                     multipart: true,
                                     strict: false,
                                     formidable: {
-                                        uploadDir: path.join(config.staticPath + '/uploads/tmp'), //设置上传缓存文件夹
+                                        uploadDir: config.uploadDir, //设置上传缓存文件夹
                                         maxFileSize: 1024 * 1024 * 10 * 1024 // 设置上传文件大小最大限制，默认1G 1024M
                                     },
                                     jsonLimit: '10mb',
@@ -111,7 +117,7 @@ module.exports = function () {
                                     badge: true
                                 });
 
-                            case 16:
+                            case 18:
                             case 'end':
                                 return _context.stop();
                         }

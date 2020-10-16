@@ -52,11 +52,12 @@ var Utils = {
      * 取随机数
      */
     getRandomNum: function getRandomNum() {
-        var Min = 10000000;
-        var Max = 99999999;
-        var Range = Max - Min;
-        var Rand = Math.random();
-        return Min + Math.round(Rand * Range);
+        var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10000000;
+        var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 99999999;
+
+        var range = min - max;
+        var rand = Math.random();
+        return min + Math.round(rand * range);
     },
 
 
@@ -64,7 +65,7 @@ var Utils = {
      * 获取MD5加密
      */
     getMd5: function getMd5(str) {
-        return MD5(str + '_SERVICE.MU.HOME').toUpperCase();
+        return MD5('' + str + config.saltMD5).toUpperCase();
     },
 
 
@@ -154,11 +155,11 @@ var Utils = {
      * 格式化设置
      * @param {*} GetOptions
      */
-    optionFormat: function optionFormat(GetOptions) {
+    optionFormat: function optionFormat(getOptions) {
         var options = '{';
-        for (var n = 0; n < GetOptions.length; n++) {
-            options = options + '\'' + GetOptions[n].option_name + '\':\'' + GetOptions[n].option_value + '\'';
-            if (n < GetOptions.length - 1) {
+        for (var n = 0; n < getOptions.length; n++) {
+            options = options + '\'' + getOptions[n].option_name + '\':\'' + getOptions[n].option_value + '\'';
+            if (n < getOptions.length - 1) {
                 options = options + ',';
             }
         }
@@ -289,13 +290,11 @@ var Utils = {
 
 
     /**
-     * 生成文件名
+     * 生成文件名 默认全大写
      * @param {*} isLowerCase
      */
     getFileNameUUID32: function getFileNameUUID32(nameExtension, isLowerCase) {
-        var str = Utils.getMd5(UUID.v1());
-        var name = isLowerCase ? str : str.toUpperCase();
-        return 'BIUXS_WEB_' + name + '.' + nameExtension;
+        return 'BIUXS_WEB_' + Utils.getTimeStampUUID(isLowerCase) + '.' + nameExtension;
     },
 
 
