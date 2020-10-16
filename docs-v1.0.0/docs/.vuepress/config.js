@@ -50,7 +50,8 @@ module.exports = {
                 sidebar: [
                     ['/zh/guide/','简介'],
                     ['/zh/guide/install','安装'],
-                    ['/zh/guide/directory-structure', '目录结构']
+                    ['/zh/guide/directory-structure', '目录结构'],
+                    ['/zh/guide/test', 'Test'],
                 ]
             },
             '/en/': {
